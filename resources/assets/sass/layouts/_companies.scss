@@ -1,0 +1,67 @@
+.companies-index{
+  .reciever_container{
+    width: 100%;
+
+    &:not(.new-company-form){
+      box-shadow: none;
+    }
+  }
+
+  .card-company{
+    .card-content{
+      display: none;
+    }
+  }
+}
+
+.card-create-address-list{
+  .error{
+    position: absolute;
+    right: 85px;
+    font-weight: lighter;
+  }
+}
+
+.update-address-list-input{
+  border: none;
+  font-size: 1rem;
+  padding: 3px 0;
+  width: 100%;
+}
+
+.companies-show{
+  .reciever_container{
+    width: 100%;
+
+    &:not(.new-company-form){
+      box-shadow: none;
+    }
+  }
+
+  .reciever_form{
+    .label{
+      color: $blue;
+      font-size: 0.65rem;
+      margin-top: 15px;
+      margin-bottom: -9px;
+      position: relative;
+    }
+  }
+
+  .card-address-list{
+    .card-content{
+      display: none;
+    }
+
+    .icon{
+      .fa-eye-slash{ display: none; }
+    }
+
+    &.opened{
+      .icon{
+        .fa-eye{ display: none; }
+        .fa-eye-slash{ display: initial; }
+      }
+    }
+  }
+}

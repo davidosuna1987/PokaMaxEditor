@@ -1,0 +1,46 @@
+// iPhone Safari media bug
+*::-webkit-media-controls-panel {
+  display: none!important;
+  -webkit-appearance: none;
+}
+*::--webkit-media-controls-play-button {
+  display: none!important;
+  -webkit-appearance: none;
+}
+*::-webkit-media-controls-start-playback-button {
+  display: none!important;
+  -webkit-appearance: none;
+}
+
+//Selection styles
+::selection{
+    background-color: $cyan;
+    color: #fff;
+}
+
+*{
+  outline: none;
+}
+
+.has-message-and-button{
+  display: flex;
+  align-items: center;
+
+  .button{
+    margin: 0 20px;
+  }
+}
+
+.navbar.is-fixed-top + #app{
+  padding-top: 95px;
+}
+
+#app{
+  max-width: 1152px;
+  width: 95vw;
+  margin: auto;
+
+  .container {
+    width: 100%;
+  }
+}

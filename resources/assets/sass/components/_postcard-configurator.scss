@@ -1,0 +1,657 @@
+/* POSTCARD FRONT */
+  .canvas-container{
+    margin: 40px auto;
+  }
+
+  .button-save-draft{
+    position: fixed;
+    bottom: 8px;
+    z-index: 1;
+    right: 150px;
+
+    &[disabled="disabled"]{
+      pointer-events: none;
+    }
+  }
+
+  .postcard_form{
+    position: relative;
+    display: flex;
+    background: white;
+    height: 465px;
+    width: 655px;
+    padding: 17px 17px 40px;
+
+    .upload-file-input{
+        display: none;
+    }
+
+    [id^=collage]{
+        position: relative;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .col-1{
+      box-shadow: 0 6px 13px 2px rgba(0, 0, 0, 0.2);
+      // flex: 0 0 400px;
+      flex: 1;
+    }
+
+    .col-2{
+        flex: 1;
+        margin-left: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #collage_1{
+        background-image: url(https://source.unsplash.com/random/?family);
+        background-position: center;
+        background-size: cover;
+        height: 100%;
+        width: 100%;
+    }
+
+    #collage_2{
+        background-image: url(https://source.unsplash.com/random/?smile);
+        background-position: center;
+        background-size: cover;
+        height: 100%;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    #collage_3{
+        background-image: url(https://source.unsplash.com/random/?face);
+        background-position: center;
+        background-size: cover;
+        height: 100%;
+        width: 100%;
+    }
+
+    .upload-icon-wrapper{
+        background: rgba(255, 255, 255, 0.45);
+        width: 100%;
+        height: 100%;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+        -ms-align-items: center;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 55px;
+        cursor: pointer;
+    }
+
+    .upload-icon-wrapper:hover{
+        color: #E91E63;
+        outline: solid 3px #E91E63;
+        outline-offset: -3px;
+    }
+
+    .front-caption-text{
+        position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40px;
+    }
+
+    .front-caption-text input{
+      opacity: 0;
+      pointer-events: none;
+      background: transparent;
+      border: none;
+      padding: 0 15px;
+      width: 100%;
+      height: 40px;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+      color: black;
+      // transition: all ease-in-out 400ms;
+    }
+
+    &.has-frame{
+      box-shadow: 0 6px 13px 2px rgba(0, 0, 0, 0.2);
+
+      .col-1{
+        box-shadow: none;
+      }
+
+      .front-caption-text input{
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+
+    .tools{
+      position: absolute;
+      top: 15px;
+      left: 12.5%;
+      width: 75%;
+      background: rgba(255, 255, 255, 0.75);
+      padding: 2px;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flex;
+      display: -o-flex;
+      display: flex;
+        -ms-align-items: center;
+        align-items: center;
+      justify-content: flex-end;
+      font-size: 20px;
+    }
+
+    .croppie-container:hover .tools{
+        z-index: 2;
+    }
+
+    .tools.hidden{
+        display: none;
+    }
+
+    .tools .tool {
+      margin: 0 3px;
+      cursor: pointer;
+    }
+
+    .tools .tool:hover{
+        color: #E91E63
+    }
+
+    .tools .tool.tool-done{
+        margin-left: 12px;
+    }
+
+    .tools .tool.tool-done:hover{
+        color: #aadd66;
+    }
+
+    .tool-remove{
+        margin-right: auto !important;
+    }
+
+    .tool-remove .mdi-delete{
+        display: block;
+    }
+
+    .tool-remove .mdi-delete-empty{
+        display: none;
+    }
+
+    .tool-remove:hover .mdi-delete{
+        display: none;
+    }
+
+    .tool-remove:hover .mdi-delete-empty{
+        display: block;
+        color: #ed143d;
+    }
+  }
+
+/* POSTCARD BACK */
+  #postcard_back{
+    display: flex;
+
+    .field{
+      position: relative;
+      margin: 0;
+
+      .error{
+        position: absolute;
+        top: 10px;
+        left: calc(100% - 22px);
+
+        &:hover{
+          .error-message{
+            display: block;
+            z-index: 1;
+          }
+        }
+      }
+
+      .error-message{
+        display: none;
+        position: absolute;
+        top: -2px;
+        left: 23px;
+        width: max-content;
+        max-width: 300px;
+        padding: 5px 10px;
+        background: whitesmoke;
+      }
+    }
+
+    #back_text{
+      width: 360px;
+      height: 408px;
+      padding: 25px;
+      color: #031993;
+      line-height: 1.3;
+      border: none;
+      resize: none;
+      overflow: hidden;
+
+      &.font-family-3{ line-height: 1; }
+
+      &:hover{
+        +.back-text-error-frame{
+          .error{
+            .error-message{
+              display: block;
+              z-index: 1;
+            }
+          }
+        }
+      }
+
+      &.has-error{
+        +.back-text-error-frame{
+          width: 340px;
+          height: 388px;
+          border: solid 1px $red;
+          position: absolute;
+          left: 10px;
+          top: 10px;
+          pointer-events: none;
+
+          .error{ top: 0; }
+        }
+      }
+    }
+
+    .vertical-line {
+      width: 1px;
+      height: 328px;
+      margin-top: 40px;
+      background: gainsboro;
+    }
+
+    .right-area{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      width: 260px;
+
+      .stamp-container{
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 140px;
+        padding: 20px;
+        z-index: 1;
+      }
+    }
+
+    #sender_data{
+      padding: 0 20px 40px;
+
+      input{
+        width: 100%;
+        padding: 12px 2px;
+        border: none;
+        border-bottom: solid 1px gainsboro;
+        font-size: 15px;
+
+        &.has-error{
+          border-color: $red;
+        }
+
+        &:hover{
+          +.error{
+            .error-message{
+              display: block;
+              z-index: 1;
+            }
+          }
+        }
+      }
+    }
+
+    &.full-text{
+      #back_text{
+        width: 621px;
+
+        &.has-error{
+          +.back-text-error-frame{
+            width: 601px;
+
+            .error{ z-index: 2; }
+          }
+        }
+      }
+
+      .vertical-line{
+        display: none;
+      }
+
+      .right-area{
+        display: none;
+      }
+
+      #sender_data{
+        display: none;
+      }
+    }
+  }
+
+  .font-selector{
+    width: 250px;
+
+    .title{
+      margin-bottom: 8px;
+    }
+
+    .font-family{
+      margin-bottom: 25px;
+    }
+
+    .font-family-list{
+      li {
+        border: solid 3px gainsboro;
+        border-bottom: none;
+        padding: 0 13px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &:last-child{
+          border-bottom: solid 3px gainsboro;
+        }
+
+        &.active {
+          background-color: gainsboro;
+          color: white;
+        }
+
+        &:hover{
+          background-color: gainsboro;
+          color: white;
+        }
+      }
+    }
+
+    .font-size-list{
+      display: flex;
+      justify-content: space-between;
+
+      li {
+        border: solid 3px gainsboro;
+        padding: 0 13px;
+        font-size: 15px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 55px;
+        cursor: pointer;
+
+        &.active {
+          background-color: gainsboro;
+          color: white;
+        }
+
+        &:hover{
+          background-color: gainsboro;
+          color: white;
+        }
+      }
+    }
+  }
+
+/* POSTCARD CONTACTS */
+  .reciever_container{
+    width: 621px;
+    box-shadow: 0 6px 13px 2px rgba(0, 0, 0, 0.2);
+
+    .reciever_form{
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      input{
+        width: 100%;
+        height: 43px;
+        padding: 12px 2px;
+        border: none;
+        border-bottom: solid 1px gainsboro;
+        font-size: 15px;
+
+        &.has-error{
+          border-color: $red;
+        }
+
+        &:hover{
+          +.error{
+            .error-message{
+              display: block;
+              z-index: 1;
+            }
+          }
+        }
+      }
+
+      .field{
+        position: relative;
+        width: 100%;
+        margin: 0;
+
+          .error{
+            position: absolute;
+            top: 10px;
+            left: calc(100% - 22px);
+            // z-index: 1;
+
+            &:hover{
+              .error-message{
+                display: block;
+                z-index: 1;
+              }
+            }
+          }
+
+          .error-message{
+            display: none;
+            position: absolute;
+            top: -2px;
+            left: 23px;
+            width: max-content;
+            max-width: 300px;
+            padding: 5px 10px;
+            background: whitesmoke;
+          }
+      }
+
+      .field-reciever-company{
+        width: calc(100% - 165px);
+        margin-right: 15px;
+      }
+
+      .field-reciever-birthday{
+        width: 150px;
+      }
+
+      .field-reciever-title{
+        width: 60px;
+        margin-right: 15px;
+      }
+
+      .field-reciever-name{
+        flex: 1;
+        margin-right: 15px;
+      }
+
+      .field-reciever-surnames{
+        width: 50%;
+      }
+
+      .field-reciever-city{
+        flex: 1;
+      }
+
+      .field-reciever-country{
+        flex: 1;
+        margin: 0 15px;
+      }
+
+      .field-reciever-zip{
+        width: 125px;
+      }
+    }
+  }
+
+/* CSV DETAILS */
+  .contact-details .reciever_form input {
+      height: 30px;
+      padding: 5px 2px;
+      background: transparent;
+
+      &.has-error{
+        border-color: $red;
+      }
+  }
+
+  .new-address-list-form{
+    input{
+      width: 100%;
+      height: 43px;
+      padding: 12px 2px;
+      border: none;
+      border-bottom: solid 1px gainsboro;
+      font-size: 15px;
+    }
+  }
+
+/* POSTCARD MODAL */
+  .modal-result{
+    display: none;
+
+    .close-modal{
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 35px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .mr-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(66, 66, 66, 0.65);
+      z-index: 999;
+    }
+
+    .mr-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 50px;
+      z-index: 1000;
+    }
+
+    .mr-content {
+      background: white;
+      max-width: 500px;
+      padding: 35px;
+    }
+  }
+
+/* POSTCARD FONTS */
+  .font-family-1{
+    font-family: 'Pacifico', cursive;
+    font-size: 19px;
+
+    &.font-size-15{ font-size: 15px; }
+    &.font-size-18{ font-size: 18px; }
+    &.font-size-21{ font-size: 21px; }
+    &.font-size-24{ font-size: 24px; }
+  }
+
+  .font-family-2{
+    font-family: 'Indie Flower', cursive;
+    font-size: 19px;
+
+    &.font-size-15{ font-size: 15px; }
+    &.font-size-18{ font-size: 18px; }
+    &.font-size-21{ font-size: 21px; }
+    &.font-size-24{ font-size: 24px; }
+  }
+
+  .font-family-3{
+    font-family: 'Nanum Pen Script', cursive;
+    font-size: 22px;
+
+    &.font-size-15{ font-size: 25px; }
+    &.font-size-18{ font-size: 28px; }
+    &.font-size-21{ font-size: 31px; }
+    &.font-size-24{ font-size: 34px; }
+  }
+
+  .font-family-4{
+    font-family: 'Gloria Hallelujah', cursive;
+    font-size: 15px;
+
+    &.font-size-15{ font-size: 15px; }
+    &.font-size-18{ font-size: 18px; }
+    &.font-size-21{ font-size: 21px; }
+    &.font-size-24{ font-size: 24px; }
+  }
+
+/* POSTCARD PREVIEW */
+  #preview-postcard{
+    width: 645px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 500ms ease-in-out;
+
+    &.flipped{
+      transform: rotateY(180deg);
+    }
+
+    .postcard_form{
+      background: transparent;
+      margin-bottom: 100px;
+    }
+
+    .preview-front{
+      background-color: transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+      backface-visibility: hidden;
+      z-index: 10;
+    }
+
+    .preview-back{
+      background-color: transparent;
+      position: absolute;
+      top: 0;
+      right: 0;
+      backface-visibility: hidden;
+      transform: rotateY(180deg);
+      z-index: 15;
+    }
+
+    .postcard-preview-image{
+      width: 100%;
+      box-shadow: 0 6px 13px 2px rgba(0, 0, 0, 0.2);
+    }
+  }

@@ -1,0 +1,151 @@
+// Bulma overrides
+$primary: $cyan !default;
+
+// Bulma extenssions overrides
+$steps-active-color: $cyan !important;
+$steps-completed-color: $cyan !important;
+
+// Buefy table selectable checkbox
+.b-checkbox.checkbox input[type=checkbox]:checked + .check{
+  background-color: $cyan;
+  border-color: $cyan;
+}
+
+.b-checkbox.checkbox:hover input[type=checkbox] + .check{
+  border-color: $cyan;
+}
+
+.b-checkbox.checkbox:focus input[type=checkbox]:checked + .check {
+  box-shadow: 0 0 0.5em rgba(32, 156, 238, 0.8);
+}
+
+.table tr.is-selected {
+    background-color: $cyan;
+}
+
+// Buefy inputs overrides
+.is-info{
+  .select{
+    &:after,
+    &:not(.is-multiple):after{
+      border-color: white;
+    }
+
+    &:hover{
+      &:after,
+      &:not(.is-multiple):after{
+        border-color: #e8e8e8;
+      }
+    }
+
+    select{
+      border-color: $cyan !important;
+      background-color: $cyan;
+      color: white;
+
+      &:focus:not(:active){
+        box-shadow: 0 0 0 0.125em rgba(32, 156, 238, 0.25);
+      }
+    }
+
+    +.icon{
+      color: white !important;
+    }
+  }
+}
+
+// Bulma steps overrides
+.steps{
+  .step-item{
+    &:not(:first-child){
+      &:before{
+        top: 1.5rem !important;
+      }
+    }
+
+    .step-details{
+      margin-top: 3rem !important;
+    }
+
+    &.is-completed{
+      .step-marker{
+        background-color: $cyan !important;
+      }
+
+      &:before{
+        background: $cyan !important;
+      }
+    }
+
+    &.is-active{
+      .step-marker{
+        color: $cyan !important;
+        border-color: $cyan !important;
+        pointer-events: none;
+      }
+
+      &:before{
+        background: $cyan !important;
+      }
+    }
+
+    .step-marker{
+      height: 3rem !important;
+      width: 3rem !important;
+      left: calc(50% - 1.5rem) !important;
+      cursor: pointer;
+
+      &.has-error{
+        color: white !important;
+        background-color: $red !important;
+
+        &.is-disabled{
+          background-color: #b5b5b5 !important;
+          border-color: $red !important;
+        }
+      }
+
+      &.is-disabled,{
+        // pointer-events: none;
+      }
+    }
+  }
+
+  .steps-actions{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: gainsboro;
+    z-index: 1;
+
+    .steps-action{
+      &:first-child{
+        justify-content: flex-start !important;
+        padding-left: 75px !important;
+      }
+
+      &:last-child{
+        justify-content: flex-end !important;
+        padding-right: 75px !important;
+      }
+
+      .step-nav[disabled="disabled"]{
+        pointer-events: none;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.card-header-icon{
+  &[disabled]{
+    pointer-events: none;
+
+    .icon{
+      color: gainsboro;
+    }
+  }
+}
