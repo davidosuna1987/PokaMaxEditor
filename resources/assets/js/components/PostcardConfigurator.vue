@@ -351,53 +351,22 @@
                         </figure> -->
                         <div id="sender_data">
                             <div class="field">
-                                <input
-                                    :value="tempData.sender_data.name+' '+tempData.sender_data.surnames"
-                                    placeholder="Sender name *"
-                                    name="sender_name"
-                                    type="text"
-                                    disabled />
+                                <input disabled />
                             </div>
                             <div class="field">
-                                <input
-                                    :value="tempData.sender_data.address_line_1"
-                                    placeholder="Address line 1 *"
-                                    name="sender_address_line_1"
-                                    type="text"
-                                    disabled />
+                                <input disabled />
                             </div>
                             <div class="field">
-                                <input
-                                  v-if="tempData.sender_data.address_line_2"
-                                  :value="tempData.sender_data.address_line_2"
-                                  placeholder="Address line 2"
-                                  name="sender_address_line_2"
-                                  type="text"
-                                  disabled />
+                                <input disabled />
                             </div>
                             <div class="field">
-                                <input
-                                  :value="tempData.sender_data.zip_code"
-                                  placeholder="Zip code *"
-                                  name="sender_zip_code"
-                                  type="number"
-                                  disabled />
+                                <input disabled />
                             </div>
                             <div class="field">
-                                <input
-                                  :value="tempData.sender_data.city"
-                                  placeholder="City *"
-                                  name="sender_city"
-                                  type="text"
-                                  disabled />
+                                <input disabled />
                             </div>
                             <div class="field">
-                                <input
-                                  :value="tempData.sender_data.country"
-                                  placeholder="Country *"
-                                  name="sender_country"
-                                  type="text"
-                                  disabled />
+                                <input disabled />
                             </div>
                         </div>
                       </div>
@@ -485,52 +454,43 @@
                                   </div>
                                   <div class="level-right">
                                     <button class="button is-link is-small m-r-5" @click.prevent="isCreatingAddressList = true">New address list</button>
-                                    <!-- <button class="button is-info is-small" @click.prevent="isImportingContacts = true">Import contacts</button> -->
                                   </div>
                                 </div>
 
-
-
-
-
-                <div v-if="isCreatingAddressList" class="card card-create-address-list">
-                    <div class="card-header">
-                        <p class="card-header-title">
-                            <input
-                                type="text"
-                                placeholder="Address list name"
-                                class="update-address-list-input"
-                                v-on:keyup.enter="storeAddresList"
-                                :class="[{ 'has-error': newAddressListHasError }]"
-                                v-model="newAddressList.name">
-                                <span v-if="newAddressListHasError" class="error has-text-danger is-size-7">
-                                    <span class="error-message">
-                                        {{newAddressListErrors['name'][0]}}
-                                    </span>
-                                </span>
-                        </p>
-                        <a href="#"
-                           class="card-header-icon has-text-success is-pulled-right p-0 m-r-10 m-l-5"
-                           aria-label="Store address list"
-                           @click.prevent="storeAddresList">
-                            <span class="icon">
-                                <i class="mdi mdi-check" aria-hidden="true"></i>
-                            </span>
-                        </a>
-                        <a href="#"
-                           class="card-header-icon has-text-danger is-pulled-right p-0 m-r-10 m-l-5"
-                           aria-label="Cancel address list"
-                           @click.prevent="cancelAddresList">
-                            <span class="icon">
-                                <i class="mdi mdi-close" aria-hidden="true"></i>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-
-
-
-
+                                <div v-if="isCreatingAddressList" class="card card-create-address-list">
+                                    <div class="card-header">
+                                        <p class="card-header-title">
+                                            <input
+                                                type="text"
+                                                placeholder="Address list name"
+                                                class="update-address-list-input"
+                                                v-on:keyup.enter="storeAddresList"
+                                                :class="[{ 'has-error': newAddressListHasError }]"
+                                                v-model="newAddressList.name">
+                                                <span v-if="newAddressListHasError" class="error has-text-danger is-size-7">
+                                                    <span class="error-message">
+                                                        {{newAddressListErrors['name'][0]}}
+                                                    </span>
+                                                </span>
+                                        </p>
+                                        <a href="#"
+                                           class="card-header-icon has-text-success is-pulled-right p-0 m-r-5 m-l-5"
+                                           aria-label="Store address list"
+                                           @click.prevent="storeAddresList">
+                                            <span class="icon">
+                                                <i class="mdi mdi-check" aria-hidden="true"></i>
+                                            </span>
+                                        </a>
+                                        <a href="#"
+                                           class="card-header-icon has-text-danger is-pulled-right p-0 m-r-10 m-l-5"
+                                           aria-label="Cancel address list"
+                                           @click.prevent="cancelAddresList">
+                                            <span class="icon">
+                                                <i class="mdi mdi-close" aria-hidden="true"></i>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
 
                                 <div v-for="(address_list, index) in companies[tempData.company_id].address_lists" :key="index">
                                   <b-collapse v-if="address_list.addresses" class="card" :open="index === 0 ? true : false">
@@ -545,7 +505,14 @@
                                       <div class="card-content">
                                         <div v-if="isImportingContacts === index">
                                           <form id="uplaod_form" class="import-contacts-form" enctype="multipart/form-data">
-                                            <p class="title is-size-5">Importing contacts</p>
+                                            <p class="title is-size-6">
+                                              Importing contacts
+                                              <button class="button is-small is-pulled-right" @click.prevent="restoreImportContacts">Cancel</button>
+                                              <button v-if="csv_addresses && csv_addresses.length" class="button is-info is-small m-r-5 is-pulled-right" :disabled="!checked_csv_addresses.length" @click.prevent="addContactsToAddressList(index)">
+                                                <b-icon pack="fa" icon="address-book-o"></b-icon>
+                                                <span>Add {{checked_csv_addresses.length}} {{checked_csv_addresses.length == 1 ? 'contact' : 'contacts'}}</span>
+                                              </button>
+                                            </p>
                                             <b-field>
                                                 <b-upload v-model="csv_file" @input="uploadCsvFile">
                                                     <a class="button is-info">
@@ -567,6 +534,8 @@
                                                   striped
                                                   :data="csv_addresses"
                                                   :checked-rows.sync="checked_csv_addresses"
+                                                  default-sort-direction="asc"
+                                                  default-sort="name"
                                                   checkable
                                                   detailed>
 
@@ -682,7 +651,7 @@
                                                   </template>
 
                                                   <template v-if="csv_addresses && csv_addresses.length" slot="bottom-left">
-                                                      <b>Total checked</b>: {{checked_csv_addresses.length}}
+                                                      <small><b>Total checked</b>: {{checked_csv_addresses.length}}</small>
                                                   </template>
                                               </b-table>
                                             </div>
@@ -691,9 +660,9 @@
                                               <div class="level m-t-10">
                                                 <div class="level-left"></div>
                                                 <div class="level-right">
-                                                  <button class="button is-info" :disabled="!checked_csv_addresses.length" @click.prevent="addContactsToAddressList(index)">
+                                                  <button class="button is-info is-small" :disabled="!checked_csv_addresses.length" @click.prevent="addContactsToAddressList(index)">
                                                     <b-icon pack="fa" icon="address-book-o"></b-icon>
-                                                    <span>Add to contact list</span>
+                                                    <span>Add {{checked_csv_addresses.length}} {{checked_csv_addresses.length == 1 ? 'contact' : 'contacts'}}</span>
                                                   </button>
                                                 </div>
                                               </div>
@@ -708,13 +677,15 @@
                                                   striped
                                                   checkable
                                                   :data="address_list.addresses"
-                                                  :checked-rows.sync="tempData.reciever_data">
+                                                  :checked-rows.sync="tempData.reciever_data"
+                                                  default-sort-direction="asc"
+                                                  default-sort="name">
 
                                                   <template slot-scope="props">
-                                                    <b-table-column field="name" label="Name">
+                                                    <b-table-column field="name" label="Name" sortable>
                                                         {{ props.row.name }}
                                                     </b-table-column>
-                                                    <b-table-column field="surnames" label="Surnames">
+                                                    <b-table-column field="surnames" label="Surnames" sortable>
                                                         {{ props.row.surnames }}
                                                     </b-table-column>
                                                   </template>
@@ -723,7 +694,7 @@
 
                                           <template v-else>
                                               <p>
-                                                  No addresses yet
+                                                  No contacts added yet
                                                   <button class="button is-info is-small is-pulled-right" @click.prevent="setImportContactsToAddressList(index)">Import contacts</button>
                                               </p>
                                           </template>
@@ -738,7 +709,7 @@
                 </div>
               </div>
               <div class="column">
-                <button class="button is-link w-200" data-nav="next" :disabled="!tempData.reciever_data.length">Preview and send!</button>
+                <button class="button is-info w-200" data-nav="next" :disabled="!tempData.reciever_data.length">Preview and send!</button>
               </div>
             </div>
           </div>
@@ -784,11 +755,11 @@
                                 <!-- <figure class="stamp-container">
                                   <img class="stamp" src="images/stamp.jpg" alt="Stamp" width="100">
                                 </figure> -->
-                                <div id="sender_data">
+                                <div id="sender_data" v-if="previewRecieverData">
                                     <div class="field">
                                         <input
                                             disabled
-                                            v-model="tempData.sender_data.name"
+                                            :value="previewRecieverData.name+' '+previewRecieverData.surnames"
                                             :class="[{ 'has-error': senderNameHasError }]"
                                             placeholder="Sender name *"
                                             name="sender_name"
@@ -796,14 +767,14 @@
                                         <span v-if="senderNameHasError" class="error has-text-danger is-size-7">
                                             <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                             <span class="error-message">
-                                                {{errors['sender_data.name'][0]}}
+                                                {{errors['reciever_data[0].name'][0]}}
                                             </span>
                                         </span>
                                     </div>
                                     <div class="field">
                                         <input
                                             disabled
-                                            v-model="tempData.sender_data.address_line_1"
+                                            :value="previewRecieverData.address_line_1"
                                             :class="[{ 'has-error': senderAddressHasError }]"
                                             placeholder="Address line 1 *"
                                             name="sender_address_line_1"
@@ -811,14 +782,14 @@
                                         <span v-if="senderAddressHasError" class="error has-text-danger is-size-7">
                                             <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                             <span class="error-message">
-                                                {{errors['sender_data.address_line_1'][0]}}
+                                                {{errors['reciever_data[0].address_line_1'][0]}}
                                             </span>
                                         </span>
                                     </div>
-                                    <div class="field" v-show="tempData.sender_data.address_line_2">
+                                    <div class="field" v-show="previewRecieverData.address_line_2">
                                         <input
                                           disabled
-                                          v-model="tempData.sender_data.address_line_2"
+                                          :value="previewRecieverData.address_line_2"
                                           placeholder="Address line 2"
                                           name="sender_address_line_2"
                                           type="text">
@@ -826,7 +797,7 @@
                                     <div class="field">
                                         <input
                                           disabled
-                                          v-model="tempData.sender_data.zip_code"
+                                          :value="previewRecieverData.zip_code"
                                           :class="[{ 'has-error': senderZipHasError }]"
                                           placeholder="Zip code *"
                                           name="sender_zip_code"
@@ -834,14 +805,14 @@
                                         <span v-if="senderZipHasError" class="error has-text-danger is-size-7">
                                             <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                             <span class="error-message">
-                                                {{errors['sender_data.zip_code'][0]}}
+                                                {{errors['reciever_data[0].zip_code'][0]}}
                                             </span>
                                         </span>
                                     </div>
                                     <div class="field">
                                         <input
                                           disabled
-                                          v-model="tempData.sender_data.city"
+                                          :value="previewRecieverData.city"
                                           :class="[{ 'has-error': senderCityHasError }]"
                                           placeholder="City *"
                                           name="sender_city"
@@ -849,14 +820,14 @@
                                         <span v-if="senderCityHasError" class="error has-text-danger is-size-7">
                                             <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                             <span class="error-message">
-                                                {{errors['sender_data.city'][0]}}
+                                                {{errors['reciever_data[0].city'][0]}}
                                             </span>
                                         </span>
                                     </div>
                                     <div class="field">
                                         <input
                                           disabled
-                                          v-model="tempData.sender_data.country"
+                                          :value="previewRecieverData.country"
                                           :class="[{ 'has-error': senderCountryHasError }]"
                                           placeholder="Country *"
                                           name="sender_country"
@@ -864,7 +835,7 @@
                                         <span v-if="senderCountryHasError" class="error has-text-danger is-size-7">
                                             <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                             <span class="error-message">
-                                                {{errors['sender_data.country'][0]}}
+                                                {{errors['reciever_data[0].country'][0]}}
                                             </span>
                                         </span>
                                     </div>
@@ -879,6 +850,36 @@
 
                   <div class="column m-t-30">
                     <button class="button is-info p-l-35 p-r-35" @click="flipPostcard">Rotate postcard</button>
+                    <b-collapse v-if="previewRecieverData" class="card m-t-10" :open="false">
+                      <div slot="trigger" slot-scope="props" class="card-header">
+                          <p class="card-header-title">Preview with other reciever</p>
+                          <a class="card-header-icon">
+                              <b-icon
+                                  :icon="props.open ? 'menu-down' : 'menu-up'">
+                              </b-icon>
+                          </a>
+                      </div>
+                      <div class="card-content">
+                              <b-table
+                                  hoverable
+                                  striped
+                                  narrowed
+                                  :selected.sync="previewRecieverData"
+                                  :data="tempData.reciever_data"
+                                  default-sort-direction="asc"
+                                  default-sort="name">
+
+                                  <template slot-scope="props">
+                                    <b-table-column field="name" label="Name" sortable>
+                                        {{ props.row.name }}
+                                    </b-table-column>
+                                    <b-table-column field="surnames" label="Surnames" sortable>
+                                        {{ props.row.surnames }}
+                                    </b-table-column>
+                                  </template>
+                              </b-table>
+                      </div>
+                  </b-collapse>
                   </div>
                 </div>
             </div>
@@ -916,16 +917,13 @@
                 csv_addresses: null,
                 checked_csv_addresses: [],
                 isImportingContacts: false,
-                // showUploadCsvFileButton: false,
-                // spinUploadButton: false,
-
                 isCreatingAddressList: false,
                 newAddressListErrors: null,
                 newAddressList: {
                     name: null,
                     company_id: null
                 },
-
+                previewRecieverData: null,
                 companies: null,
                 selected_company_contacts: [],
                 selected_company_address_lists: [],
@@ -969,18 +967,6 @@
                     birthday: ''
                   },
                   reciever_data: []
-                  // reciever_data: {
-                  //   company: '',
-                  //   title: '',
-                  //   name: '',
-                  //   surnames: '',
-                  //   address_line_1: '',
-                  //   address_line_2: '',
-                  //   city: '',
-                  //   country: '',
-                  //   zip_code: '',
-                  //   birthday: ''
-                  // }
                 }
             }
         },
@@ -999,20 +985,20 @@
             },
             deep: true
           },
-          // checked_csv_addresses: {
-          //   handler(val){
-          //     this.tempData.reciever_data = this.checked_csv_addresses;
-          //   },
-          //   deep: true
-          // }
           newAddressList: {
               handler(val){
                   this.removeErrors();
               },
               deep: true
           },
+          computedPreviewRecieverData() {
+              this.previewRecieverData = this.computedPreviewRecieverData;
+          }
         },
         computed: {
+            computedPreviewRecieverData() {
+              return this.tempData.reciever_data[0];
+            },
             newAddressListHasError() {
               return this.newAddressListErrors != null && !_.isEmpty(this.newAddressListErrors) && !_.isEmpty(this.newAddressListErrors['name']);
             },
@@ -1163,6 +1149,7 @@
                 });
             },
             restoreImportContacts() {
+                this.selected_address_list = null;
                 this.isCreatingAddressList = false;
                 this.getCompanies(this.tempData.company_id);
                 this.isImportingContacts = null;

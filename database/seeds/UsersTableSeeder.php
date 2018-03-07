@@ -67,20 +67,20 @@ class UsersTableSeeder extends Seeder
             'address_id' => 3
         ]);
 
-        DB::table('address_lists')->insert([
-            'company_id' => 1,
-            'name' => 'Uncategorized'
-        ]);
+        // DB::table('address_lists')->insert([
+        //     'company_id' => 1,
+        //     'name' => 'Uncategorized'
+        // ]);
 
-        DB::table('address_lists')->insert([
-            'company_id' => 2,
-            'name' => 'Uncategorized'
-        ]);
+        // DB::table('address_lists')->insert([
+        //     'company_id' => 2,
+        //     'name' => 'Uncategorized'
+        // ]);
 
-        DB::table('address_lists')->insert([
-            'company_id' => 3,
-            'name' => 'Uncategorized'
-        ]);
+        // DB::table('address_lists')->insert([
+        //     'company_id' => 3,
+        //     'name' => 'Uncategorized'
+        // ]);
 
         DB::table('addresses')->insert([
             'company' => 'EmartiDent',
@@ -93,7 +93,7 @@ class UsersTableSeeder extends Seeder
             'country' => 'España',
             'zip_code' => '08080',
             'birthday' => null,
-            'address_list_id' => 1
+            // 'address_list_id' => 1
         ]);
 
         DB::table('addresses')->insert([
@@ -107,7 +107,7 @@ class UsersTableSeeder extends Seeder
             'country' => 'España',
             'zip_code' => '08080',
             'birthday' => null,
-            'address_list_id' => 1
+            // 'address_list_id' => 1
         ]);
 
         // //Create testing postcard

@@ -4,7 +4,19 @@
 - Importar contactos
 - Añadir paso seleccionar/crear empresa
 
+- Postcard create
+    · No create new addresses, only assign address_id
+
+- Address lists
+    · Edit addresses
+
 - Validations
+    · AddressMultipleInsertRequest cambiar código comentado por el de test
     · companies->information
     · company->information
+
+- Manuel
+    · remove postcard frame
+    · company postcards table (id, picture, recievers, status, actions)
+    · empty text reciever data and show in preview step
 */

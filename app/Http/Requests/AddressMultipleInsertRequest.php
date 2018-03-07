@@ -33,8 +33,9 @@ class AddressMultipleInsertRequest extends FormRequest
             'addresses.*.address_line_2' => 'string|nullable',
             'addresses.*.city' => 'required|string',
             'addresses.*.country' => 'required|string',
-            'addresses.*.zip_code' => 'required|digits_between:5,5|numeric',
-            'addresses.*.birthday' => 'date_format:Y-m-d|nullable'
+            'addresses.*.birthday' => 'date_format:Y-m-d|nullable',
+            // 'addresses.*.zip_code' => 'required|digits_between:5,5|numeric',
+            'addresses.*.zip_code' => 'required|numeric', // just for test with invalid zip_code
         ];
     }
 }

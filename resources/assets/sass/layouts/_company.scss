@@ -1,0 +1,9 @@
+.address-list-contacts-table{
+  .table-wrapper:not(:last-child){
+    margin-bottom: 0;
+  }
+
+  .level{
+    padding: 0;
+  }
+}

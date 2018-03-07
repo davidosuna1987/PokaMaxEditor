@@ -14,7 +14,7 @@ class CreatePostcardsTable extends Migration
     public function up()
     {
         Schema::create('postcards', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unique();
             $table->integer('company_id');
             $table->enum('status', ['SENDED', 'DRAFT'])->default('DRAFT');
             $table->string('product_name');
@@ -23,8 +23,6 @@ class CreatePostcardsTable extends Migration
             $table->text('back_text');
             $table->integer('font_family');
             $table->integer('font_size');
-            // $table->integer('sender_address_id');
-            // $table->integer('reciever_address_id');
             $table->timestamps();
         });
     }

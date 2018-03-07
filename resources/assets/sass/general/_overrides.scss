@@ -106,7 +106,7 @@ $steps-completed-color: $cyan !important;
       }
 
       &.is-disabled,{
-        // pointer-events: none;
+        pointer-events: none;
       }
     }
   }

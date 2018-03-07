@@ -14,11 +14,13 @@ class CreatePostcardAddressesTable extends Migration
     public function up()
     {
         Schema::create('postcard_addresses', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('postcard_id')->unsigned();
-            $table->integer('address_id')->unsigned();
+            $table->increments('id')->unique();
+            $table->unsignedInteger('postcard_id')->nullable();
+            $table->unsignedInteger('address_id');
             $table->enum('type', ['sender', 'reciever']);
             $table->timestamps();
+
+            $table->foreign('postcard_id')->references('id')->on('postcards')->onDelete('set null');
         });
     }
 

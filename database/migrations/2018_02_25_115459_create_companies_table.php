@@ -14,10 +14,12 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('address_id')->unsigned();
+            $table->increments('id')->unique();
+            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('address_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

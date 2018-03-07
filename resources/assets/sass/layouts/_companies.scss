@@ -54,13 +54,13 @@
     }
 
     .icon{
-      .fa-eye-slash{ display: none; }
+      .mdi-playlist-remove{ display: none; }
     }
 
     &.opened{
       .icon{
-        .fa-eye{ display: none; }
-        .fa-eye-slash{ display: initial; }
+        .mdi-playlist-plus{ display: none; }
+        .mdi-playlist-remove{ display: initial; }
       }
     }
   }

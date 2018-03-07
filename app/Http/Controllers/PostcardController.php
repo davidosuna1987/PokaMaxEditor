@@ -108,35 +108,31 @@ class PostcardController extends Controller
                 ]);
             endforeach;
 
+            $temp_file_path = public_path().'/images/postcards/'.$postcard->id.'/';
+            File::cleanDirectory($temp_file_path);
+            File::makeDirectory($temp_file_path, $mode = 0777, true, true);
+
             if($request->get('original_file')):
                 $original_file = $request->get('original_file');
-                $temp_file_path = public_path().'/images/postcards/'.$postcard->id.'/';
-                if(File::exists($temp_file_path.'postcard-front-original.jpg')):
-                    unlink($temp_file_path.'postcard-front-original.jpg');
-                endif;
-                File::makeDirectory($temp_file_path, $mode = 0777, true, true);
+                $original_file_name = str_random(25).'.jpg';
 
                 $img = Image::make($original_file)
-                            ->save($temp_file_path.'postcard-front-original.jpg');
+                            ->save($temp_file_path.$original_file_name);
 
-                $temp_postcard['front_original_file_path'] = asset('images/postcards/'.$postcard->id.'/postcard-front-original.jpg');
+                $temp_postcard['front_original_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$original_file_name);
             endif;
 
             if($request->get('cropped_file')):
                 $cropped_file = $request->get('cropped_file');
-                $temp_file_path = public_path().'/images/postcards/'.$postcard->id.'/';
-                if(File::exists($temp_file_path.'postcard-front-cropped.jpg')):
-                    unlink($temp_file_path.'postcard-front-cropped.jpg');
-                endif;
-                File::makeDirectory($temp_file_path, $mode = 0777, true, true);
+                $cropped_file_name = str_random(25).'.jpg';
 
                 $img = Image::make($cropped_file)
                             ->resize(1000, null, function($c){
                               $c->aspectRatio();
                             })
-                            ->save($temp_file_path.'postcard-front-cropped.jpg');
+                            ->save($temp_file_path.$cropped_file_name);
 
-                $temp_postcard['front_cropped_file_path'] = asset('images/postcards/'.$postcard->id.'/postcard-front-cropped.jpg');
+                $temp_postcard['front_cropped_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$cropped_file_name);
             endif;
 
             $postcard->update([

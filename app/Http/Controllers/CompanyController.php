@@ -111,10 +111,10 @@ class CompanyController extends Controller
           'address_id' => $address->id
         ]);
 
-        AddressList::create([
-            'company_id' => $company->id,
-            'name' => 'Uncategorized'
-        ]);
+        // AddressList::create([
+        //     'company_id' => $company->id,
+        //     'name' => 'Uncategorized'
+        // ]);
 
         return response()->json([
           'company' => $company,
@@ -224,7 +224,7 @@ class CompanyController extends Controller
 
     public function postcards($id)
     {
-      $company = Company::with('address', 'postcards')->findOrFail($id);
+      $company = Company::with('address', 'postcards', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address')->findOrFail($id);
       return view('pages.companies.postcards', compact('company'));
     }
 }

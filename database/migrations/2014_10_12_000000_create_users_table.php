@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id')->unsigned()->unique();
+            $table->increments('id')->unique();
             $table->string('name');
             $table->string('surnames')->nullable();
             $table->string('email')->unique();
@@ -23,12 +23,11 @@ class CreateUsersTable extends Migration
             $table->string('provider_id')->nullable();
             $table->string('api_token', 60)->unique();
             $table->boolean('active')->default(false);
-            $table->integer('role_id')->unsigned()->nullable();
+            $table->unsignedInteger('role_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('role_id')->references('id')->on('roles')
-                  ->onDelete('set null');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
 
         });
     }

@@ -15,7 +15,7 @@ class AddressController extends Controller
     public function csvImport(Request $request)
     {
         $path = $request->file('csv_file')->getRealPath();
-        $results = Excel::load($path, function($reader) {})->ignoreEmpty()->get();
+        $results = Excel::load($path, function($reader) {})->ignoreEmpty()->formatDates(true, 'Y-m-d')->get();
 
         if(!empty($results) && $results->count()):
             $addresses = collect();
@@ -109,6 +109,7 @@ class AddressController extends Controller
 
         $addresses_collect = collect();
         foreach($addresses as $address):
+            $birthday = strtotime(date($address['birthday'])) || null;
             $addresses_collect->push(new Address([
                 'company' => $address['company'],
                 'title' => $address['title'],

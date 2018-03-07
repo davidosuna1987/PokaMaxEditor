@@ -14,7 +14,7 @@ class CreateAddressesTable extends Migration
     public function up()
     {
         Schema::create('addresses', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unique();
             $table->string('address_line_1');
             $table->string('address_line_2')->nullable();
             $table->string('city');
@@ -25,8 +25,10 @@ class CreateAddressesTable extends Migration
             $table->string('name');
             $table->string('surnames')->nullable();
             $table->string('birthday')->nullable();
-            $table->integer('address_list_id')->nullable();
+            $table->unsignedInteger('address_list_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('address_list_id')->references('id')->on('address_lists')->onDelete('set null');
         });
     }
 
