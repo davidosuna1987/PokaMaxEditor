@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
             'username' => 'manuelschmid',
             'password' => bcrypt('secret'),
             'api_token' => bcrypt('manuel@pokamax.com'),
-            'role_id' => 3,
+            'role_id' => 2,
             'active' => true,
         ]);
 

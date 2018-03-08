@@ -25040,6 +25040,7 @@ background: #ccc;
   display: none;
 }
 
+.card-address-list .error,
 .card-create-address-list .error {
   position: absolute;
   right: 85px;

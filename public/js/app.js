@@ -41331,6 +41331,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['companyId'],
@@ -41546,6 +41551,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         editAddressList: function editAddressList(index) {
+            this.cancelUpdateAddressList();
+            this.cancelAddresList();
             if (this.updatingAddressListIndex === index) {
                 this.updatingAddressListIndex = null;
                 this.updatedAddressList.name = null;
@@ -41561,7 +41568,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this6 = this;
 
             var addressList = this.company.address_lists[index];
-            axios.put('/api/addresslists/' + addressList.id, { name: this.updatedAddressList.name }).then(function (response) {
+            axios.put('/api/addresslists/' + addressList.id, { name: this.updatedAddressList.name, company_id: this.company.id }).then(function (response) {
                 _this6.$snackbar.open(response.data.message);
                 _this6.updatingAddressListIndex = null;
                 _this6.isEditingCompany = false;
@@ -41571,7 +41578,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     location.href = '/login';
                 }
                 console.info(error);
-                _this6.errorsAddressList = error.response.data.errors;
+                if (_.isEmpty(_this6.updatedAddressList.name)) {
+                    _this6.newAddressListErrors = { name: ['This field is required.'] };
+                } else {
+                    _this6.newAddressListErrors = error.response.data.errors;
+                }
                 _this6.$snackbar.open({
                     duration: 5000,
                     message: 'Please correct errors to update an address list.',
@@ -41586,6 +41597,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         cancelUpdateAddressList: function cancelUpdateAddressList() {
+            this.newAddressListErrors = null;
             this.updatingAddressListIndex = null;
         },
         deleteAddressList: function deleteAddressList(addressList) {
@@ -41658,6 +41670,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         createAddressList: function createAddressList() {
+            this.cancelUpdateAddressList();
             $('.card-address-list').removeClass('opened').find('.card-content').slideUp();
             this.newAddressList.name = null, this.newAddressList.company_id = this.company.id;
             this.isCreatingAddressList = true;
@@ -41685,7 +41698,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
                 console.info(error);
                 $('.card-create-address-list .update-address-list-input').focus();
-                _this9.newAddressListErrors = error.response.data.errors;
+                if (_.isEmpty(_this9.newAddressList.name)) {
+                    _this9.newAddressListErrors = { name: ['This field is required.'] };
+                } else {
+                    _this9.newAddressListErrors = error.response.data.errors;
+                }
                 _this9.$snackbar.open({
                     duration: 5000,
                     message: 'Please correct errors to create an address list.',
@@ -41700,6 +41717,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         cancelAddresList: function cancelAddresList() {
+            this.newAddressListErrors = null;
             this.isCreatingAddressList = false;
         },
         removeErrors: function removeErrors() {
@@ -42534,7 +42552,34 @@ var render = function() {
                                       )
                                     }
                                   }
-                                })
+                                }),
+                                _vm._v(" "),
+                                _vm.newAddressListHasError
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "error has-text-danger is-size-7"
+                                      },
+                                      [
+                                        _c(
+                                          "span",
+                                          { staticClass: "error-message" },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(
+                                                  _vm.newAddressListErrors[
+                                                    "name"
+                                                  ][0]
+                                                ) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
                               ]),
                               _vm._v(" "),
                               _c(

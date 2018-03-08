@@ -22,7 +22,7 @@ class AddressListController extends Controller
         ]);
     }
 
-    public function apiUpdate(Request $request, $id)
+    public function apiUpdate(CreateUpdateAddressListRequest $request, $id)
     {
         $address_list = AddressList::findOrFail($id);
         $address_list->update([

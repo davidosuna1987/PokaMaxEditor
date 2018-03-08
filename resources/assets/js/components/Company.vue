@@ -223,6 +223,11 @@
                                     class="update-address-list-input"
                                     v-on:keyup.enter="updateAddressList(index)"
                                     v-model="updatedAddressList.name">
+                                    <span v-if="newAddressListHasError" class="error has-text-danger is-size-7">
+                                        <span class="error-message">
+                                            {{newAddressListErrors['name'][0]}}
+                                        </span>
+                                    </span>
                             </p>
                             <a href="#"
                                class="card-header-icon has-text-success is-pulled-right p-0 m-r-5 m-l-5"
@@ -685,6 +690,8 @@
                 }
             },
             editAddressList(index) {
+                this.cancelUpdateAddressList();
+                this.cancelAddresList();
                 if(this.updatingAddressListIndex === index){
                     this.updatingAddressListIndex = null;
                     this.updatedAddressList.name = null;
@@ -698,7 +705,7 @@
             },
             updateAddressList(index){
                 let addressList = this.company.address_lists[index];
-                axios.put('/api/addresslists/'+addressList.id, {name: this.updatedAddressList.name})
+                axios.put('/api/addresslists/'+addressList.id, {name: this.updatedAddressList.name, company_id: this.company.id})
                 .then(response => {
                     this.$snackbar.open(response.data.message);
                     this.updatingAddressListIndex = null;
@@ -709,7 +716,11 @@
                         location.href = '/login';
                     }
                     console.info(error);
-                    this.errorsAddressList = error.response.data.errors;
+                    if(_.isEmpty(this.updatedAddressList.name)){
+                        this.newAddressListErrors = {name: ['This field is required.']}
+                    }else{
+                        this.newAddressListErrors = error.response.data.errors;
+                    }
                     this.$snackbar.open({
                         duration: 5000,
                         message: 'Please correct errors to update an address list.',
@@ -724,6 +735,7 @@
                 });
             },
             cancelUpdateAddressList() {
+                this.newAddressListErrors = null;
                 this.updatingAddressListIndex = null;
             },
             deleteAddressList(addressList) {
@@ -794,6 +806,7 @@
                 });
             },
             createAddressList() {
+                this.cancelUpdateAddressList();
                 $('.card-address-list').removeClass('opened').find('.card-content').slideUp();
                 this.newAddressList.name = null,
                 this.newAddressList.company_id = this.company.id;
@@ -821,7 +834,11 @@
                   }
                   console.info(error);
                   $('.card-create-address-list .update-address-list-input').focus();
-                  this.newAddressListErrors = error.response.data.errors;
+                  if(_.isEmpty(this.newAddressList.name)){
+                    this.newAddressListErrors = {name: ['This field is required.']}
+                  }else{
+                    this.newAddressListErrors = error.response.data.errors;
+                  }
                   this.$snackbar.open({
                       duration: 5000,
                       message: 'Please correct errors to create an address list.',
@@ -836,6 +853,7 @@
                 });
             },
             cancelAddresList() {
+                this.newAddressListErrors = null;
                 this.isCreatingAddressList = false;
             },
             removeErrors() {

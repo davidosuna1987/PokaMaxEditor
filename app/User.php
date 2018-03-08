@@ -32,12 +32,12 @@ class User extends Authenticatable
         return $this->role->slug == $role;
     }
 
-    public function isGod(){
-        return $this->role->slug == 'god';
+    public function isSuperadmin(){
+        return $this->role->slug == 'superadmin';
     }
 
     public function isAdmin(){
-        return $this->role->slug == 'god'
+        return $this->role->slug == 'superadmin'
                 or $this->role->slug == 'admin'
                 or $this->role->slug == 'developer';
     }
