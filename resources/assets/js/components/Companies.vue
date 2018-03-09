@@ -5,7 +5,7 @@
                 <div class="level">
                     <div class="level-left"></div>
                     <div class="level-right">
-                        <button v-if="creatingCompany" @click.prevent="emptyNewCompanyFields" class="button is-info">Show companies</button>
+                        <button v-if="creatingCompany" @click.prevent="emptyNewCompanyFields" class="button">Cancel</button>
                         <button v-else @click.prevent="creatingCompany = !creatingCompany" class="button is-info">Create company</button>
                     </div>
                 </div>
@@ -21,6 +21,7 @@
                                 id="reciever_email"
                                 name="reciever_email"
                                 placeholder="Email *"
+                                v-on:keyup.enter="createCompany"
                                 :class="[{ 'has-error': newCompanyEmailHasError }]"
                                 v-model="newCompany.email" />
                                 <span v-if="newCompanyEmailHasError" class="error has-text-danger is-size-7">
@@ -36,9 +37,10 @@
                                 id="reciever_password"
                                 name="reciever_password"
                                 placeholder="Password *"
+                                v-on:keyup.enter="createCompany"
                                 :class="[{ 'has-error': newCompanyPasswordHasError }]"
                                 v-model="newCompany.password" />
-                                <button class="button is-small is-info generate-password" @click.prevent="generateRandomPassword">Generate</button>
+                                <button class="button is-small is-link generate-password" @click.prevent="generateRandomPassword">Generate password</button>
                                 <span v-if="newCompanyPasswordHasError" class="error has-text-danger is-size-7">
                                     <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                     <span class="error-message">
@@ -46,16 +48,13 @@
                                     </span>
                                 </span>
                         </div>
-
-
-
-
                         <div class="field field-reciever-company">
                             <input
                                 type="text"
                                 id="reciever_company"
                                 name="reciever_company"
                                 placeholder="Company *"
+                                v-on:keyup.enter="createCompany"
                                 :class="[{ 'has-error': newCompanyCompanyHasError }]"
                                 v-model="newCompany.company" />
                                 <span v-if="newCompanyCompanyHasError" class="error has-text-danger is-size-7">
@@ -71,6 +70,7 @@
                                 id="reciever_birthday"
                                 name="reciever_birthday"
                                 placeholder="Birthday"
+                                v-on:keyup.enter="createCompany"
                                 v-model="newCompany.birthday" />
                         </div>
                         <div class="field field-reciever-title">
@@ -79,6 +79,7 @@
                                 id="reciever_title"
                                 name="reciever_title"
                                 placeholder="Title"
+                                v-on:keyup.enter="createCompany"
                                 v-model="newCompany.title" />
                         </div>
                         <div class="field field-reciever-name">
@@ -87,6 +88,7 @@
                                 id="reciever_name"
                                 name="reciever_name"
                                 placeholder="Name *"
+                                v-on:keyup.enter="createCompany"
                                 :class="[{ 'has-error': newCompanyNameHasError }]"
                                 v-model="newCompany.name" />
                                 <span v-if="newCompanyNameHasError" class="error has-text-danger is-size-7">
@@ -102,6 +104,7 @@
                                 id="reciever_surnames"
                                 name="reciever_surnames"
                                 placeholder="Surnames *"
+                                v-on:keyup.enter="createCompany"
                                 :class="[{ 'has-error': newCompanySurnamesHasError }]"
                                 v-model="newCompany.surnames" />
                                 <span v-if="newCompanySurnamesHasError" class="error has-text-danger is-size-7">
@@ -117,6 +120,7 @@
                                 id="reciever_address_line_1"
                                 name="reciever_address_line_1"
                                 placeholder="Address line 1 *"
+                                v-on:keyup.enter="createCompany"
                                 :class="[{ 'has-error': newCompanyAddressHasError }]"
                                 v-model="newCompany.address_line_1" />
                                 <span v-if="newCompanyAddressHasError" class="error has-text-danger is-size-7">
@@ -132,6 +136,7 @@
                                 id="reciever_address_line_2"
                                 name="reciever_address_line_2"
                                 placeholder="Address line 2"
+                                v-on:keyup.enter="createCompany"
                                 v-model="newCompany.address_line_2" />
                         </div>
                         <div class="field field-reciever-city">
@@ -140,6 +145,7 @@
                                 id="reciever_city"
                                 name="reciever_city"
                                 placeholder="City *"
+                                v-on:keyup.enter="createCompany"
                                 :class="[{ 'has-error': newCompanyCityHasError }]"
                                 v-model="newCompany.city" />
                                 <span v-if="newCompanyCityHasError" class="error has-text-danger is-size-7">
@@ -155,6 +161,7 @@
                                 id="reciever_country"
                                 name="reciever_country"
                                 placeholder="Country *"
+                                v-on:keyup.enter="createCompany"
                                 :class="[{ 'has-error': newCompanyCountryHasError }]"
                                 v-model="newCompany.country" />
                                 <span v-if="newCompanyCountryHasError" class="error has-text-danger is-size-7">
@@ -170,6 +177,7 @@
                                 id="reciever_zip_code"
                                 name="reciever_zip_code"
                                 placeholder="Zip *"
+                                v-on:keyup.enter="createCompany"
                                 :class="[{ 'has-error': newCompanyZipHasError }]"
                                 v-model="newCompany.zip_code" />
                                 <span v-if="newCompanyZipHasError" class="error has-text-danger is-size-7">

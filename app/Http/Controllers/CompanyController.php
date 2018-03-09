@@ -9,7 +9,7 @@ use App\Postcard;
 use App\AddressList;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\CreateUpdateCompanyRequest;
+use App\Http\Requests\CreateCompanyRequest;
 use App\Http\Requests\CreateUpdateCompanyFromEditorRequest;
 
 class CompanyController extends Controller
@@ -90,7 +90,7 @@ class CompanyController extends Controller
       // return $customCompanyArray;
     }
 
-    public function apiCreate(CreateUpdateCompanyRequest $request)
+    public function apiCreate(CreateCompanyRequest $request)
     {
         // return response()->json(['request' => $sender_data['address_line_1']]);
 
@@ -124,9 +124,9 @@ class CompanyController extends Controller
 
     public function apiCreateFromEditor(CreateUpdateCompanyFromEditorRequest $request)
     {
-        // return response()->json(['request' => $sender_data['address_line_1']]);
 
         $sender_data = $request->get('sender_data');
+        // return response()->json(['request' => $sender_data]);
 
         $address = Address::create([
           'address_line_1' => $sender_data['address_line_1'],
@@ -141,14 +141,13 @@ class CompanyController extends Controller
           'birthday' => $sender_data['birthday']
         ]);
 
-        $company = Company::create([
-          'user_id' => auth()->user()->id,
-          'address_id' => $address->id
-        ]);
-
-        AddressList::create([
-            'company_id' => $company->id,
-            'name' => 'Uncategorized'
+        $company = User::create([
+            'email' => $sender_data['email'],
+            'password' => bcrypt($sender_data['password']),
+            'api_token' => bcrypt($sender_data['email']),
+            'role_id' => 4,
+            'address_id' => $address->id,
+            'active' => false,
         ]);
 
         return response()->json([
@@ -186,7 +185,7 @@ class CompanyController extends Controller
     public function apiUpdateFromEditor(CreateUpdateCompanyFromEditorRequest $request, $id)
     {
 
-        $company = Company::findOrFail($id);
+        $company = User::where('role_id', 4)->findOrFail($id);
         $address = $company->address()->first();
 
         $sender_data = $request->get('sender_data');

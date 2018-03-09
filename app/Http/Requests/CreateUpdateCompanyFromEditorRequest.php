@@ -23,7 +23,9 @@ class CreateUpdateCompanyFromEditorRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $sender_data = $this->get('sender_data');
+
+        $rules = [
             'sender_data.company' => 'required|string',
             'sender_data.title' => 'string|nullable',
             'sender_data.name' => 'required|string',
@@ -33,7 +35,16 @@ class CreateUpdateCompanyFromEditorRequest extends FormRequest
             'sender_data.city' => 'required|string',
             'sender_data.country' => 'required|string',
             'sender_data.zip_code' => 'required|string',
-            'sender_data.birthday' => 'date_format:Y-m-d|nullable'
+            'sender_data.birthday' => 'date_format:Y-m-d|nullable',
         ];
+
+        if($sender_data['is_new']):
+          $rules = array_merge($rules, [
+            'sender_data.email' => 'required|string|email|max:255|unique:users,email',
+            'sender_data.password' => 'string|min:6',
+          ]);
+        endif;
+
+        return $rules;
     }
 }
