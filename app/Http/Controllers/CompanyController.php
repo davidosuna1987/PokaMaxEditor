@@ -10,7 +10,8 @@ use App\AddressList;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\CreateCompanyRequest;
-use App\Http\Requests\CreateUpdateCompanyFromEditorRequest;
+use App\Http\Requests\CreateCompanyFromEditorRequest;
+use App\Http\Requests\UpdateCompanyFromEditorRequest;
 
 class CompanyController extends Controller
 {
@@ -122,7 +123,7 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function apiCreateFromEditor(CreateUpdateCompanyFromEditorRequest $request)
+    public function apiCreateFromEditor(CreateCompanyFromEditorRequest $request)
     {
 
         $sender_data = $request->get('sender_data');
@@ -182,7 +183,7 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function apiUpdateFromEditor(CreateUpdateCompanyFromEditorRequest $request, $id)
+    public function apiUpdateFromEditor(UpdateCompanyFromEditorRequest $request, $id)
     {
 
         $company = User::where('role_id', 4)->findOrFail($id);
