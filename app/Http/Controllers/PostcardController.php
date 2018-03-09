@@ -84,7 +84,7 @@ class PostcardController extends Controller
             $font_data = $request->get('font_data');
 
             $postcard = Postcard::create([
-              'company_id' => $request->get('company_id'),
+              'user_id' => $request->get('company_id'),
               'status' => 'DRAFT',
               'product_name' => $request->get('product_name'),
               'front_cropped_file_path' => 'waiting',

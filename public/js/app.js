@@ -41371,7 +41371,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             selected_address_list: null,
             newAddressList: {
                 name: null,
-                companyId: null
+                company_id: null
             },
             updatedAddressList: {
                 name: null,
@@ -41682,7 +41682,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 onConfirm: function onConfirm() {
                     // alert(this.bulkActionAddresses.length);return;
                     for (var i = _this8.bulkActionAddresses.length - 1; i >= 0; i--) {
-                        axios.put('/api/address/' + _this8.bulkActionAddresses[i].id + '/setnulladdresslist').then(function (response) {
+                        axios.delete('/api/address/' + _this8.bulkActionAddresses[i].id).then(function (response) {
                             // Do something on success
                         }).catch(function (error) {
                             console.info(error);
@@ -44433,6 +44433,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -44442,6 +44477,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             loadingData: false,
             creatingCompany: false,
             updateFields: {
+                email: '',
+                password: '',
                 address_id: '',
                 address_line_1: '',
                 address_line_2: '',
@@ -44455,6 +44492,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 birthday: ''
             },
             newCompany: {
+                email: '',
+                password: '',
                 address_line_1: '',
                 address_line_2: '',
                 city: '',
@@ -44486,6 +44525,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     computed: {
+        newCompanyEmailHasError: function newCompanyEmailHasError() {
+            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['email']);
+        },
+        newCompanyPasswordHasError: function newCompanyPasswordHasError() {
+            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['password']);
+        },
         newCompanyCompanyHasError: function newCompanyCompanyHasError() {
             return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['company']);
         },
@@ -44618,16 +44663,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         emptyUpdateFields: function emptyUpdateFields() {
-            this.updateFields.address_id = '', this.updateFields.address_line_1 = '', this.updateFields.address_line_2 = '', this.updateFields.city = '', this.updateFields.country = '', this.updateFields.zip_code = '', this.updateFields.title = '', this.updateFields.company = '', this.updateFields.name = '', this.updateFields.surnames = '', this.updateFields.birthday = '';
+            this.updateFields.email = '', this.updateFields.password = '', this.updateFields.address_id = '', this.updateFields.address_line_1 = '', this.updateFields.address_line_2 = '', this.updateFields.city = '', this.updateFields.country = '', this.updateFields.zip_code = '', this.updateFields.title = '', this.updateFields.company = '', this.updateFields.name = '', this.updateFields.surnames = '', this.updateFields.birthday = '';
         },
         emptyNewCompanyFields: function emptyNewCompanyFields() {
             this.newCompanyErrors = {};
             this.creatingCompany = !this.creatingCompany;
 
-            this.newCompany.address_id = '', this.newCompany.address_line_1 = '', this.newCompany.address_line_2 = '', this.newCompany.city = '', this.newCompany.country = '', this.newCompany.zip_code = '', this.newCompany.title = '', this.newCompany.company = '', this.newCompany.name = '', this.newCompany.surnames = '', this.newCompany.birthday = '';
+            this.newCompany.email = '', this.newCompany.password = '', this.newCompany.address_id = '', this.newCompany.address_line_1 = '', this.newCompany.address_line_2 = '', this.newCompany.city = '', this.newCompany.country = '', this.newCompany.zip_code = '', this.newCompany.title = '', this.newCompany.company = '', this.newCompany.name = '', this.newCompany.surnames = '', this.newCompany.birthday = '';
+        },
+        generateRandomPassword: function generateRandomPassword() {
+            this.newCompany.password = Math.random().toString(36).substring(2) + new Date().getTime().toString(36);
         },
         removeErrors: function removeErrors() {
             if (!_.isEmpty(this.newCompanyErrors)) {
+                if ('email' in this.newCompanyErrors && !_.isEmpty(this.newCompany.email)) {
+                    this.newCompanyErrors['email'] = null;
+                }
+                if ('password' in this.newCompanyErrors && !_.isEmpty(this.newCompany.password)) {
+                    this.newCompanyErrors['password'] = null;
+                }
                 if ('company' in this.newCompanyErrors && !_.isEmpty(this.newCompany.company)) {
                     this.newCompanyErrors['company'] = null;
                 }
@@ -44708,254 +44762,47 @@ var render = function() {
       _vm.creatingCompany
         ? _c("div", { staticClass: "column is-8" }, [
             _c("div", { staticClass: "reciever_container new-company-form" }, [
-              _c("form", { staticClass: "reciever_form" }, [
-                _c("div", { staticClass: "field field-reciever-company" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.newCompany.company,
-                        expression: "newCompany.company"
-                      }
-                    ],
-                    class: [{ "has-error": _vm.newCompanyCompanyHasError }],
-                    attrs: {
-                      type: "text",
-                      id: "reciever_company",
-                      name: "reciever_company",
-                      placeholder: "Company *"
-                    },
-                    domProps: { value: _vm.newCompany.company },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.newCompany, "company", $event.target.value)
-                      }
+              _c(
+                "form",
+                {
+                  staticClass: "reciever_form",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.createCompany($event)
                     }
-                  }),
-                  _vm._v(" "),
-                  _vm.newCompanyCompanyHasError
-                    ? _c(
-                        "span",
-                        { staticClass: "error has-text-danger is-size-7" },
-                        [
-                          _c("i", {
-                            staticClass: "mdi mdi-alert-circle-outline mdi-18px"
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "error-message" }, [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.newCompanyErrors["company"][0]) +
-                                "\n                                "
-                            )
-                          ])
-                        ]
-                      )
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field field-reciever-birthday" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.newCompany.birthday,
-                        expression: "newCompany.birthday"
-                      }
-                    ],
-                    attrs: {
-                      type: "date",
-                      id: "reciever_birthday",
-                      name: "reciever_birthday",
-                      placeholder: "Birthday"
-                    },
-                    domProps: { value: _vm.newCompany.birthday },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.newCompany,
-                          "birthday",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field field-reciever-title" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.newCompany.title,
-                        expression: "newCompany.title"
-                      }
-                    ],
-                    attrs: {
-                      type: "text",
-                      id: "reciever_title",
-                      name: "reciever_title",
-                      placeholder: "Title"
-                    },
-                    domProps: { value: _vm.newCompany.title },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.newCompany, "title", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field field-reciever-name" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.newCompany.name,
-                        expression: "newCompany.name"
-                      }
-                    ],
-                    class: [{ "has-error": _vm.newCompanyNameHasError }],
-                    attrs: {
-                      type: "text",
-                      id: "reciever_name",
-                      name: "reciever_name",
-                      placeholder: "Name *"
-                    },
-                    domProps: { value: _vm.newCompany.name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.newCompany, "name", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.newCompanyNameHasError
-                    ? _c(
-                        "span",
-                        { staticClass: "error has-text-danger is-size-7" },
-                        [
-                          _c("i", {
-                            staticClass: "mdi mdi-alert-circle-outline mdi-18px"
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "error-message" }, [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.newCompanyErrors["name"][0]) +
-                                "\n                                "
-                            )
-                          ])
-                        ]
-                      )
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field field-reciever-surnames" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.newCompany.surnames,
-                        expression: "newCompany.surnames"
-                      }
-                    ],
-                    class: [{ "has-error": _vm.newCompanySurnamesHasError }],
-                    attrs: {
-                      type: "text",
-                      id: "reciever_surnames",
-                      name: "reciever_surnames",
-                      placeholder: "Surnames *"
-                    },
-                    domProps: { value: _vm.newCompany.surnames },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.newCompany,
-                          "surnames",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.newCompanySurnamesHasError
-                    ? _c(
-                        "span",
-                        { staticClass: "error has-text-danger is-size-7" },
-                        [
-                          _c("i", {
-                            staticClass: "mdi mdi-alert-circle-outline mdi-18px"
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "error-message" }, [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.newCompanyErrors["surnames"][0]) +
-                                "\n                                "
-                            )
-                          ])
-                        ]
-                      )
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "field field-reciever-address-line-1" },
-                  [
+                  }
+                },
+                [
+                  _c("div", { staticClass: "field field-reciever-email" }, [
                     _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.newCompany.address_line_1,
-                          expression: "newCompany.address_line_1"
+                          value: _vm.newCompany.email,
+                          expression: "newCompany.email"
                         }
                       ],
-                      class: [{ "has-error": _vm.newCompanyAddressHasError }],
+                      class: [{ "has-error": _vm.newCompanyEmailHasError }],
                       attrs: {
-                        type: "text",
-                        id: "reciever_address_line_1",
-                        name: "reciever_address_line_1",
-                        placeholder: "Address line 1 *"
+                        type: "email",
+                        id: "reciever_email",
+                        name: "reciever_email",
+                        placeholder: "Email *"
                       },
-                      domProps: { value: _vm.newCompany.address_line_1 },
+                      domProps: { value: _vm.newCompany.email },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(
-                            _vm.newCompany,
-                            "address_line_1",
-                            $event.target.value
-                          )
+                          _vm.$set(_vm.newCompany, "email", $event.target.value)
                         }
                       }
                     }),
                     _vm._v(" "),
-                    _vm.newCompanyAddressHasError
+                    _vm.newCompanyEmailHasError
                       ? _c(
                           "span",
                           { staticClass: "error has-text-danger is-size-7" },
@@ -44968,38 +44815,33 @@ var render = function() {
                             _c("span", { staticClass: "error-message" }, [
                               _vm._v(
                                 "\n                                    " +
-                                  _vm._s(
-                                    _vm.newCompanyErrors["address_line_1"][0]
-                                  ) +
+                                  _vm._s(_vm.newCompanyErrors["email"][0]) +
                                   "\n                                "
                               )
                             ])
                           ]
                         )
                       : _vm._e()
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "field field-reciever-address-line-2" },
-                  [
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "field field-reciever-password" }, [
                     _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.newCompany.address_line_2,
-                          expression: "newCompany.address_line_2"
+                          value: _vm.newCompany.password,
+                          expression: "newCompany.password"
                         }
                       ],
+                      class: [{ "has-error": _vm.newCompanyPasswordHasError }],
                       attrs: {
-                        type: "text",
-                        id: "reciever_address_line_2",
-                        name: "reciever_address_line_2",
-                        placeholder: "Address line 2"
+                        type: "password",
+                        id: "reciever_password",
+                        name: "reciever_password",
+                        placeholder: "Password *"
                       },
-                      domProps: { value: _vm.newCompany.address_line_2 },
+                      domProps: { value: _vm.newCompany.password },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
@@ -45007,196 +44849,553 @@ var render = function() {
                           }
                           _vm.$set(
                             _vm.newCompany,
-                            "address_line_2",
+                            "password",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "button is-small is-info generate-password",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.generateRandomPassword($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Generate")]
+                    ),
+                    _vm._v(" "),
+                    _vm.newCompanyPasswordHasError
+                      ? _c(
+                          "span",
+                          { staticClass: "error has-text-danger is-size-7" },
+                          [
+                            _c("i", {
+                              staticClass:
+                                "mdi mdi-alert-circle-outline mdi-18px"
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "error-message" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.newCompanyErrors["password"][0]) +
+                                  "\n                                "
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "field field-reciever-company" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newCompany.company,
+                          expression: "newCompany.company"
+                        }
+                      ],
+                      class: [{ "has-error": _vm.newCompanyCompanyHasError }],
+                      attrs: {
+                        type: "text",
+                        id: "reciever_company",
+                        name: "reciever_company",
+                        placeholder: "Company *"
+                      },
+                      domProps: { value: _vm.newCompany.company },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.newCompany,
+                            "company",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.newCompanyCompanyHasError
+                      ? _c(
+                          "span",
+                          { staticClass: "error has-text-danger is-size-7" },
+                          [
+                            _c("i", {
+                              staticClass:
+                                "mdi mdi-alert-circle-outline mdi-18px"
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "error-message" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.newCompanyErrors["company"][0]) +
+                                  "\n                                "
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "field field-reciever-birthday" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newCompany.birthday,
+                          expression: "newCompany.birthday"
+                        }
+                      ],
+                      attrs: {
+                        type: "date",
+                        id: "reciever_birthday",
+                        name: "reciever_birthday",
+                        placeholder: "Birthday"
+                      },
+                      domProps: { value: _vm.newCompany.birthday },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.newCompany,
+                            "birthday",
                             $event.target.value
                           )
                         }
                       }
                     })
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "field field-reciever-city" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.newCompany.city,
-                        expression: "newCompany.city"
-                      }
-                    ],
-                    class: [{ "has-error": _vm.newCompanyCityHasError }],
-                    attrs: {
-                      type: "text",
-                      id: "reciever_city",
-                      name: "reciever_city",
-                      placeholder: "City *"
-                    },
-                    domProps: { value: _vm.newCompany.city },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.newCompany, "city", $event.target.value)
-                      }
-                    }
-                  }),
+                  ]),
                   _vm._v(" "),
-                  _vm.newCompanyCityHasError
-                    ? _c(
-                        "span",
-                        { staticClass: "error has-text-danger is-size-7" },
-                        [
-                          _c("i", {
-                            staticClass: "mdi mdi-alert-circle-outline mdi-18px"
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "error-message" }, [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.newCompanyErrors["city"][0]) +
-                                "\n                                "
-                            )
-                          ])
-                        ]
-                      )
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field field-reciever-country" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.newCompany.country,
-                        expression: "newCompany.country"
-                      }
-                    ],
-                    class: [{ "has-error": _vm.newCompanyCountryHasError }],
-                    attrs: {
-                      type: "text",
-                      id: "reciever_country",
-                      name: "reciever_country",
-                      placeholder: "Country *"
-                    },
-                    domProps: { value: _vm.newCompany.country },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                  _c("div", { staticClass: "field field-reciever-title" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newCompany.title,
+                          expression: "newCompany.title"
                         }
-                        _vm.$set(_vm.newCompany, "country", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.newCompanyCountryHasError
-                    ? _c(
-                        "span",
-                        { staticClass: "error has-text-danger is-size-7" },
-                        [
-                          _c("i", {
-                            staticClass: "mdi mdi-alert-circle-outline mdi-18px"
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "error-message" }, [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.newCompanyErrors["country"][0]) +
-                                "\n                                "
-                            )
-                          ])
-                        ]
-                      )
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field field-reciever-zip" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.newCompany.zip_code,
-                        expression: "newCompany.zip_code"
-                      }
-                    ],
-                    class: [{ "has-error": _vm.newCompanyZipHasError }],
-                    attrs: {
-                      type: "number",
-                      id: "reciever_zip_code",
-                      name: "reciever_zip_code",
-                      placeholder: "Zip *"
-                    },
-                    domProps: { value: _vm.newCompany.zip_code },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.newCompany,
-                          "zip_code",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.newCompanyZipHasError
-                    ? _c(
-                        "span",
-                        { staticClass: "error has-text-danger is-size-7" },
-                        [
-                          _c("i", {
-                            staticClass: "mdi mdi-alert-circle-outline mdi-18px"
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "error-message" }, [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.newCompanyErrors["zip_code"][0]) +
-                                "\n                                "
-                            )
-                          ])
-                        ]
-                      )
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field has-text-right m-t-30" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button",
+                      ],
+                      attrs: {
+                        type: "text",
+                        id: "reciever_title",
+                        name: "reciever_title",
+                        placeholder: "Title"
+                      },
+                      domProps: { value: _vm.newCompany.title },
                       on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.emptyNewCompanyFields($event)
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.newCompany, "title", $event.target.value)
                         }
                       }
-                    },
-                    [_vm._v("Cancel")]
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "field field-reciever-name" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newCompany.name,
+                          expression: "newCompany.name"
+                        }
+                      ],
+                      class: [{ "has-error": _vm.newCompanyNameHasError }],
+                      attrs: {
+                        type: "text",
+                        id: "reciever_name",
+                        name: "reciever_name",
+                        placeholder: "Name *"
+                      },
+                      domProps: { value: _vm.newCompany.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.newCompany, "name", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.newCompanyNameHasError
+                      ? _c(
+                          "span",
+                          { staticClass: "error has-text-danger is-size-7" },
+                          [
+                            _c("i", {
+                              staticClass:
+                                "mdi mdi-alert-circle-outline mdi-18px"
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "error-message" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.newCompanyErrors["name"][0]) +
+                                  "\n                                "
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "field field-reciever-surnames" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newCompany.surnames,
+                          expression: "newCompany.surnames"
+                        }
+                      ],
+                      class: [{ "has-error": _vm.newCompanySurnamesHasError }],
+                      attrs: {
+                        type: "text",
+                        id: "reciever_surnames",
+                        name: "reciever_surnames",
+                        placeholder: "Surnames *"
+                      },
+                      domProps: { value: _vm.newCompany.surnames },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.newCompany,
+                            "surnames",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.newCompanySurnamesHasError
+                      ? _c(
+                          "span",
+                          { staticClass: "error has-text-danger is-size-7" },
+                          [
+                            _c("i", {
+                              staticClass:
+                                "mdi mdi-alert-circle-outline mdi-18px"
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "error-message" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.newCompanyErrors["surnames"][0]) +
+                                  "\n                                "
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "field field-reciever-address-line-1" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newCompany.address_line_1,
+                            expression: "newCompany.address_line_1"
+                          }
+                        ],
+                        class: [{ "has-error": _vm.newCompanyAddressHasError }],
+                        attrs: {
+                          type: "text",
+                          id: "reciever_address_line_1",
+                          name: "reciever_address_line_1",
+                          placeholder: "Address line 1 *"
+                        },
+                        domProps: { value: _vm.newCompany.address_line_1 },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newCompany,
+                              "address_line_1",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.newCompanyAddressHasError
+                        ? _c(
+                            "span",
+                            { staticClass: "error has-text-danger is-size-7" },
+                            [
+                              _c("i", {
+                                staticClass:
+                                  "mdi mdi-alert-circle-outline mdi-18px"
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "error-message" }, [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(
+                                      _vm.newCompanyErrors["address_line_1"][0]
+                                    ) +
+                                    "\n                                "
+                                )
+                              ])
+                            ]
+                          )
+                        : _vm._e()
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
-                    "button",
-                    {
-                      staticClass: "button is-info",
+                    "div",
+                    { staticClass: "field field-reciever-address-line-2" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newCompany.address_line_2,
+                            expression: "newCompany.address_line_2"
+                          }
+                        ],
+                        attrs: {
+                          type: "text",
+                          id: "reciever_address_line_2",
+                          name: "reciever_address_line_2",
+                          placeholder: "Address line 2"
+                        },
+                        domProps: { value: _vm.newCompany.address_line_2 },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newCompany,
+                              "address_line_2",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "field field-reciever-city" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newCompany.city,
+                          expression: "newCompany.city"
+                        }
+                      ],
+                      class: [{ "has-error": _vm.newCompanyCityHasError }],
+                      attrs: {
+                        type: "text",
+                        id: "reciever_city",
+                        name: "reciever_city",
+                        placeholder: "City *"
+                      },
+                      domProps: { value: _vm.newCompany.city },
                       on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.createCompany($event)
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.newCompany, "city", $event.target.value)
                         }
                       }
-                    },
-                    [_vm._v("Create company")]
-                  )
-                ])
-              ])
+                    }),
+                    _vm._v(" "),
+                    _vm.newCompanyCityHasError
+                      ? _c(
+                          "span",
+                          { staticClass: "error has-text-danger is-size-7" },
+                          [
+                            _c("i", {
+                              staticClass:
+                                "mdi mdi-alert-circle-outline mdi-18px"
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "error-message" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.newCompanyErrors["city"][0]) +
+                                  "\n                                "
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "field field-reciever-country" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newCompany.country,
+                          expression: "newCompany.country"
+                        }
+                      ],
+                      class: [{ "has-error": _vm.newCompanyCountryHasError }],
+                      attrs: {
+                        type: "text",
+                        id: "reciever_country",
+                        name: "reciever_country",
+                        placeholder: "Country *"
+                      },
+                      domProps: { value: _vm.newCompany.country },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.newCompany,
+                            "country",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.newCompanyCountryHasError
+                      ? _c(
+                          "span",
+                          { staticClass: "error has-text-danger is-size-7" },
+                          [
+                            _c("i", {
+                              staticClass:
+                                "mdi mdi-alert-circle-outline mdi-18px"
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "error-message" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.newCompanyErrors["country"][0]) +
+                                  "\n                                "
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "field field-reciever-zip" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newCompany.zip_code,
+                          expression: "newCompany.zip_code"
+                        }
+                      ],
+                      class: [{ "has-error": _vm.newCompanyZipHasError }],
+                      attrs: {
+                        type: "number",
+                        id: "reciever_zip_code",
+                        name: "reciever_zip_code",
+                        placeholder: "Zip *"
+                      },
+                      domProps: { value: _vm.newCompany.zip_code },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.newCompany,
+                            "zip_code",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.newCompanyZipHasError
+                      ? _c(
+                          "span",
+                          { staticClass: "error has-text-danger is-size-7" },
+                          [
+                            _c("i", {
+                              staticClass:
+                                "mdi mdi-alert-circle-outline mdi-18px"
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "error-message" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.newCompanyErrors["zip_code"][0]) +
+                                  "\n                                "
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "field has-text-right m-t-30" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.emptyNewCompanyFields($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Cancel")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button is-info",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.createCompany($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Create company")]
+                    )
+                  ])
+                ]
+              )
             ])
           ])
         : _c(

@@ -26,7 +26,7 @@ class CreateUpdateAddressListRequest extends FormRequest
         return [
             'company_id' => 'required|integer',
             'name' => \Illuminate\Validation\Rule::unique('address_lists')->where(function ($query) {
-                $query->where('company_id', $this->input('company_id'));
+                $query->where('user_id', $this->input('company_id'))->where('id', '!=', $this->id);
             })
         ];
     }

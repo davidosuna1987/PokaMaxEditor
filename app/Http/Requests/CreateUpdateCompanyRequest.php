@@ -24,6 +24,8 @@ class CreateUpdateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
             'company' => 'required|string',
             'title' => 'string|nullable',
             'name' => 'required|string',

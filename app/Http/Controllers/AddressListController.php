@@ -12,7 +12,7 @@ class AddressListController extends Controller
     public function apiCreate(CreateUpdateAddressListRequest $request)
     {
         $address_list = AddressList::create([
-            'company_id' => $request->get('company_id'),
+            'user_id' => $request->get('company_id'),
             'name' => $request->get('name')
         ]);
 

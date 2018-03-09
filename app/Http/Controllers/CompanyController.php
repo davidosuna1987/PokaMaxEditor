@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Company;
 use App\Address;
 use App\Postcard;
@@ -15,20 +16,20 @@ class CompanyController extends Controller
 {
     public function index()
     {
-      $companies = Company::with('address', 'postcards')->get();
+      $companies = User::where('role_id', 4)->with('address', 'postcards')->get();
       return view('pages.companies.index', compact('companies'));
     }
 
     public function apiIndex()
     {
-      return Company::with('address', 'postcards')->get();
+      return User::where('role_id', 4)->with('address', 'postcards')->get();
     }
 
     public function apiIndexFromEditor()
     {
       // return Company::with('address', 'postcards', 'addressLists.addresses')->get();
 
-      $companies = Company::with('address', 'postcards', 'addressLists.addresses')->get();
+      $companies = User::where('role_id', 4)->with('address', 'postcards', 'addressLists.addresses')->get();
       $customCompaniesArray = [];
 
       foreach ($companies as $company):
@@ -58,7 +59,7 @@ class CompanyController extends Controller
 
     public function apiShow($id)
     {
-      return Company::with('address', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address', 'addressLists.addresses')->findOrFail($id);
+      return User::where('role_id', 4)->with('address', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address', 'addressLists.addresses')->findOrFail($id);
 
       // $company = Company::findOrFail($id);
       // $customCompanyArray = $company->load('address', 'addressLists.addresses')->toArray();
@@ -106,15 +107,14 @@ class CompanyController extends Controller
           'birthday' => $request->get('birthday')
         ]);
 
-        $company = Company::create([
-          'user_id' => auth()->user()->id,
-          'address_id' => $address->id
+        $company = User::create([
+            'email' => $request->get('email'),
+            'password' => bcrypt($request->get('password')),
+            'api_token' => bcrypt($request->get('email')),
+            'role_id' => 4,
+            'address_id' => $address->id,
+            'active' => false,
         ]);
-
-        // AddressList::create([
-        //     'company_id' => $company->id,
-        //     'name' => 'Uncategorized'
-        // ]);
 
         return response()->json([
           'company' => $company,
@@ -159,7 +159,7 @@ class CompanyController extends Controller
 
     public function apiUpdate(Request $request, $id)
     {
-        $company = Company::findOrFail($id);
+        $company = User::where('role_id', 4)->findOrFail($id);
         $address = $company->address()->first();
 
         $address->update([
@@ -214,7 +214,7 @@ class CompanyController extends Controller
 
     public function apiDelete($id)
     {
-        $company = Company::with('address')->findOrFail($id);
+        $company = User::where('role_id', 4)->with('address')->findOrFail($id);
         $company->delete();
         return response()->json([
           'company' => $company,
@@ -224,7 +224,7 @@ class CompanyController extends Controller
 
     public function postcards($id)
     {
-      $company = Company::with('address', 'postcards', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address')->findOrFail($id);
+      $company = User::where('role_id', 4)->with('address', 'postcards', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address')->findOrFail($id);
       return view('pages.companies.postcards', compact('company'));
     }
 }

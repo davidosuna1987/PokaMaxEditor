@@ -15,7 +15,7 @@ class CreatePostcardsTable extends Migration
     {
         Schema::create('postcards', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->integer('company_id');
+            $table->unsignedInteger('user_id');
             $table->enum('status', ['SENDED', 'DRAFT'])->default('DRAFT');
             $table->string('product_name');
             $table->string('front_cropped_file_path');
@@ -24,6 +24,8 @@ class CreatePostcardsTable extends Migration
             $table->integer('font_family');
             $table->integer('font_size');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

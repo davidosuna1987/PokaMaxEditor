@@ -517,7 +517,7 @@
                 selected_address_list: null,
                 newAddressList: {
                     name: null,
-                    companyId: null
+                    company_id: null
                 },
                 updatedAddressList: {
                     name: null,
@@ -816,7 +816,7 @@
                     onConfirm: () => {
                         // alert(this.bulkActionAddresses.length);return;
                         for (var i = this.bulkActionAddresses.length - 1; i >= 0; i--) {
-                            axios.put('/api/address/'+this.bulkActionAddresses[i].id+'/setnulladdresslist')
+                            axios.delete('/api/address/'+this.bulkActionAddresses[i].id)
                             .then(response => {
                                 // Do something on success
                             }).catch(error => {

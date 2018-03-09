@@ -2,8 +2,8 @@
 
 namespace App;
 
+use App\User;
 use App\Address;
-use App\Company;
 use App\PostcardAddress;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,20 +12,18 @@ class Postcard extends Model
     protected $table = 'postcards';
 
     protected $fillable = [
-      'company_id',
+      'user_id',
       'status',
       'product_name',
       'front_cropped_file_path',
       'front_original_file_path',
       'back_text',
       'font_family',
-      'font_size'
-      // 'sender_address_id',
-      // 'reciever_address_id'
+      'font_size',
     ];
 
-    public function company(){
-      return $this->belongsTo(Company::class);
+    public function user(){
+      return $this->belongsTo(User::class);
     }
 
     public function addresses(){

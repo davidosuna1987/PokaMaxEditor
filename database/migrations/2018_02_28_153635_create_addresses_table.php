@@ -28,7 +28,7 @@ class CreateAddressesTable extends Migration
             $table->unsignedInteger('address_list_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('address_list_id')->references('id')->on('address_lists')->onDelete('set null');
+            $table->foreign('address_list_id')->references('id')->on('address_lists')->onDelete('cascade');
         });
     }
 

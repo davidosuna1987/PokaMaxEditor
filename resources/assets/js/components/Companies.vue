@@ -14,7 +14,42 @@
         <div class="columns is-centered is-multiline">
             <div v-if="creatingCompany" class="column is-8">
                 <div class="reciever_container new-company-form">
-                    <form class="reciever_form">
+                    <form class="reciever_form" v-on:submit.prevent="createCompany">
+                        <div class="field field-reciever-email">
+                            <input
+                                type="email"
+                                id="reciever_email"
+                                name="reciever_email"
+                                placeholder="Email *"
+                                :class="[{ 'has-error': newCompanyEmailHasError }]"
+                                v-model="newCompany.email" />
+                                <span v-if="newCompanyEmailHasError" class="error has-text-danger is-size-7">
+                                    <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                    <span class="error-message">
+                                        {{newCompanyErrors['email'][0]}}
+                                    </span>
+                                </span>
+                        </div>
+                        <div class="field field-reciever-password">
+                            <input
+                                type="password"
+                                id="reciever_password"
+                                name="reciever_password"
+                                placeholder="Password *"
+                                :class="[{ 'has-error': newCompanyPasswordHasError }]"
+                                v-model="newCompany.password" />
+                                <button class="button is-small is-info generate-password" @click.prevent="generateRandomPassword">Generate</button>
+                                <span v-if="newCompanyPasswordHasError" class="error has-text-danger is-size-7">
+                                    <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                    <span class="error-message">
+                                        {{newCompanyErrors['password'][0]}}
+                                    </span>
+                                </span>
+                        </div>
+
+
+
+
                         <div class="field field-reciever-company">
                             <input
                                 type="text"
@@ -295,6 +330,8 @@
                 loadingData: false,
                 creatingCompany: false,
                 updateFields: {
+                    email: '',
+                    password: '',
                     address_id: '',
                     address_line_1: '',
                     address_line_2: '',
@@ -308,6 +345,8 @@
                     birthday: ''
                 },
                 newCompany: {
+                    email: '',
+                    password: '',
                     address_line_1: '',
                     address_line_2: '',
                     city: '',
@@ -336,6 +375,12 @@
           }
         },
         computed: {
+            newCompanyEmailHasError() {
+                return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['email']);
+            },
+            newCompanyPasswordHasError() {
+                return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['password']);
+            },
             newCompanyCompanyHasError() {
               return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['company']);
             },
@@ -464,6 +509,8 @@
                 });
             },
             emptyUpdateFields() {
+                this.updateFields.email = '',
+                this.updateFields.password = '',
                 this.updateFields.address_id = '',
                 this.updateFields.address_line_1 = '',
                 this.updateFields.address_line_2 = '',
@@ -481,6 +528,8 @@
                 this.creatingCompany = !this.creatingCompany;
 
 
+                this.newCompany.email = '',
+                this.newCompany.password = '',
                 this.newCompany.address_id = '',
                 this.newCompany.address_line_1 = '',
                 this.newCompany.address_line_2 = '',
@@ -493,8 +542,17 @@
                 this.newCompany.surnames = '',
                 this.newCompany.birthday = ''
             },
+            generateRandomPassword() {
+                this.newCompany.password = Math.random().toString(36).substring(2) + new Date().getTime().toString(36);
+            },
             removeErrors() {
               if(!_.isEmpty(this.newCompanyErrors)){
+                if('email' in this.newCompanyErrors && !_.isEmpty(this.newCompany.email)){
+                  this.newCompanyErrors['email'] = null;
+                }
+                if('password' in this.newCompanyErrors && !_.isEmpty(this.newCompany.password)){
+                  this.newCompanyErrors['password'] = null;
+                }
                 if('company' in this.newCompanyErrors && !_.isEmpty(this.newCompany.company)){
                   this.newCompanyErrors['company'] = null;
                 }
