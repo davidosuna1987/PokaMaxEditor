@@ -41336,11 +41336,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['companyId'],
     data: function data() {
         return {
+            progressBar: {
+                isLoading: false,
+                barPercent: 100,
+                message: ''
+            },
             newAddressListErrors: null,
             company: null,
             isEditingCompany: false,
@@ -41423,25 +41438,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addContactsToAddressList: function addContactsToAddressList(index) {
             var _this = this;
 
-            var formData = new FormData();
-            formData.append('addresses', this.checked_csv_addresses);
+            // let counter = 1;
+            // for (var i = 0; i < this.checked_csv_addresses.length; i++) {
 
-            axios.post('/api/addresses/addresslists/' + this.selected_address_list.id + '/insert', { addresses: this.checked_csv_addresses }).then(function (response) {
+            var axiosConfig = {
+                onUploadProgress: function onUploadProgress(progressEvent) {
+                    var percentCompleted = Math.floor(progressEvent.loaded * 100 / progressEvent.total);
+                    // do whatever you like with the percentage complete
+                    // maybe dispatch an action that will update a progress bar or something
+                    console.info(percentCompleted);
+                    _this.progressBar.message = percentCompleted + '%';
+                    _this.progressBar.barPercent = 100 - percentCompleted;
+                }
+            };
+
+            this.progressBar.isLoading = true;
+
+            axios.post('/api/addresses/addresslists/' + this.selected_address_list.id + '/insert', { addresses: this.checked_csv_addresses }, axiosConfig)
+            // axios.post( '/api/addresses/addresslists/'+this.selected_address_list.id+'/insert', {addresses: [this.checked_csv_addresses[i]]})
+            .then(function (response) {
                 _this.restoreImportContacts();
-                _this.$snackbar.open({
-                    duration: 5000,
-                    message: response.data.message,
-                    queue: false,
-                    onAction: function onAction() {
-                        //Do something on click button
-                    }
-                });
+
+                // this.$snackbar.open({
+                //     duration: 5000,
+                //     message: response.data.message,
+                //     queue: false,
+                //     onAction: () => {
+                //         //Do something on click button
+                //     }
+                // });
+                _this.progressBar.isLoading = false;
             }).catch(function (error) {
                 if (error.response.status && error.response.status === 419) {
                     location.href = '/login';
                 }
+                _this.progressBar.isLoading = false;
                 console.info(error);
             });
+
+            // }
         },
         restoreImportContacts: function restoreImportContacts() {
             this.importingPaginated = true;
@@ -41767,6 +41802,38 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.company
     ? _c("div", { staticClass: "companies-show" }, [
+        _vm.progressBar.isLoading
+          ? _c("div", { staticClass: "loading-layer" }, [
+              _c("div", { staticClass: "progress-bar__container" }, [
+                _c("span", { staticClass: "progress-bar__message" }, [
+                  _vm._v(_vm._s(_vm.progressBar.message))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "svg",
+                  {
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "-1 -1 34 34"
+                    }
+                  },
+                  [
+                    _c("circle", {
+                      staticClass: "progress-bar__background",
+                      attrs: { cx: "16", cy: "16", r: "15.9155" }
+                    }),
+                    _vm._v(" "),
+                    _c("circle", {
+                      staticClass: "progress-bar__progress",
+                      style: { strokeDashoffset: _vm.progressBar.barPercent },
+                      attrs: { cx: "16", cy: "16", r: "15.9155" }
+                    })
+                  ]
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c("div", { staticClass: "columns is-centered" }, [
           _c(
             "div",

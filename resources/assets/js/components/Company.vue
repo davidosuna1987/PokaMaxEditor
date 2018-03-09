@@ -1,5 +1,15 @@
 <template>
     <div v-if="company" class="companies-show">
+        <div v-if="progressBar.isLoading" class="loading-layer">
+            <div class="progress-bar__container">
+                <span class="progress-bar__message">{{progressBar.message}}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 34 34">
+                    <circle cx="16" cy="16" r="15.9155" class="progress-bar__background" />
+                    <circle cx="16" cy="16" r="15.9155" class="progress-bar__progress" :style="{ strokeDashoffset: progressBar.barPercent }" />
+                </svg>
+            </div>
+        </div>
+
         <div class="columns is-centered">
             <div class="column is-8">
                 <p class="title is-3 has-text-info">{{company.address.company}}</p>
@@ -487,6 +497,11 @@
         props: ['companyId'],
         data() {
             return {
+                progressBar: {
+                    isLoading: false,
+                    barPercent: 100,
+                    message: ''
+                },
                 newAddressListErrors: null,
                 company: null,
                 isEditingCompany: false,
@@ -565,26 +580,45 @@
                 this.isImportingContacts = index;
             },
             addContactsToAddressList(index) {
-                let formData = new FormData();
-                formData.append('addresses', this.checked_csv_addresses);
+                // let counter = 1;
+                // for (var i = 0; i < this.checked_csv_addresses.length; i++) {
 
-                axios.post( '/api/addresses/addresslists/'+this.selected_address_list.id+'/insert', {addresses: this.checked_csv_addresses})
-                .then(response => {
-                  this.restoreImportContacts();
-                  this.$snackbar.open({
-                      duration: 5000,
-                      message: response.data.message,
-                      queue: false,
-                      onAction: () => {
-                          //Do something on click button
+                    let axiosConfig = {
+                      onUploadProgress: progressEvent => {
+                        let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                        // do whatever you like with the percentage complete
+                        // maybe dispatch an action that will update a progress bar or something
+                        console.info(percentCompleted);
+                        this.progressBar.message = percentCompleted+'%';
+                        this.progressBar.barPercent = 100-percentCompleted;
                       }
-                  });
-                }).catch(error => {
-                  if(error.response.status && error.response.status === 419){
-                    location.href = '/login';
-                  }
-                  console.info(error);
-                });
+                    }
+
+                    this.progressBar.isLoading = true;
+
+                    axios.post( '/api/addresses/addresslists/'+this.selected_address_list.id+'/insert', {addresses: this.checked_csv_addresses}, axiosConfig)
+                    // axios.post( '/api/addresses/addresslists/'+this.selected_address_list.id+'/insert', {addresses: [this.checked_csv_addresses[i]]})
+                    .then(response => {
+                      this.restoreImportContacts();
+
+                      // this.$snackbar.open({
+                      //     duration: 5000,
+                      //     message: response.data.message,
+                      //     queue: false,
+                      //     onAction: () => {
+                      //         //Do something on click button
+                      //     }
+                      // });
+                      this.progressBar.isLoading = false;
+                    }).catch(error => {
+                      if(error.response.status && error.response.status === 419){
+                        location.href = '/login';
+                      }
+                      this.progressBar.isLoading = false;
+                      console.info(error);
+                    });
+
+                // }
             },
             restoreImportContacts() {
                 this.importingPaginated = true;
