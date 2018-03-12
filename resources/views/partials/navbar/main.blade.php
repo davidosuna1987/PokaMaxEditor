@@ -16,8 +16,9 @@
             <div class="navbar-start">
                 @if(auth()->user() and auth()->user()->isAdmin())
                     <a href="{{ route('companies.index') }}" class="navbar-item">Companies</a>
-                    <a href="{{ route('editor') }}" class="navbar-item">Editor</a>
                 @endif
+
+                <a href="{{ route('editor') }}" class="navbar-item">Editor</a>
             </div>
 
             <div class="navbar-end">
@@ -26,7 +27,7 @@
                     <a class="navbar-item " href="{{ route('register') }}">Register</a>
                 @else
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link" href="#">{{ auth()->user()->name }}</a>
+                        <a class="navbar-link" href="#">{{ auth()->user()->name() }}</a>
 
                         <div class="navbar-dropdown is-right">
                             <a class="navbar-item" href="#">

@@ -27,8 +27,12 @@ class User extends Authenticatable
         'password', 'remember_token', 'api_token'
     ];
 
+    public function name(){
+        return $this->address()->first()->name;
+    }
+
     public function fullName(){
-        return $this->address()->name.' '.$this->address()->surnames;
+        return $this->address()->first()->name.' '.$this->address()->first()->surnames;
     }
 
     public function role(){
