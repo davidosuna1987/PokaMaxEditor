@@ -114,30 +114,35 @@ class PostcardController extends Controller
 
             if($request->get('original_file')):
                 $original_file = $request->get('original_file');
-                $original_file_name = str_random(25).'.jpg';
+                $original_file_name = 'o-'.str_random(25).'.jpg';
 
-                $img = Image::make($original_file)
-                            ->save($temp_file_path.$original_file_name);
+                Image::make($original_file)->save($temp_file_path.$original_file_name);
 
                 $temp_postcard['front_original_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$original_file_name);
             endif;
 
             if($request->get('cropped_file')):
                 $cropped_file = $request->get('cropped_file');
-                $cropped_file_name = str_random(25).'.jpg';
+                $cropped_file_name = 'c-'.str_random(25).'.jpg';
+                $thumbnail_file_name = 't-'.str_random(25).'.jpg';
 
-                $img = Image::make($cropped_file)
-                            ->resize(1000, null, function($c){
-                              $c->aspectRatio();
-                            })
-                            ->save($temp_file_path.$cropped_file_name);
+                Image::make($cropped_file)->resize(1000, null, function($c){
+                  $c->aspectRatio();
+                })->save($temp_file_path.$cropped_file_name);
+
+                Image::make($cropped_file)->resize(120, null, function($c){
+                  $c->aspectRatio();
+                })->save($temp_file_path.$thumbnail_file_name);
 
                 $temp_postcard['front_cropped_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$cropped_file_name);
+
+                $temp_postcard['front_thumbnail_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$thumbnail_file_name);
             endif;
 
             $postcard->update([
               'front_cropped_file_path' => $temp_postcard['front_cropped_file_path'],
               'front_original_file_path' => $temp_postcard['front_original_file_path'],
+              'front_thumbnail_file_path' => $temp_postcard['front_thumbnail_file_path'],
             ]);
 
             return response()->json([
@@ -201,7 +206,7 @@ class PostcardController extends Controller
                 endif;
                 File::makeDirectory($temp_file_path, $mode = 0777, true, true);
 
-                $img = Image::make($original_file)
+                Image::make($original_file)
                             ->save($temp_file_path.'postcard-front-original.jpg');
 
                 $temp_postcard['front_original_file_path'] = asset('images/temp-postcards/'.auth()->user()->id.'/postcard-front-original.jpg');
@@ -216,7 +221,7 @@ class PostcardController extends Controller
                 endif;
                 File::makeDirectory($temp_file_path, $mode = 0777, true, true);
 
-                $img = Image::make($cropped_file)
+                Image::make($cropped_file)
                             ->resize(1000, null, function($c){
                               $c->aspectRatio();
                             })

@@ -1,9 +1,4 @@
 /*
-- Primer paso quitar product_name y añadir is_set
-- Opción mostrar/ocultar contactos
-- Importar contactos
-- Añadir paso seleccionar/crear empresa
-
 - Postcard create
     · No create new addresses, only assign address_id
 

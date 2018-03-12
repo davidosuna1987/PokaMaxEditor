@@ -17,6 +17,7 @@ class Postcard extends Model
       'product_name',
       'front_cropped_file_path',
       'front_original_file_path',
+      'front_thumbnail_file_path',
       'back_text',
       'font_family',
       'font_size',

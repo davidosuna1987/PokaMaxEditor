@@ -33,7 +33,7 @@
 
                         <b-table-column field="picture" label="Picture">
                             <figure class="postcard-picture">
-                                <img :src="props.row.front_cropped_file_path" alt="Postcard picture" width="100">
+                                <img :src="props.row.front_thumbnail_file_path" alt="Postcard picture" width="100">
                             </figure>
                         </b-table-column>
 

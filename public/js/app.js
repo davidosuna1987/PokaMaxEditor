@@ -41347,6 +41347,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['companyId'],
@@ -41365,7 +41372,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             bulkActionAddresses: [],
             isCreatingAddressList: false,
             isImportingContacts: false,
-            importingPaginated: true,
+            isPaginated: true,
             csv_file: null,
             csv_addresses: null,
             checked_csv_addresses: [],
@@ -41458,16 +41465,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.post('/api/addresses/addresslists/' + this.selected_address_list.id + '/insert', { addresses: this.checked_csv_addresses }, axiosConfig)
             // axios.post( '/api/addresses/addresslists/'+this.selected_address_list.id+'/insert', {addresses: [this.checked_csv_addresses[i]]})
             .then(function (response) {
-                _this.restoreImportContacts();
 
-                // this.$snackbar.open({
-                //     duration: 5000,
-                //     message: response.data.message,
-                //     queue: false,
-                //     onAction: () => {
-                //         //Do something on click button
-                //     }
-                // });
+                _this.$snackbar.open({
+                    duration: 5000,
+                    message: _this.checked_csv_addresses.length + ' was added to list correctly!',
+                    queue: false,
+                    onAction: function onAction() {
+                        //Do something on click button
+                    }
+                });
+
+                _this.restoreImportContacts();
                 _this.progressBar.isLoading = false;
             }).catch(function (error) {
                 if (error.response.status && error.response.status === 419) {
@@ -41480,7 +41488,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // }
         },
         restoreImportContacts: function restoreImportContacts() {
-            this.importingPaginated = true;
+            this.isPaginated = true;
             this.selected_address_list = null;
             this.isCreatingAddressList = false;
             this.isImportingContacts = null;
@@ -42845,12 +42853,11 @@ var render = function() {
                                                   type: "is-info"
                                                 },
                                                 model: {
-                                                  value: _vm.importingPaginated,
+                                                  value: _vm.isPaginated,
                                                   callback: function($$v) {
-                                                    _vm.importingPaginated = $$v
+                                                    _vm.isPaginated = $$v
                                                   },
-                                                  expression:
-                                                    "importingPaginated"
+                                                  expression: "isPaginated"
                                                 }
                                               },
                                               [_vm._v("Paginated")]
@@ -42866,7 +42873,7 @@ var render = function() {
                                               narrowed: "",
                                               hoverable: "",
                                               striped: "",
-                                              paginated: _vm.importingPaginated,
+                                              paginated: _vm.isPaginated,
                                               "per-page": "20",
                                               "pagination-size": "is-small",
                                               data: _vm.csv_addresses,
@@ -43834,12 +43841,40 @@ var render = function() {
                                         ]
                                       : _vm._e(),
                                     _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "field m-t-30" },
+                                      [
+                                        _c(
+                                          "b-switch",
+                                          {
+                                            attrs: {
+                                              size: "is-small",
+                                              type: "is-info"
+                                            },
+                                            model: {
+                                              value: _vm.isPaginated,
+                                              callback: function($$v) {
+                                                _vm.isPaginated = $$v
+                                              },
+                                              expression: "isPaginated"
+                                            }
+                                          },
+                                          [_vm._v("Paginated")]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
                                     _c("b-table", {
                                       staticClass:
                                         "address-list-contacts-table",
                                       attrs: {
                                         hoverable: "",
                                         striped: "",
+                                        paginated: _vm.isPaginated,
+                                        "per-page": "10",
+                                        "pagination-size": "is-small",
                                         checkable:
                                           _vm.bulkActionAddressesActive ===
                                           index,
@@ -46313,7 +46348,8 @@ var render = function() {
                                   [
                                     _c("img", {
                                       attrs: {
-                                        src: props.row.front_cropped_file_path,
+                                        src:
+                                          props.row.front_thumbnail_file_path,
                                         alt: "Postcard picture",
                                         width: "100"
                                       }
@@ -47673,7 +47709,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors['back_text']);
     },
     stepItemFourHasErrors: function stepItemFourHasErrors() {
-      return this.errors != null && !_.isEmpty(this.errors) && (!_.isEmpty(this.errors['reciever_data.name']) || !_.isEmpty(this.errors['reciever_data.surnames']) || !_.isEmpty(this.errors['reciever_data.city']) || !_.isEmpty(this.errors['reciever_data.country']) || !_.isEmpty(this.errors['reciever_data.zip_code']) || !_.isEmpty(this.errors['reciever_data.address_line_1']));
+      return this.errors != null && !_.isEmpty(this.errors) && (!_.isEmpty(this.errors['reciever_data']) || !_.isEmpty(this.errors['reciever_data.name']) || !_.isEmpty(this.errors['reciever_data.surnames']) || !_.isEmpty(this.errors['reciever_data.city']) || !_.isEmpty(this.errors['reciever_data.country']) || !_.isEmpty(this.errors['reciever_data.zip_code']) || !_.isEmpty(this.errors['reciever_data.address_line_1']));
     },
     stepItemFiveHasErrors: function stepItemFiveHasErrors() {
       return false;
