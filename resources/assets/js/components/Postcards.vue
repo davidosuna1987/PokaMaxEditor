@@ -38,7 +38,10 @@
                         </b-table-column>
 
                         <b-table-column field="recievers" label="Recievers" sortable>
-                            <a href="#" class="button is-info is-small">{{ props.row.reciever_addresses.length }} {{props.row.reciever_addresses.length == 1 ? 'reciever' : 'recievers'}}</a>
+                            <a
+                                href="#"
+                                class="button is-info is-small"
+                                @click.prevent="showRecievers(props.row.reciever_addresses)">{{ props.row.reciever_addresses.length }} {{props.row.reciever_addresses.length == 1 ? 'reciever' : 'recievers'}}</a>
                         </b-table-column>
 
                         <b-table-column field="status" label="Status" sortable>
@@ -78,6 +81,8 @@
 </template>
 
 <script>
+    import RecieversTable from './RecieversTable.vue';
+
     export default {
         props: ['companyProp'],
         data() {
@@ -89,6 +94,13 @@
         methods: {
             getPostcards() {
                 console.info('company');
+            },
+            showRecievers(reciever_addresses) {
+                this.$modal.open({
+                    parent: this,
+                    component: RecieversTable,
+                    props: {recieverAddressesProps: reciever_addresses}
+                });
             }
         },
         mounted() {

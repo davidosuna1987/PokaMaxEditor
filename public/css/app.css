@@ -25219,3 +25219,9 @@ background: #ccc;
   vertical-align: middle;
 }
 
+.detail-container .reciever_container {
+  width: 100%;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+

@@ -29,6 +29,7 @@ Vue.use(Buefy, {
 Vue.component('company', require('./components/Company.vue'));
 Vue.component('companies', require('./components/Companies.vue'));
 Vue.component('postcards', require('./components/Postcards.vue'));
+Vue.component('recievers-table', require('./components/RecieversTable.vue'));
 Vue.component('postcard-configurator', require('./components/PostcardConfigurator.vue'));
 
 const app = new Vue({

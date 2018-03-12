@@ -1211,6 +1211,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_buefy___default.a, {
 Vue.component('company', __webpack_require__(40));
 Vue.component('companies', __webpack_require__(43));
 Vue.component('postcards', __webpack_require__(46));
+Vue.component('recievers-table', __webpack_require__(68));
 Vue.component('postcard-configurator', __webpack_require__(49));
 
 var app = new Vue({
@@ -46132,6 +46133,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__RecieversTable_vue__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__RecieversTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__RecieversTable_vue__);
 //
 //
 //
@@ -46211,6 +46214,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['companyProp'],
@@ -46224,6 +46232,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         getPostcards: function getPostcards() {
             console.info('company');
+        },
+        showRecievers: function showRecievers(reciever_addresses) {
+            this.$modal.open({
+                parent: this,
+                component: __WEBPACK_IMPORTED_MODULE_0__RecieversTable_vue___default.a,
+                props: { recieverAddressesProps: reciever_addresses }
+            });
         }
     },
     mounted: function mounted() {
@@ -46322,7 +46337,15 @@ var render = function() {
                                   "a",
                                   {
                                     staticClass: "button is-info is-small",
-                                    attrs: { href: "#" }
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        _vm.showRecievers(
+                                          props.row.reciever_addresses
+                                        )
+                                      }
+                                    }
                                   },
                                   [
                                     _vm._v(
@@ -54954,6 +54977,717 @@ document.addEventListener( 'DOMContentLoaded', function () {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(69)
+/* template */
+var __vue_template__ = __webpack_require__(70)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/RecieversTable.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-26b66949", Component.options)
+  } else {
+    hotAPI.reload("data-v-26b66949", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['recieverAddressesProps'],
+    data: function data() {
+        return {
+            reciever_addresses: [],
+            isModalTablePaginated: true
+        };
+    },
+
+    methods: {
+        formattedDate: function formattedDate(date) {
+            if (date) {
+                var d = new Date(date);
+                var month = String(d.getMonth() + 1);
+                var day = String(d.getDate());
+                var year = String(d.getFullYear());
+
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+
+                return month + '/' + day + '/' + year;
+            }
+            return '';
+        }
+    },
+    mounted: function mounted() {
+        this.reciever_addresses = this.recieverAddressesProps;
+    }
+});
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c(
+      "div",
+      { staticClass: "card-content" },
+      [
+        _c(
+          "div",
+          { staticClass: "field m-t-30" },
+          [
+            _c(
+              "b-switch",
+              {
+                attrs: { size: "is-small", type: "is-info" },
+                model: {
+                  value: _vm.isModalTablePaginated,
+                  callback: function($$v) {
+                    _vm.isModalTablePaginated = $$v
+                  },
+                  expression: "isModalTablePaginated"
+                }
+              },
+              [_vm._v("Paginated")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("b-table", {
+          attrs: {
+            narrowed: "",
+            hoverable: "",
+            striped: "",
+            paginated: _vm.isModalTablePaginated,
+            "per-page": "10",
+            "pagination-size": "is-small",
+            data: _vm.reciever_addresses,
+            detailed: "",
+            "default-sort-direction": "asc",
+            "default-sort": "name"
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "default",
+              fn: function(props) {
+                return [
+                  _c(
+                    "b-table-column",
+                    { attrs: { field: "name", label: "Name", sortable: "" } },
+                    [
+                      _vm._v(
+                        "\n                 " +
+                          _vm._s(props.row.address.name) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "surnames",
+                        label: "Surnames",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(props.row.address.surnames) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "birthday",
+                        label: "Birthday",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            _vm.formattedDate(props.row.address.birthday)
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  )
+                ]
+              }
+            },
+            {
+              key: "detail",
+              fn: function(props) {
+                return _c("div", { staticClass: "reciever_container" }, [
+                  _c("article", { staticClass: "contact-details" }, [
+                    _c("form", { staticClass: "reciever_form" }, [
+                      _c(
+                        "div",
+                        { staticClass: "field field-reciever-company" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: props.row.address.company,
+                                expression: "props.row.address.company"
+                              }
+                            ],
+                            attrs: {
+                              type: "text",
+                              id: "reciever_company",
+                              name: "reciever_company",
+                              placeholder: "Company",
+                              disabled: ""
+                            },
+                            domProps: { value: props.row.address.company },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  props.row.address,
+                                  "company",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "field field-reciever-birthday" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: props.row.address.birthday,
+                                expression: "props.row.address.birthday"
+                              }
+                            ],
+                            attrs: {
+                              type: "date",
+                              id: "reciever_birthday",
+                              name: "reciever_birthday",
+                              placeholder: "Birthday",
+                              disabled: ""
+                            },
+                            domProps: { value: props.row.address.birthday },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  props.row.address,
+                                  "birthday",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "field field-reciever-title" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: props.row.address.title,
+                              expression: "props.row.address.title"
+                            }
+                          ],
+                          attrs: {
+                            type: "text",
+                            id: "reciever_title",
+                            name: "reciever_title",
+                            placeholder: "Mr",
+                            disabled: ""
+                          },
+                          domProps: { value: props.row.address.title },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                props.row.address,
+                                "title",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "field field-reciever-name" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: props.row.address.name,
+                              expression: "props.row.address.name"
+                            }
+                          ],
+                          attrs: {
+                            type: "text",
+                            id: "reciever_name",
+                            name: "reciever_name",
+                            placeholder: "Name *",
+                            disabled: ""
+                          },
+                          domProps: { value: props.row.address.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                props.row.address,
+                                "name",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "field field-reciever-surnames" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: props.row.address.surnames,
+                                expression: "props.row.address.surnames"
+                              }
+                            ],
+                            attrs: {
+                              type: "text",
+                              id: "reciever_surnames",
+                              name: "reciever_surnames",
+                              placeholder: "Surnames *",
+                              disabled: ""
+                            },
+                            domProps: { value: props.row.address.surnames },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  props.row.address,
+                                  "surnames",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "field field-reciever-address-line-1" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: props.row.address.address_line_1,
+                                expression: "props.row.address.address_line_1"
+                              }
+                            ],
+                            attrs: {
+                              type: "text",
+                              id: "reciever_address_line_1",
+                              name: "reciever_address_line_1",
+                              placeholder: "Address line 1 *",
+                              disabled: ""
+                            },
+                            domProps: {
+                              value: props.row.address.address_line_1
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  props.row.address,
+                                  "address_line_1",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "field field-reciever-address-line-2" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: props.row.address.address_line_2,
+                                expression: "props.row.address.address_line_2"
+                              }
+                            ],
+                            attrs: {
+                              type: "text",
+                              id: "reciever_address_line_2",
+                              name: "reciever_address_line_2",
+                              placeholder: "Address line 2",
+                              disabled: ""
+                            },
+                            domProps: {
+                              value: props.row.address.address_line_2
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  props.row.address,
+                                  "address_line_2",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "field field-reciever-city" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: props.row.address.city,
+                              expression: "props.row.address.city"
+                            }
+                          ],
+                          attrs: {
+                            type: "text",
+                            id: "reciever_city",
+                            name: "reciever_city",
+                            placeholder: "City *",
+                            disabled: ""
+                          },
+                          domProps: { value: props.row.address.city },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                props.row.address,
+                                "city",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "field field-reciever-country" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: props.row.address.country,
+                                expression: "props.row.address.country"
+                              }
+                            ],
+                            attrs: {
+                              type: "text",
+                              id: "reciever_country",
+                              name: "reciever_country",
+                              placeholder: "Country *",
+                              disabled: ""
+                            },
+                            domProps: { value: props.row.address.country },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  props.row.address,
+                                  "country",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "field field-reciever-zip" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: props.row.address.zip_code,
+                              expression: "props.row.address.zip_code"
+                            }
+                          ],
+                          attrs: {
+                            type: "number",
+                            id: "reciever_zip_code",
+                            name: "reciever_zip_code",
+                            placeholder: "Zip *",
+                            disabled: ""
+                          },
+                          domProps: { value: props.row.address.zip_code },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                props.row.address,
+                                "zip_code",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              }
+            }
+          ])
+        })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-26b66949", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
