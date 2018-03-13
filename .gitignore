@@ -12,5 +12,6 @@ npm-debug.log
 yarn-error.log
 .env
 
+public/images/postcards
 public/css/app.css
 public/js/app.js
