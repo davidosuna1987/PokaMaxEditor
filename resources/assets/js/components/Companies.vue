@@ -196,131 +196,133 @@
             </div>
 
             <div v-else class="column is-8">
-                <div v-for="(company, index) in companies" class="card m-b-30 card-company" :data-id="company.id">
-                    <div class="card-header">
-                        <p class="card-header-title">
-                            {{company.address.company}} <small class="has-text-weight-light m-l-10">({{company.address.name}} {{company.address.surnames}})</small>
-                        </p>
-                        <a :href="'/companies/'+company.id+'/postcards'"
-                           class="card-header-icon has-text-primary is-pulled-right p-0 m-r-5 m-l-5"
-                           aria-label="Show company postcards"
-                           :disabled="!company.postcards.length">
-                            <span class="icon">
-                                <i class="fa fa-picture-o" aria-hidden="true"></i>
-                            </span>
-                        </a>
-                        <a :href="'/companies/'+company.id"
-                           class="card-header-icon has-text-info is-pulled-right p-0 m-r-5 m-l-5"
-                           aria-label="Show company">
-                            <span class="icon">
-                                <i class="fa fa-eye" aria-hidden="true"></i>
-                            </span>
-                        </a>
-                        <a href="#"
-                           class="card-header-icon is-pulled-right p-0 m-r-5 m-l-5"
-                           aria-label="Edit company"
-                           @click.prevent="toggleEditForm(company)">
-                            <span class="icon">
-                                <i class="mdi mdi-pencil" aria-hidden="true"></i>
-                            </span>
-                        </a>
-                        <a href="#"
-                           class="card-header-icon has-text-danger is-pulled-right p-0 m-r-10 m-l-5"
-                           aria-label="Delete company"
-                           @click.prevent="deleteCompany(company)">
-                            <span class="icon">
-                                <i class="mdi mdi-delete" aria-hidden="true"></i>
-                            </span>
-                        </a>
-                    </div>
+                <div v-for="(company, index) in companies">
+                    <div v-if="company.address.company !== null && company.address.company !== ''" class="card m-b-30 card-company" :data-id="company.id">
+                        <div class="card-header">
+                            <p class="card-header-title">
+                                {{company.address.company}} <small class="has-text-weight-light m-l-10">({{company.address.name}} {{company.address.surnames}})</small>
+                            </p>
+                            <a :href="'/companies/'+company.id+'/postcards'"
+                               class="card-header-icon has-text-primary is-pulled-right p-0 m-r-5 m-l-5"
+                               aria-label="Show company postcards"
+                               :disabled="!company.postcards.length">
+                                <span class="icon">
+                                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                            <a :href="'/companies/'+company.id"
+                               class="card-header-icon has-text-info is-pulled-right p-0 m-r-5 m-l-5"
+                               aria-label="Show company">
+                                <span class="icon">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                            <a href="#"
+                               class="card-header-icon is-pulled-right p-0 m-r-5 m-l-5"
+                               aria-label="Edit company"
+                               @click.prevent="toggleEditForm(company)">
+                                <span class="icon">
+                                    <i class="mdi mdi-pencil" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                            <a href="#"
+                               class="card-header-icon has-text-danger is-pulled-right p-0 m-r-10 m-l-5"
+                               aria-label="Delete company"
+                               @click.prevent="deleteCompany(company)">
+                                <span class="icon">
+                                    <i class="mdi mdi-delete" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </div>
 
-                    <div class="card-content">
-                        <div class="reciever_container">
-                            <form class="reciever_form">
-                                <div class="field field-reciever-company">
-                                    <input
-                                        type="text"
-                                        id="reciever_company"
-                                        name="reciever_company"
-                                        placeholder="Company"
-                                        v-model="companies[index].address.company" />
-                                </div>
-                                <div class="field field-reciever-birthday">
-                                    <input
-                                        type="date"
-                                        id="reciever_birthday"
-                                        name="reciever_birthday"
-                                        placeholder="Birthday"
-                                        v-model="companies[index].address.birthday" />
-                                </div>
-                                <div class="field field-reciever-title">
-                                    <input
-                                        type="text"
-                                        id="reciever_title"
-                                        name="reciever_title"
-                                        placeholder="Title"
-                                        v-model="companies[index].address.title" />
-                                </div>
-                                <div class="field field-reciever-name">
-                                    <input
-                                        type="text"
-                                        id="reciever_name"
-                                        name="reciever_name"
-                                        placeholder="Name *"
-                                        v-model="companies[index].address.name" />
-                                </div>
-                                <div class="field field-reciever-surnames">
-                                    <input
-                                        type="text"
-                                        id="reciever_surnames"
-                                        name="reciever_surnames"
-                                        placeholder="Surnames *"
-                                        v-model="companies[index].address.surnames" />
-                                </div>
-                                <div class="field field-reciever-address-line-1">
-                                    <input
-                                        type="text"
-                                        id="reciever_address_line_1"
-                                        name="reciever_address_line_1"
-                                        placeholder="Address line 1 *"
-                                        v-model="companies[index].address.address_line_1" />
-                                </div>
-                                <div class="field field-reciever-address-line-2">
-                                    <input
-                                        type="text"
-                                        id="reciever_address_line_2"
-                                        name="reciever_address_line_2"
-                                        placeholder="Address line 2"
-                                        v-model="companies[index].address.address_line_2" />
-                                </div>
-                                <div class="field field-reciever-city">
-                                    <input
-                                        type="text"
-                                        id="reciever_city"
-                                        name="reciever_city"
-                                        placeholder="City *"
-                                        v-model="companies[index].address.city" />
-                                </div>
-                                <div class="field field-reciever-country">
-                                    <input
-                                        type="text"
-                                        id="reciever_country"
-                                        name="reciever_country"
-                                        placeholder="Country *"
-                                        v-model="companies[index].address.country" />
-                                </div>
-                                <div class="field field-reciever-zip">
-                                    <input
-                                        type="number"
-                                        id="reciever_zip_code"
-                                        name="reciever_zip_code"
-                                        placeholder="Zip *"
-                                        v-model="companies[index].address.zip_code" />
-                                </div>
-                                <div class="field has-text-right m-t-30">
-                                    <button class="button is-info" @click.prevent="updateCompany(company)">Update company</button>
-                                </div>
-                            </form>
+                        <div class="card-content">
+                            <div class="reciever_container">
+                                <form class="reciever_form">
+                                    <div class="field field-reciever-company">
+                                        <input
+                                            type="text"
+                                            id="reciever_company"
+                                            name="reciever_company"
+                                            placeholder="Company"
+                                            v-model="companies[index].address.company" />
+                                    </div>
+                                    <div class="field field-reciever-birthday">
+                                        <input
+                                            type="date"
+                                            id="reciever_birthday"
+                                            name="reciever_birthday"
+                                            placeholder="Birthday"
+                                            v-model="companies[index].address.birthday" />
+                                    </div>
+                                    <div class="field field-reciever-title">
+                                        <input
+                                            type="text"
+                                            id="reciever_title"
+                                            name="reciever_title"
+                                            placeholder="Title"
+                                            v-model="companies[index].address.title" />
+                                    </div>
+                                    <div class="field field-reciever-name">
+                                        <input
+                                            type="text"
+                                            id="reciever_name"
+                                            name="reciever_name"
+                                            placeholder="Name *"
+                                            v-model="companies[index].address.name" />
+                                    </div>
+                                    <div class="field field-reciever-surnames">
+                                        <input
+                                            type="text"
+                                            id="reciever_surnames"
+                                            name="reciever_surnames"
+                                            placeholder="Surnames *"
+                                            v-model="companies[index].address.surnames" />
+                                    </div>
+                                    <div class="field field-reciever-address-line-1">
+                                        <input
+                                            type="text"
+                                            id="reciever_address_line_1"
+                                            name="reciever_address_line_1"
+                                            placeholder="Address line 1 *"
+                                            v-model="companies[index].address.address_line_1" />
+                                    </div>
+                                    <div class="field field-reciever-address-line-2">
+                                        <input
+                                            type="text"
+                                            id="reciever_address_line_2"
+                                            name="reciever_address_line_2"
+                                            placeholder="Address line 2"
+                                            v-model="companies[index].address.address_line_2" />
+                                    </div>
+                                    <div class="field field-reciever-city">
+                                        <input
+                                            type="text"
+                                            id="reciever_city"
+                                            name="reciever_city"
+                                            placeholder="City *"
+                                            v-model="companies[index].address.city" />
+                                    </div>
+                                    <div class="field field-reciever-country">
+                                        <input
+                                            type="text"
+                                            id="reciever_country"
+                                            name="reciever_country"
+                                            placeholder="Country *"
+                                            v-model="companies[index].address.country" />
+                                    </div>
+                                    <div class="field field-reciever-zip">
+                                        <input
+                                            type="number"
+                                            id="reciever_zip_code"
+                                            name="reciever_zip_code"
+                                            placeholder="Zip *"
+                                            v-model="companies[index].address.zip_code" />
+                                    </div>
+                                    <div class="field has-text-right m-t-30">
+                                        <button class="button is-info" @click.prevent="updateCompany(company)">Update company</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

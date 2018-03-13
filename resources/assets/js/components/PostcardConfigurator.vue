@@ -291,6 +291,7 @@
                         <option v-if="tempData.company_id !== null" value="0">New company</option>
                         <option
                             v-for="(company, index) in companies"
+                            v-if="company.address.company !== null && company.address.company !== ''"
                             :value="company.id"
                             :key="company.id">
                             {{ company.address.company }}

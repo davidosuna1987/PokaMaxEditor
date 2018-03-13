@@ -21,20 +21,24 @@ class CompanyController extends Controller
           return redirect()->route('home');
       endif;
 
-      $companies = User::where('role_id', 4)->with('address', 'postcards')->get();
+      $companies = User::whereIn('role_id', [1, 2, 4])->with('address', 'postcards')->get();
       return view('pages.companies.index', compact('companies'));
     }
 
     public function apiIndex()
     {
-      return User::where('role_id', 4)->with('address', 'postcards')->get();
+      if(!auth()->user()->isAdmin()):
+          return redirect()->route('home');
+      endif;
+
+      return User::whereIn('role_id', [1, 2, 4])->with('address', 'postcards')->get();
     }
 
     public function apiIndexFromEditor()
     {
       // return Company::with('address', 'postcards', 'addressLists.addresses')->get();
 
-      $companies = User::where('role_id', 4)->with('address', 'postcards', 'addressLists.addresses')->get();
+      $companies = User::whereIn('role_id', [1, 2, 4])->with('address', 'postcards', 'addressLists.addresses')->get();
       $customCompaniesArray = [];
 
       foreach ($companies as $company):
@@ -72,7 +76,7 @@ class CompanyController extends Controller
           return redirect()->route('home');
       endif;
 
-      return User::where('role_id', 4)->with('address', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address', 'addressLists.addresses')->findOrFail($id);
+      return User::whereIn('role_id', [1, 2, 4])->with('address', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address', 'addressLists.addresses')->findOrFail($id);
 
       // $company = Company::findOrFail($id);
       // $customCompanyArray = $company->load('address', 'addressLists.addresses')->toArray();
@@ -175,7 +179,7 @@ class CompanyController extends Controller
             return redirect()->route('home');
         endif;
 
-        $company = User::where('role_id', 4)->findOrFail($id);
+        $company = User::whereIn('role_id', [1, 2, 4])->findOrFail($id);
         $address = $company->address()->first();
 
         $address->update([
@@ -205,7 +209,7 @@ class CompanyController extends Controller
           return redirect()->route('home');
       endif;
 
-        $company = User::where('role_id', 4)->findOrFail($id);
+        $company = User::whereIn('role_id', [1, 2, 4])->findOrFail($id);
         $address = $company->address()->first();
 
         $sender_data = $request->get('sender_data');
@@ -237,7 +241,7 @@ class CompanyController extends Controller
           return redirect()->route('home');
       endif;
 
-        $company = User::where('role_id', 4)->with('address')->findOrFail($id);
+        $company = User::whereIn('role_id', [1, 2, 4])->with('address')->findOrFail($id);
         $company->delete();
         return response()->json([
           'company' => $company,
@@ -251,7 +255,7 @@ class CompanyController extends Controller
           return redirect()->route('home');
       endif;
 
-      $company = User::where('role_id', 4)->with('address', 'postcards', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address')->findOrFail($id);
+      $company = User::whereIn('role_id', [1, 2, 4])->with('address', 'postcards', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address')->findOrFail($id);
       return view('pages.companies.postcards', compact('company'));
     }
 }
