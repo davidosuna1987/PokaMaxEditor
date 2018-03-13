@@ -88,4 +88,10 @@ class UserController extends Controller
         $user_id = $user->id;
         return view('profile.index', compact('user_id'));
     }
+
+    public function postcards()
+    {
+        $user = auth()->user()->with('address', 'postcards', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address')->find(auth()->user()->id);
+        return view('profile.postcards', compact('user'));
+    }
 }

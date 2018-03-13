@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     // User routes
     Route::get('profile', 'UserController@profile')->name('user.profile');
-    Route::get('my-postcards', 'PostcardController@userPostcards')->name('user.postcards');
+    Route::get('my-postcards', 'UserController@postcards')->name('user.postcards');
 
     // Companies routes
     Route::get('companies', 'CompanyController@index')->name('companies.index');
