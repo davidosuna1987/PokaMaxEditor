@@ -4,7 +4,7 @@
     <div class="container p-b-100">
         <div class="columns is- is-marginless is-centered">
             <div class="column">
-                <postcard-configurator></postcard-configurator>
+                <postcard-configurator company-id-prop="{{auth()->user()->isAdmin() ? '' : auth()->user()->id}}"></postcard-configurator>
             </div>
         </div>
     </div>

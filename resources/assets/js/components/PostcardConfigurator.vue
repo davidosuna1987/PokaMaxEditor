@@ -84,7 +84,7 @@
             <div class="columns m-t-15 p-l-20">
               <div class="column is-8">
                 <div :data-id="tempData.company_id" class="reciever_container">
-                    <div v-if="!isCreatingCompany && tempData.company_id == null" class="level p-20">
+                    <div v-if="!isCreatingCompany && tempData.company_id == null && !companyIdProp" class="level p-20">
                       <p class="level-left">Please, select company or create new</p>
                       <p class="level-right">
                         <a href="#" class="button is-link" @click.prevent="createCompany">New company</a>
@@ -253,33 +253,37 @@
                                     </span>
                                 </span>
                         </div>
-                        <small v-if="this.tempData.company_id" class="has-text-link is-8 m-t-15"><strong class="has-text-link">Info:</strong> you can change sender data without updating the company.</small>
-                        <div class="field has-text-right m-t-30">
-                            <button
-                              v-if="tempData.company_id === null"
-                              class="button"
-                              @click.prevent="cancelCreateCompany">
-                                Cancel
-                            </button>
-                            <button
-                              class="button"
-                              :class="[{'is-info' : tempData.company_id === null, 'is-link' : tempData.company_id !== null}]"
-                              @click.prevent="storeCompany">
-                                {{tempData.company_id === null ? 'Create company' : 'New company'}}
-                            </button>
-                            <button
-                              v-if="tempData.company_id !== null"
-                              class="button is-info"
-                              @click.prevent="updateCompany(tempData.company_id)">
-                                Update company
-                            </button>
-                        </div>
+
+                        <template v-if="!companyIdProp">
+                            <small v-if="this.tempData.company_id" class="has-text-link is-8 m-t-15"><strong class="has-text-link">Info:</strong> you can change sender data without updating the company.</small>
+                            <div class="field has-text-right m-t-30">
+                                <button
+                                  v-if="tempData.company_id === null"
+                                  class="button"
+                                  @click.prevent="cancelCreateCompany">
+                                    Cancel
+                                </button>
+                                <button
+                                  class="button"
+                                  :class="[{'is-info' : tempData.company_id === null, 'is-link' : tempData.company_id !== null}]"
+                                  @click.prevent="storeCompany">
+                                    {{tempData.company_id === null ? 'Create company' : 'New company'}}
+                                </button>
+                                <button
+                                  v-if="tempData.company_id !== null"
+                                  class="button is-info"
+                                  @click.prevent="updateCompany(tempData.company_id)">
+                                    Update company
+                                </button>
+                            </div>
+                        </template>
                     </form>
                 </div>
               </div>
               <div class="column">
                   <b-field class="is-info">
                     <b-select
+                        v-show="!companyIdProp"
                         v-model="tempData.company_id"
                         @input="changeCompany(tempData.company_id)"
                         placeholder="Select company"
@@ -576,12 +580,20 @@
                                                 </div>
                                             </b-field>
                                             <div v-if="csv_addresses" class="csv-addresses">
+
+                                              <div class="field m-t-30">
+                                                <b-switch v-model="isPaginated" size="is-small" type="is-info">Paginated</b-switch>
+                                              </div>
+
                                               <b-table
                                                   class="m-t-30"
                                                   narrowed
                                                   hoverable
                                                   striped
                                                   :data="csv_addresses"
+                                                  :paginated="isPaginated"
+                                                  per-page="20"
+                                                  pagination-size="is-small"
                                                   :checked-rows.sync="checked_csv_addresses"
                                                   default-sort-direction="asc"
                                                   default-sort="name"
@@ -721,11 +733,19 @@
                                         <div v-else>
                                           <template v-if="address_list.addresses.length">
                                               <button class="button is-info is-small is-pulled-right" @click.prevent="setImportContactsToAddressList(index)">Import contacts</button>
+
+                                              <div class="field m-t-30">
+                                                <b-switch v-model="isPaginated" size="is-small" type="is-info">Paginated</b-switch>
+                                              </div>
+
                                               <b-table
                                                   hoverable
                                                   striped
                                                   checkable
                                                   :data="address_list.addresses"
+                                                  :paginated="isPaginated"
+                                                  per-page="20"
+                                                  pagination-size="is-small"
                                                   :checked-rows.sync="tempData.reciever_data"
                                                   default-sort-direction="asc"
                                                   default-sort="name">
@@ -909,10 +929,17 @@
                           </a>
                       </div>
                       <div class="card-content">
+                              <div class="field m-t-30">
+                                <b-switch v-model="isPaginated" size="is-small" type="is-info">Paginated</b-switch>
+                              </div>
+
                               <b-table
                                   hoverable
                                   striped
                                   narrowed
+                                  :paginated="isPaginated"
+                                  per-page="10"
+                                  pagination-size="is-small"
                                   :selected.sync="previewRecieverData"
                                   :data="tempData.reciever_data"
                                   default-sort-direction="asc"
@@ -960,8 +987,10 @@
 
 <script>
     export default {
+        props: ['companyIdProp'],
         data() {
             return {
+                isPaginated: true,
                 csv_file: null,
                 csv_addresses: null,
                 checked_csv_addresses: [],
@@ -1210,6 +1239,7 @@
                 this.selected_address_list = null;
                 this.isCreatingAddressList = false;
                 this.getCompanies(this.tempData.company_id);
+                this.tempData.reciever_data = [];
                 this.isImportingContacts = null;
                 this.checked_csv_addresses = [];
                 this.csv_addresses = null;
@@ -1578,8 +1608,9 @@
         mounted() {
 
             let vue = this;
+
             vue.tempFill();
-            vue.getCompanies();
+            vue.getCompanies(vue.companyIdProp);
 
             $(document).on('click', '.tool-done, .tool-remove', function(){
                 vue.tempFill();

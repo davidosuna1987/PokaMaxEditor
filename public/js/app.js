@@ -47541,12 +47541,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['companyIdProp'],
   data: function data() {
     var _ref;
 
     return _ref = {
+      isPaginated: true,
       csv_file: null,
       csv_addresses: null,
       checked_csv_addresses: [],
@@ -47789,6 +47818,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.selected_address_list = null;
       this.isCreatingAddressList = false;
       this.getCompanies(this.tempData.company_id);
+      this.tempData.reciever_data = [];
       this.isImportingContacts = null;
       this.checked_csv_addresses = [];
       this.csv_addresses = null;
@@ -48163,8 +48193,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
 
     var vue = this;
+
     vue.tempFill();
-    vue.getCompanies();
+    vue.getCompanies(vue.companyIdProp);
 
     $(document).on('click', '.tool-done, .tool-remove', function () {
       vue.tempFill();
@@ -48348,7 +48379,9 @@ var render = function() {
                   attrs: { "data-id": _vm.tempData.company_id }
                 },
                 [
-                  !_vm.isCreatingCompany && _vm.tempData.company_id == null
+                  !_vm.isCreatingCompany &&
+                  _vm.tempData.company_id == null &&
+                  !_vm.companyIdProp
                     ? _c("div", { staticClass: "level p-20" }, [
                         _c("p", { staticClass: "level-left" }, [
                           _vm._v("Please, select company or create new")
@@ -49179,102 +49212,110 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          this.tempData.company_id
-                            ? _c(
-                                "small",
-                                { staticClass: "has-text-link is-8 m-t-15" },
-                                [
-                                  _c(
-                                    "strong",
-                                    { staticClass: "has-text-link" },
-                                    [_vm._v("Info:")]
-                                  ),
-                                  _vm._v(
-                                    " you can change sender data without updating the company."
-                                  )
-                                ]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "field has-text-right m-t-30" },
-                            [
-                              _vm.tempData.company_id === null
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass: "button",
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          _vm.cancelCreateCompany($event)
+                          !_vm.companyIdProp
+                            ? [
+                                this.tempData.company_id
+                                  ? _c(
+                                      "small",
+                                      {
+                                        staticClass: "has-text-link is-8 m-t-15"
+                                      },
+                                      [
+                                        _c(
+                                          "strong",
+                                          { staticClass: "has-text-link" },
+                                          [_vm._v("Info:")]
+                                        ),
+                                        _vm._v(
+                                          " you can change sender data without updating the company."
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "field has-text-right m-t-30"
+                                  },
+                                  [
+                                    _vm.tempData.company_id === null
+                                      ? _c(
+                                          "button",
+                                          {
+                                            staticClass: "button",
+                                            on: {
+                                              click: function($event) {
+                                                $event.preventDefault()
+                                                _vm.cancelCreateCompany($event)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                Cancel\n                            "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "button",
+                                        class: [
+                                          {
+                                            "is-info":
+                                              _vm.tempData.company_id === null,
+                                            "is-link":
+                                              _vm.tempData.company_id !== null
+                                          }
+                                        ],
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            _vm.storeCompany($event)
+                                          }
                                         }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                            Cancel\n                        "
-                                      )
-                                    ]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "button",
-                                  class: [
-                                    {
-                                      "is-info":
-                                        _vm.tempData.company_id === null,
-                                      "is-link":
-                                        _vm.tempData.company_id !== null
-                                    }
-                                  ],
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.storeCompany($event)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                            " +
-                                      _vm._s(
-                                        _vm.tempData.company_id === null
-                                          ? "Create company"
-                                          : "New company"
-                                      ) +
-                                      "\n                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _vm.tempData.company_id !== null
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass: "button is-info",
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          _vm.updateCompany(
-                                            _vm.tempData.company_id
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                            Update company\n                        "
-                                      )
-                                    ]
-                                  )
-                                : _vm._e()
-                            ]
-                          )
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                " +
+                                            _vm._s(
+                                              _vm.tempData.company_id === null
+                                                ? "Create company"
+                                                : "New company"
+                                            ) +
+                                            "\n                            "
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm.tempData.company_id !== null
+                                      ? _c(
+                                          "button",
+                                          {
+                                            staticClass: "button is-info",
+                                            on: {
+                                              click: function($event) {
+                                                $event.preventDefault()
+                                                _vm.updateCompany(
+                                                  _vm.tempData.company_id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                Update company\n                            "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                )
+                              ]
+                            : _vm._e()
                         ],
                         2
                       )
@@ -49293,6 +49334,14 @@ var render = function() {
                     _c(
                       "b-select",
                       {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.companyIdProp,
+                            expression: "!companyIdProp"
+                          }
+                        ],
                         attrs: {
                           placeholder: "Select company",
                           icon: "domain"
@@ -50212,6 +50261,44 @@ var render = function() {
                                                                   },
                                                                   [
                                                                     _c(
+                                                                      "div",
+                                                                      {
+                                                                        staticClass:
+                                                                          "field m-t-30"
+                                                                      },
+                                                                      [
+                                                                        _c(
+                                                                          "b-switch",
+                                                                          {
+                                                                            attrs: {
+                                                                              size:
+                                                                                "is-small",
+                                                                              type:
+                                                                                "is-info"
+                                                                            },
+                                                                            model: {
+                                                                              value:
+                                                                                _vm.isPaginated,
+                                                                              callback: function(
+                                                                                $$v
+                                                                              ) {
+                                                                                _vm.isPaginated = $$v
+                                                                              },
+                                                                              expression:
+                                                                                "isPaginated"
+                                                                            }
+                                                                          },
+                                                                          [
+                                                                            _vm._v(
+                                                                              "Paginated"
+                                                                            )
+                                                                          ]
+                                                                        )
+                                                                      ],
+                                                                      1
+                                                                    ),
+                                                                    _vm._v(" "),
+                                                                    _c(
                                                                       "b-table",
                                                                       {
                                                                         staticClass:
@@ -50225,6 +50312,12 @@ var render = function() {
                                                                             "",
                                                                           data:
                                                                             _vm.csv_addresses,
+                                                                          paginated:
+                                                                            _vm.isPaginated,
+                                                                          "per-page":
+                                                                            "20",
+                                                                          "pagination-size":
+                                                                            "is-small",
                                                                           "checked-rows":
                                                                             _vm.checked_csv_addresses,
                                                                           "default-sort-direction":
@@ -51270,6 +51363,44 @@ var render = function() {
                                                                   ]
                                                                 ),
                                                                 _vm._v(" "),
+                                                                _c(
+                                                                  "div",
+                                                                  {
+                                                                    staticClass:
+                                                                      "field m-t-30"
+                                                                  },
+                                                                  [
+                                                                    _c(
+                                                                      "b-switch",
+                                                                      {
+                                                                        attrs: {
+                                                                          size:
+                                                                            "is-small",
+                                                                          type:
+                                                                            "is-info"
+                                                                        },
+                                                                        model: {
+                                                                          value:
+                                                                            _vm.isPaginated,
+                                                                          callback: function(
+                                                                            $$v
+                                                                          ) {
+                                                                            _vm.isPaginated = $$v
+                                                                          },
+                                                                          expression:
+                                                                            "isPaginated"
+                                                                        }
+                                                                      },
+                                                                      [
+                                                                        _vm._v(
+                                                                          "Paginated"
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  ],
+                                                                  1
+                                                                ),
+                                                                _vm._v(" "),
                                                                 _c("b-table", {
                                                                   attrs: {
                                                                     hoverable:
@@ -51279,6 +51410,12 @@ var render = function() {
                                                                       "",
                                                                     data:
                                                                       address_list.addresses,
+                                                                    paginated:
+                                                                      _vm.isPaginated,
+                                                                    "per-page":
+                                                                      "20",
+                                                                    "pagination-size":
+                                                                      "is-small",
                                                                     "checked-rows":
                                                                       _vm
                                                                         .tempData
@@ -51946,11 +52083,39 @@ var render = function() {
                             "div",
                             { staticClass: "card-content" },
                             [
+                              _c(
+                                "div",
+                                { staticClass: "field m-t-30" },
+                                [
+                                  _c(
+                                    "b-switch",
+                                    {
+                                      attrs: {
+                                        size: "is-small",
+                                        type: "is-info"
+                                      },
+                                      model: {
+                                        value: _vm.isPaginated,
+                                        callback: function($$v) {
+                                          _vm.isPaginated = $$v
+                                        },
+                                        expression: "isPaginated"
+                                      }
+                                    },
+                                    [_vm._v("Paginated")]
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
                               _c("b-table", {
                                 attrs: {
                                   hoverable: "",
                                   striped: "",
                                   narrowed: "",
+                                  paginated: _vm.isPaginated,
+                                  "per-page": "10",
+                                  "pagination-size": "is-small",
                                   selected: _vm.previewRecieverData,
                                   data: _vm.tempData.reciever_data,
                                   "default-sort-direction": "asc",

@@ -14,11 +14,13 @@
 
         <div class="navbar-menu" id="navMenu">
             <div class="navbar-start">
-                @if(auth()->user() and auth()->user()->isAdmin())
-                    <a href="{{ route('companies.index') }}" class="navbar-item">Companies</a>
-                @endif
+                @if(auth()->user())
+                    @if(auth()->user()->isAdmin())
+                        <a href="{{ route('companies.index') }}" class="navbar-item">Companies</a>
+                    @endif
 
-                <a href="{{ route('editor') }}" class="navbar-item">Editor</a>
+                    <a href="{{ route('editor') }}" class="navbar-item">Editor</a>
+                @endif
             </div>
 
             <div class="navbar-end">
