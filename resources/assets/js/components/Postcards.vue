@@ -68,7 +68,7 @@
                 <div v-else class="card">
                     <div class="level p-10">
                         <div class="level-left">
-                            This company doesn't have any postcard yet.
+                            No postcards created yet.
                         </div>
                         <div class="level-right">
                             <a href="/editor" class="button is-info">Create postcard</a>

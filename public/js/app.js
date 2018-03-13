@@ -46493,7 +46493,7 @@ var render = function() {
                     _c("div", { staticClass: "level p-10" }, [
                       _c("div", { staticClass: "level-left" }, [
                         _vm._v(
-                          "\n                        This company doesn't have any postcard yet.\n                    "
+                          "\n                        No postcards created yet.\n                    "
                         )
                       ]),
                       _vm._v(" "),
