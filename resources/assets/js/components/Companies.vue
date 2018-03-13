@@ -196,7 +196,9 @@
             </div>
 
             <div v-else class="column is-8">
-                <div v-for="(company, index) in companies">
+                <input class="input is-small m-b-30" v-model="searchBy" type="text" placeholder="Search company" />
+
+                <div v-for="(company, index) in filteredCompanies">
                     <div v-if="company.address.company !== null && company.address.company !== ''" class="card m-b-30 card-company" :data-id="company.id">
                         <div class="card-header">
                             <p class="card-header-title">
@@ -335,6 +337,7 @@
     export default {
         data() {
             return {
+                searchBy: '',
                 newCompanyErrors: {},
                 companies: [],
                 loadingData: false,
@@ -385,6 +388,12 @@
           }
         },
         computed: {
+            filteredCompanies: function(){
+                var vue = this;
+                return this.companies.filter(function(comp){
+                    return comp.address.company.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0 || comp.address.name.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0 || comp.address.surnames.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0;
+                });
+            },
             newCompanyEmailHasError() {
                 return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['email']);
             },

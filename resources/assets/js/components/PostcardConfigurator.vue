@@ -733,7 +733,10 @@
                                         </div>
                                         <div v-else>
                                           <template v-if="address_list.addresses.length">
-                                              <button class="button is-info is-small is-pulled-right" @click.prevent="setImportContactsToAddressList(index)">Import contacts</button>
+                                              <p class="title is-size-6">
+                                              Select contacts
+                                                <button class="button is-info is-small is-pulled-right" @click.prevent="setImportContactsToAddressList(index)">Import contacts</button>
+                                              </p>
 
                                               <div class="field m-t-30">
                                                 <b-switch v-model="isPaginated" size="is-small" type="is-info">Paginated</b-switch>
