@@ -201,7 +201,7 @@
                         <p class="card-header-title">
                             {{company.address.company}} <small class="has-text-weight-light m-l-10">({{company.address.name}} {{company.address.surnames}})</small>
                         </p>
-                        <a :href="'/api/companies/'+company.id+'/postcards'"
+                        <a :href="'/companies/'+company.id+'/postcards'"
                            class="card-header-icon has-text-primary is-pulled-right p-0 m-r-5 m-l-5"
                            aria-label="Show company postcards"
                            :disabled="!company.postcards.length">

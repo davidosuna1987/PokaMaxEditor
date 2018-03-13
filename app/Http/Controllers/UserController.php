@@ -81,4 +81,11 @@ class UserController extends Controller
     {
         //
     }
+
+    public function profile()
+    {
+        $user = auth()->user();
+        $user_id = $user->id;
+        return view('profile.index', compact('user_id'));
+    }
 }

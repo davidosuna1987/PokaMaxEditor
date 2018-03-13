@@ -32,7 +32,7 @@
                         <a class="navbar-link" href="#">{{ auth()->user()->name() }}</a>
 
                         <div class="navbar-dropdown is-right">
-                            <a class="navbar-item" href="#">
+                            <a class="navbar-item" href="{{ route('user.profile') }}">
                               <span class="icon has-text-info is-small m-r-10"><i class="fa fa-fw fa-user-o"></i></span>
                               Profile
                             </a>

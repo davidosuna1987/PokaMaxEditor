@@ -17,6 +17,10 @@ class CompanyController extends Controller
 {
     public function index()
     {
+      if(!auth()->user()->isAdmin()):
+          return redirect()->route('home');
+      endif;
+
       $companies = User::where('role_id', 4)->with('address', 'postcards')->get();
       return view('pages.companies.index', compact('companies'));
     }
@@ -54,12 +58,20 @@ class CompanyController extends Controller
 
     public function show($id)
     {
+      if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+          return redirect()->route('home');
+      endif;
+
       $company_id = $id;
       return view('pages.companies.show', compact('company_id'));
     }
 
     public function apiShow($id)
     {
+      if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+          return redirect()->route('home');
+      endif;
+
       return User::where('role_id', 4)->with('address', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address', 'addressLists.addresses')->findOrFail($id);
 
       // $company = Company::findOrFail($id);
@@ -159,6 +171,10 @@ class CompanyController extends Controller
 
     public function apiUpdate(Request $request, $id)
     {
+        if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+            return redirect()->route('home');
+        endif;
+
         $company = User::where('role_id', 4)->findOrFail($id);
         $address = $company->address()->first();
 
@@ -185,6 +201,9 @@ class CompanyController extends Controller
 
     public function apiUpdateFromEditor(UpdateCompanyFromEditorRequest $request, $id)
     {
+      if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+          return redirect()->route('home');
+      endif;
 
         $company = User::where('role_id', 4)->findOrFail($id);
         $address = $company->address()->first();
@@ -214,6 +233,10 @@ class CompanyController extends Controller
 
     public function apiDelete($id)
     {
+      if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+          return redirect()->route('home');
+      endif;
+
         $company = User::where('role_id', 4)->with('address')->findOrFail($id);
         $company->delete();
         return response()->json([
@@ -224,6 +247,10 @@ class CompanyController extends Controller
 
     public function postcards($id)
     {
+      if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+          return redirect()->route('home');
+      endif;
+
       $company = User::where('role_id', 4)->with('address', 'postcards', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address')->findOrFail($id);
       return view('pages.companies.postcards', compact('company'));
     }

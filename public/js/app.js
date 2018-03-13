@@ -45589,7 +45589,7 @@ var render = function() {
                         staticClass:
                           "card-header-icon has-text-primary is-pulled-right p-0 m-r-5 m-l-5",
                         attrs: {
-                          href: "/api/companies/" + company.id + "/postcards",
+                          href: "/companies/" + company.id + "/postcards",
                           "aria-label": "Show company postcards",
                           disabled: !company.postcards.length
                         }

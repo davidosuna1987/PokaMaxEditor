@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('postcard/tempfill', 'PostcardController@tempFill')->name('postcard.tempfill');;
 
     // User routes
+    Route::get('profile', 'UserController@profile')->name('user.profile');
     Route::get('my-postcards', 'PostcardController@userPostcards')->name('user.postcards');
 
     // Companies routes
@@ -38,6 +39,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('companies/{id}', 'CompanyController@show')->name('companies.show');
 
     Route::post('csv/import', 'AddressController@csvImport')->name('csv.import');
+    Route::get('companies/{id}/postcards', 'CompanyController@postcards')->name('companies.postcards');
 });
 
 
@@ -55,7 +57,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function(){
     Route::get('companies/{id}', 'CompanyController@apiShow')->name('api.companies.show');
     Route::put('companies/{id}', 'CompanyController@apiUpdate')->name('api.companies.update');
     Route::delete('companies/{id}', 'CompanyController@apiDelete')->name('api.companies.delete');
-    Route::get('companies/{id}/postcards', 'CompanyController@postcards')->name('api.companies.postcards');
+    Route::get('companies/{id}/postcards', 'CompanyController@apiPostcards')->name('api.companies.postcards');
 
     // Api address routes
     Route::post('addresses/addresslists/{id}/insert', 'AddressController@apiAddressListsInsert')->name('api.address.addresslists.insert');
