@@ -45607,634 +45607,603 @@ var render = function() {
               _vm._v(" "),
               _vm._l(_vm.filteredCompanies, function(company, index) {
                 return _c("div", [
-                  company.address.company !== null &&
-                  company.address.company !== ""
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "card m-b-30 card-company",
-                          attrs: { "data-id": company.id }
-                        },
-                        [
-                          _c("div", { staticClass: "card-header" }, [
-                            _c("p", { staticClass: "card-header-title" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "card m-b-30 card-company",
+                      attrs: { "data-id": company.id }
+                    },
+                    [
+                      _c("div", { staticClass: "card-header" }, [
+                        _c("p", { staticClass: "card-header-title" }, [
+                          _c(
+                            "span",
+                            {
+                              domProps: {
+                                innerHTML: _vm._s(
+                                  _vm.$options.filters.highlight(
+                                    company.address.company,
+                                    _vm.searchBy
+                                  )
+                                )
+                              }
+                            },
+                            [_vm._v(_vm._s(company.address.company))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "small",
+                            { staticClass: "has-text-weight-light m-l-10" },
+                            [
+                              _vm._v("("),
                               _c(
                                 "span",
                                 {
                                   domProps: {
                                     innerHTML: _vm._s(
                                       _vm.$options.filters.highlight(
-                                        company.address.company,
+                                        company.address.name +
+                                          " " +
+                                          company.address.surnames,
                                         _vm.searchBy
                                       )
                                     )
                                   }
                                 },
-                                [_vm._v(_vm._s(company.address.company))]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "small",
-                                { staticClass: "has-text-weight-light m-l-10" },
                                 [
-                                  _vm._v("("),
-                                  _c(
-                                    "span",
-                                    {
-                                      domProps: {
-                                        innerHTML: _vm._s(
-                                          _vm.$options.filters.highlight(
-                                            company.address.name +
-                                              " " +
-                                              company.address.surnames,
-                                            _vm.searchBy
-                                          )
-                                        )
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          company.address.name +
-                                            " " +
-                                            company.address.surnames
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(")")
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "card-header-icon has-text-primary is-pulled-right p-0 m-r-5 m-l-5",
-                                attrs: {
-                                  href:
-                                    "/companies/" + company.id + "/postcards",
-                                  "aria-label": "Show company postcards",
-                                  disabled: !company.postcards.length
-                                }
-                              },
-                              [_vm._m(0, true)]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "card-header-icon has-text-info is-pulled-right p-0 m-r-5 m-l-5",
-                                attrs: {
-                                  href: "/companies/" + company.id,
-                                  "aria-label": "Show company"
-                                }
-                              },
-                              [_vm._m(1, true)]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "card-header-icon is-pulled-right p-0 m-r-5 m-l-5",
-                                attrs: {
-                                  href: "#",
-                                  "aria-label": "Edit company"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    _vm.toggleEditForm(company)
-                                  }
-                                }
-                              },
-                              [_vm._m(2, true)]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "card-header-icon has-text-danger is-pulled-right p-0 m-r-10 m-l-5",
-                                attrs: {
-                                  href: "#",
-                                  "aria-label": "Delete company"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    _vm.deleteCompany(company)
-                                  }
-                                }
-                              },
-                              [_vm._m(3, true)]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "card-content" }, [
-                            _c("div", { staticClass: "reciever_container" }, [
-                              _c("form", { staticClass: "reciever_form" }, [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "field field-reciever-company"
-                                  },
-                                  [
-                                    _c("label", { staticClass: "label" }, [
-                                      _vm._v("Company name")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value:
-                                            _vm.companies[index].address
-                                              .company,
-                                          expression:
-                                            "companies[index].address.company"
-                                        }
-                                      ],
-                                      attrs: {
-                                        type: "text",
-                                        id: "reciever_company",
-                                        name: "reciever_company",
-                                        placeholder: "Company"
-                                      },
-                                      domProps: {
-                                        value:
-                                          _vm.companies[index].address.company
-                                      },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.companies[index].address,
-                                            "company",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "field field-reciever-birthday"
-                                  },
-                                  [
-                                    _c("label", { staticClass: "label" }, [
-                                      _vm._v("Birthday")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value:
-                                            _vm.companies[index].address
-                                              .birthday,
-                                          expression:
-                                            "companies[index].address.birthday"
-                                        }
-                                      ],
-                                      attrs: {
-                                        type: "date",
-                                        id: "reciever_birthday",
-                                        name: "reciever_birthday",
-                                        placeholder: "Birthday"
-                                      },
-                                      domProps: {
-                                        value:
-                                          _vm.companies[index].address.birthday
-                                      },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.companies[index].address,
-                                            "birthday",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "field field-reciever-title" },
-                                  [
-                                    _c("label", { staticClass: "label" }, [
-                                      _vm._v("Title")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value:
-                                            _vm.companies[index].address.title,
-                                          expression:
-                                            "companies[index].address.title"
-                                        }
-                                      ],
-                                      attrs: {
-                                        type: "text",
-                                        id: "reciever_title",
-                                        name: "reciever_title",
-                                        placeholder: "Title"
-                                      },
-                                      domProps: {
-                                        value:
-                                          _vm.companies[index].address.title
-                                      },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.companies[index].address,
-                                            "title",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "field field-reciever-name" },
-                                  [
-                                    _c("label", { staticClass: "label" }, [
-                                      _vm._v("Name")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value:
-                                            _vm.companies[index].address.name,
-                                          expression:
-                                            "companies[index].address.name"
-                                        }
-                                      ],
-                                      attrs: {
-                                        type: "text",
-                                        id: "reciever_name",
-                                        name: "reciever_name",
-                                        placeholder: "Name *"
-                                      },
-                                      domProps: {
-                                        value: _vm.companies[index].address.name
-                                      },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.companies[index].address,
-                                            "name",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "field field-reciever-surnames"
-                                  },
-                                  [
-                                    _c("label", { staticClass: "label" }, [
-                                      _vm._v("Surnames")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value:
-                                            _vm.companies[index].address
-                                              .surnames,
-                                          expression:
-                                            "companies[index].address.surnames"
-                                        }
-                                      ],
-                                      attrs: {
-                                        type: "text",
-                                        id: "reciever_surnames",
-                                        name: "reciever_surnames",
-                                        placeholder: "Surnames *"
-                                      },
-                                      domProps: {
-                                        value:
-                                          _vm.companies[index].address.surnames
-                                      },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.companies[index].address,
-                                            "surnames",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "field field-reciever-address-line-1"
-                                  },
-                                  [
-                                    _c("label", { staticClass: "label" }, [
-                                      _vm._v("Address line 1")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value:
-                                            _vm.companies[index].address
-                                              .address_line_1,
-                                          expression:
-                                            "companies[index].address.address_line_1"
-                                        }
-                                      ],
-                                      attrs: {
-                                        type: "text",
-                                        id: "reciever_address_line_1",
-                                        name: "reciever_address_line_1",
-                                        placeholder: "Address line 1 *"
-                                      },
-                                      domProps: {
-                                        value:
-                                          _vm.companies[index].address
-                                            .address_line_1
-                                      },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.companies[index].address,
-                                            "address_line_1",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "field field-reciever-address-line-2"
-                                  },
-                                  [
-                                    _c("label", { staticClass: "label" }, [
-                                      _vm._v("Address line 2")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value:
-                                            _vm.companies[index].address
-                                              .address_line_2,
-                                          expression:
-                                            "companies[index].address.address_line_2"
-                                        }
-                                      ],
-                                      attrs: {
-                                        type: "text",
-                                        id: "reciever_address_line_2",
-                                        name: "reciever_address_line_2",
-                                        placeholder: "Address line 2"
-                                      },
-                                      domProps: {
-                                        value:
-                                          _vm.companies[index].address
-                                            .address_line_2
-                                      },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.companies[index].address,
-                                            "address_line_2",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "field field-reciever-city" },
-                                  [
-                                    _c("label", { staticClass: "label" }, [
-                                      _vm._v("City")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value:
-                                            _vm.companies[index].address.city,
-                                          expression:
-                                            "companies[index].address.city"
-                                        }
-                                      ],
-                                      attrs: {
-                                        type: "text",
-                                        id: "reciever_city",
-                                        name: "reciever_city",
-                                        placeholder: "City *"
-                                      },
-                                      domProps: {
-                                        value: _vm.companies[index].address.city
-                                      },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.companies[index].address,
-                                            "city",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "field field-reciever-country"
-                                  },
-                                  [
-                                    _c("label", { staticClass: "label" }, [
-                                      _vm._v("Country")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value:
-                                            _vm.companies[index].address
-                                              .country,
-                                          expression:
-                                            "companies[index].address.country"
-                                        }
-                                      ],
-                                      attrs: {
-                                        type: "text",
-                                        id: "reciever_country",
-                                        name: "reciever_country",
-                                        placeholder: "Country *"
-                                      },
-                                      domProps: {
-                                        value:
-                                          _vm.companies[index].address.country
-                                      },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.companies[index].address,
-                                            "country",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "field field-reciever-zip" },
-                                  [
-                                    _c("label", { staticClass: "label" }, [
-                                      _vm._v("Zip code")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value:
-                                            _vm.companies[index].address
-                                              .zip_code,
-                                          expression:
-                                            "companies[index].address.zip_code"
-                                        }
-                                      ],
-                                      attrs: {
-                                        type: "number",
-                                        id: "reciever_zip_code",
-                                        name: "reciever_zip_code",
-                                        placeholder: "Zip *"
-                                      },
-                                      domProps: {
-                                        value:
-                                          _vm.companies[index].address.zip_code
-                                      },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            _vm.companies[index].address,
-                                            "zip_code",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "field has-text-right m-t-30"
-                                  },
-                                  [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "button is-info",
-                                        on: {
-                                          click: function($event) {
-                                            $event.preventDefault()
-                                            _vm.updateCompany(company)
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Update company")]
+                                  _vm._v(
+                                    _vm._s(
+                                      company.address.name +
+                                        " " +
+                                        company.address.surnames
                                     )
-                                  ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(")")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "card-header-icon has-text-primary is-pulled-right p-0 m-r-5 m-l-5",
+                            attrs: {
+                              href: "/companies/" + company.id + "/postcards",
+                              "aria-label": "Show company postcards",
+                              disabled: !company.postcards.length
+                            }
+                          },
+                          [_vm._m(0, true)]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "card-header-icon has-text-info is-pulled-right p-0 m-r-5 m-l-5",
+                            attrs: {
+                              href: "/companies/" + company.id,
+                              "aria-label": "Show company"
+                            }
+                          },
+                          [_vm._m(1, true)]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "card-header-icon is-pulled-right p-0 m-r-5 m-l-5",
+                            attrs: { href: "#", "aria-label": "Edit company" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.toggleEditForm(company)
+                              }
+                            }
+                          },
+                          [_vm._m(2, true)]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "card-header-icon has-text-danger is-pulled-right p-0 m-r-10 m-l-5",
+                            attrs: {
+                              href: "#",
+                              "aria-label": "Delete company"
+                            },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.deleteCompany(company)
+                              }
+                            }
+                          },
+                          [_vm._m(3, true)]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card-content" }, [
+                        _c("div", { staticClass: "reciever_container" }, [
+                          _c("form", { staticClass: "reciever_form" }, [
+                            _c(
+                              "div",
+                              { staticClass: "field field-reciever-company" },
+                              [
+                                _c("label", { staticClass: "label" }, [
+                                  _vm._v("Company name")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.companies[index].address.company,
+                                      expression:
+                                        "companies[index].address.company"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    id: "reciever_company",
+                                    name: "reciever_company",
+                                    placeholder: "Company"
+                                  },
+                                  domProps: {
+                                    value: _vm.companies[index].address.company
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.companies[index].address,
+                                        "company",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "field field-reciever-birthday" },
+                              [
+                                _c("label", { staticClass: "label" }, [
+                                  _vm._v("Birthday")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.companies[index].address.birthday,
+                                      expression:
+                                        "companies[index].address.birthday"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "date",
+                                    id: "reciever_birthday",
+                                    name: "reciever_birthday",
+                                    placeholder: "Birthday"
+                                  },
+                                  domProps: {
+                                    value: _vm.companies[index].address.birthday
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.companies[index].address,
+                                        "birthday",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "field field-reciever-title" },
+                              [
+                                _c("label", { staticClass: "label" }, [
+                                  _vm._v("Title")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.companies[index].address.title,
+                                      expression:
+                                        "companies[index].address.title"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    id: "reciever_title",
+                                    name: "reciever_title",
+                                    placeholder: "Title"
+                                  },
+                                  domProps: {
+                                    value: _vm.companies[index].address.title
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.companies[index].address,
+                                        "title",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "field field-reciever-name" },
+                              [
+                                _c("label", { staticClass: "label" }, [
+                                  _vm._v("Name")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.companies[index].address.name,
+                                      expression:
+                                        "companies[index].address.name"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    id: "reciever_name",
+                                    name: "reciever_name",
+                                    placeholder: "Name *"
+                                  },
+                                  domProps: {
+                                    value: _vm.companies[index].address.name
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.companies[index].address,
+                                        "name",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "field field-reciever-surnames" },
+                              [
+                                _c("label", { staticClass: "label" }, [
+                                  _vm._v("Surnames")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.companies[index].address.surnames,
+                                      expression:
+                                        "companies[index].address.surnames"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    id: "reciever_surnames",
+                                    name: "reciever_surnames",
+                                    placeholder: "Surnames *"
+                                  },
+                                  domProps: {
+                                    value: _vm.companies[index].address.surnames
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.companies[index].address,
+                                        "surnames",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "field field-reciever-address-line-1"
+                              },
+                              [
+                                _c("label", { staticClass: "label" }, [
+                                  _vm._v("Address line 1")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.companies[index].address
+                                          .address_line_1,
+                                      expression:
+                                        "companies[index].address.address_line_1"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    id: "reciever_address_line_1",
+                                    name: "reciever_address_line_1",
+                                    placeholder: "Address line 1 *"
+                                  },
+                                  domProps: {
+                                    value:
+                                      _vm.companies[index].address
+                                        .address_line_1
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.companies[index].address,
+                                        "address_line_1",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "field field-reciever-address-line-2"
+                              },
+                              [
+                                _c("label", { staticClass: "label" }, [
+                                  _vm._v("Address line 2")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.companies[index].address
+                                          .address_line_2,
+                                      expression:
+                                        "companies[index].address.address_line_2"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    id: "reciever_address_line_2",
+                                    name: "reciever_address_line_2",
+                                    placeholder: "Address line 2"
+                                  },
+                                  domProps: {
+                                    value:
+                                      _vm.companies[index].address
+                                        .address_line_2
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.companies[index].address,
+                                        "address_line_2",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "field field-reciever-city" },
+                              [
+                                _c("label", { staticClass: "label" }, [
+                                  _vm._v("City")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.companies[index].address.city,
+                                      expression:
+                                        "companies[index].address.city"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    id: "reciever_city",
+                                    name: "reciever_city",
+                                    placeholder: "City *"
+                                  },
+                                  domProps: {
+                                    value: _vm.companies[index].address.city
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.companies[index].address,
+                                        "city",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "field field-reciever-country" },
+                              [
+                                _c("label", { staticClass: "label" }, [
+                                  _vm._v("Country")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.companies[index].address.country,
+                                      expression:
+                                        "companies[index].address.country"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    id: "reciever_country",
+                                    name: "reciever_country",
+                                    placeholder: "Country *"
+                                  },
+                                  domProps: {
+                                    value: _vm.companies[index].address.country
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.companies[index].address,
+                                        "country",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "field field-reciever-zip" },
+                              [
+                                _c("label", { staticClass: "label" }, [
+                                  _vm._v("Zip code")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.companies[index].address.zip_code,
+                                      expression:
+                                        "companies[index].address.zip_code"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "number",
+                                    id: "reciever_zip_code",
+                                    name: "reciever_zip_code",
+                                    placeholder: "Zip *"
+                                  },
+                                  domProps: {
+                                    value: _vm.companies[index].address.zip_code
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.companies[index].address,
+                                        "zip_code",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "field has-text-right m-t-30" },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "button is-info",
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        _vm.updateCompany(company)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Update company")]
                                 )
-                              ])
-                            ])
+                              ]
+                            )
                           ])
-                        ]
-                      )
-                    : _vm._e()
+                        ])
+                      ])
+                    ]
+                  )
                 ])
               })
             ],

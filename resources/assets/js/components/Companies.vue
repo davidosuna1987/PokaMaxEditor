@@ -199,7 +199,7 @@
                 <input class="input is-small m-b-30" v-model="searchBy" type="text" placeholder="Search company" />
 
                 <div v-for="(company, index) in filteredCompanies">
-                    <div v-if="company.address.company !== null && company.address.company !== ''" class="card m-b-30 card-company" :data-id="company.id">
+                    <div class="card m-b-30 card-company" :data-id="company.id">
                         <div class="card-header">
                             <p class="card-header-title">
                                 <span v-html="$options.filters.highlight(company.address.company, searchBy)">{{company.address.company}}</span> <small class="has-text-weight-light m-l-10">(<span v-html="$options.filters.highlight(company.address.name+' '+company.address.surnames, searchBy)">{{company.address.name+' '+company.address.surnames}}</span>)</small>

@@ -10,6 +10,7 @@ use App\AddressList;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\CreateCompanyRequest;
+use App\Http\Requests\UpdateCompanyRequest;
 use App\Http\Requests\CreateCompanyFromEditorRequest;
 use App\Http\Requests\UpdateCompanyFromEditorRequest;
 
@@ -173,7 +174,7 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function apiUpdate(Request $request, $id)
+    public function apiUpdate(UpdateCompanyRequest $request, $id)
     {
         if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
             return redirect()->route('home');
