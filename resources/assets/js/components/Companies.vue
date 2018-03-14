@@ -202,7 +202,7 @@
                     <div v-if="company.address.company !== null && company.address.company !== ''" class="card m-b-30 card-company" :data-id="company.id">
                         <div class="card-header">
                             <p class="card-header-title">
-                                {{company.address.company}} <small class="has-text-weight-light m-l-10">({{company.address.name}} {{company.address.surnames}})</small>
+                                <span v-html="$options.filters.highlight(company.address.company, searchBy)">{{company.address.company}}</span> <small class="has-text-weight-light m-l-10">(<span v-html="$options.filters.highlight(company.address.name+' '+company.address.surnames, searchBy)">{{company.address.name+' '+company.address.surnames}}</span>)</small>
                             </p>
                             <a :href="'/companies/'+company.id+'/postcards'"
                                class="card-header-icon has-text-primary is-pulled-right p-0 m-r-5 m-l-5"
@@ -391,7 +391,8 @@
             filteredCompanies: function(){
                 var vue = this;
                 return this.companies.filter(function(comp){
-                    return comp.address.company.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0 || comp.address.name.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0 || comp.address.surnames.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0;
+                    let fullName = comp.address.name+' '+comp.address.surnames;
+                    return comp.address.company.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0 || fullName.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0;
                 });
             },
             newCompanyEmailHasError() {

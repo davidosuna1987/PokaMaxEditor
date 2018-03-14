@@ -1214,6 +1214,13 @@ Vue.component('postcards', __webpack_require__(46));
 Vue.component('recievers-table', __webpack_require__(68));
 Vue.component('postcard-configurator', __webpack_require__(49));
 
+Vue.filter('highlight', function (word, query) {
+    var check = new RegExp(query, "ig");
+    return word.toString().replace(check, function (matchedText, a, b) {
+        return '<mark>' + matchedText + '</mark>';
+    });
+});
+
 var app = new Vue({
     el: '#app'
 });
@@ -44577,7 +44584,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         filteredCompanies: function filteredCompanies() {
             var vue = this;
             return this.companies.filter(function (comp) {
-                return comp.address.company.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0 || comp.address.name.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0 || comp.address.surnames.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0;
+                var fullName = comp.address.name + ' ' + comp.address.surnames;
+                return comp.address.company.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0 || fullName.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0;
             });
         },
         newCompanyEmailHasError: function newCompanyEmailHasError() {
@@ -45600,22 +45608,51 @@ var render = function() {
                         [
                           _c("div", { staticClass: "card-header" }, [
                             _c("p", { staticClass: "card-header-title" }, [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(company.address.company) +
-                                  " "
+                              _c(
+                                "span",
+                                {
+                                  domProps: {
+                                    innerHTML: _vm._s(
+                                      _vm.$options.filters.highlight(
+                                        company.address.company,
+                                        _vm.searchBy
+                                      )
+                                    )
+                                  }
+                                },
+                                [_vm._v(_vm._s(company.address.company))]
                               ),
+                              _vm._v(" "),
                               _c(
                                 "small",
                                 { staticClass: "has-text-weight-light m-l-10" },
                                 [
-                                  _vm._v(
-                                    "(" +
-                                      _vm._s(company.address.name) +
-                                      " " +
-                                      _vm._s(company.address.surnames) +
-                                      ")"
-                                  )
+                                  _vm._v("("),
+                                  _c(
+                                    "span",
+                                    {
+                                      domProps: {
+                                        innerHTML: _vm._s(
+                                          _vm.$options.filters.highlight(
+                                            company.address.name +
+                                              " " +
+                                              company.address.surnames,
+                                            _vm.searchBy
+                                          )
+                                        )
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(
+                                          company.address.name +
+                                            " " +
+                                            company.address.surnames
+                                        )
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(")")
                                 ]
                               )
                             ]),

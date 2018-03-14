@@ -32,6 +32,13 @@ Vue.component('postcards', require('./components/Postcards.vue'));
 Vue.component('recievers-table', require('./components/RecieversTable.vue'));
 Vue.component('postcard-configurator', require('./components/PostcardConfigurator.vue'));
 
+Vue.filter('highlight', function(word, query){
+  var check = new RegExp(query, "ig");
+  return word.toString().replace(check, function(matchedText,a,b){
+      return ('<mark>' + matchedText + '</mark>');
+  });
+});
+
 const app = new Vue({
     el: '#app'
 });
