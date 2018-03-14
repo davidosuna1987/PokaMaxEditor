@@ -14,13 +14,10 @@
                         {{ csrf_field() }}
 
                         <div class="field">
-                            <label class="label">E-mail Address</label>
-
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="email" type="email" name="email"
-                                               value="{{ old('email') }}" required autofocus>
+                                        <input class="input" id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Email *" required autofocus>
                                     </p>
 
                                     @if ($errors->has('email'))
@@ -33,12 +30,10 @@
                         </div>
 
                         <div class="field">
-                            <label class="label">Company</label>
-
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="company" type="text" name="company" required>
+                                        <input class="input" id="company" type="text" name="company" placeholder="Company *" required>
                                     </p>
 
                                     @if ($errors->has('company'))
@@ -51,12 +46,10 @@
                         </div>
 
                         <div class="field">
-                            <label class="label">Name</label>
-
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="name" type="text" name="name" required>
+                                        <input class="input" id="name" type="text" name="name" placeholder="Name *" required>
                                     </p>
 
                                     @if ($errors->has('name'))
@@ -69,12 +62,10 @@
                         </div>
 
                         <div class="field">
-                            <label class="label">Surnames</label>
-
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="surnames" type="text" name="surnames" required>
+                                        <input class="input" id="surnames" type="text" name="surnames" placeholder="Surnames *" required>
                                     </p>
 
                                     @if ($errors->has('surnames'))
@@ -87,12 +78,10 @@
                         </div>
 
                         <div class="field">
-                            <label class="label">Address line 1</label>
-
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="address_line_1" type="text" name="address_line_1" required>
+                                        <input class="input" id="address_line_1" type="text" name="address_line_1" placeholder="Address line 1 *" required>
                                     </p>
 
                                     @if ($errors->has('address_line_1'))
@@ -105,12 +94,10 @@
                         </div>
 
                         <div class="field">
-                            <label class="label">Address line 2</label>
-
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="address_line_2" type="text" name="address_line_2">
+                                        <input class="input" id="address_line_2" type="text" name="address_line_2" placeholder="Address line 2">
                                     </p>
 
                                     @if ($errors->has('address_line_2'))
@@ -123,12 +110,10 @@
                         </div>
 
                         <div class="field">
-                            <label class="label">Country</label>
-
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="country" type="text" name="country" required>
+                                        <input class="input" id="country" type="text" name="country" placeholder="Country *" required>
                                     </p>
 
                                     @if ($errors->has('country'))
@@ -141,12 +126,10 @@
                         </div>
 
                         <div class="field">
-                            <label class="label">City</label>
-
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="city" type="text" name="city" required>
+                                        <input class="input" id="city" type="text" name="city" placeholder="City *" required>
                                     </p>
 
                                     @if ($errors->has('city'))
@@ -159,12 +142,10 @@
                         </div>
 
                         <div class="field">
-                            <label class="label">Zip code</label>
-
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="zip_code" type="text" name="zip_code" required>
+                                        <input class="input" id="zip_code" type="number" name="zip_code" placeholder="Zip code *" required>
                                     </p>
 
                                     @if ($errors->has('zip_code'))
@@ -177,12 +158,10 @@
                         </div>
 
                         <div class="field">
-                            <label class="label">Password</label>
-
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="password" type="password" name="password" required>
+                                        <input class="input" id="password" type="password" name="password" placeholder="Password *" required>
                                     </p>
 
                                     @if ($errors->has('password'))
@@ -195,13 +174,10 @@
                         </div>
 
                         <div class="field">
-                            <label class="label">Confirm Password</label>
-
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="password-confirm" type="password"
-                                               name="password_confirmation" required>
+                                        <input class="input" id="password-confirm" type="password" name="password_confirmation" placeholder="Confirm password *" required>
                                     </p>
                                 </div>
                             </div>
