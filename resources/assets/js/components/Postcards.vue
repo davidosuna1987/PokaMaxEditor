@@ -1,20 +1,11 @@
 <template>
-    <div v-if="company" class="postcards-show">
+    <div class="postcards-show">
         <div class="columns is-centered">
             <div class="column is-10">
-                <p class="title is-3 has-text-info">{{company.address.company}} postcards</p>
-                <!-- <div v-if="company.postcards.length" class="card">
-                    <div class="card-content">
-                        <div class="columns">
-                            <div v-for="postcard in company.postcards" class="column is-3">
-                                <img :src="postcard.front_cropped_file_path" alt="Postcard front image">
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                <p class="title is-3 has-text-info">{{companyProp ? company.address.company : 'Your'}} postcards</p>
 
                 <b-table
-                    v-if="company.postcards.length"
+                    v-if="postcards && postcards.length"
                     class="postcards-table"
                     narrowed
                     hoverable
@@ -22,7 +13,7 @@
                     :paginated="isPaginated"
                     per-page="20"
                     pagination-size="is-small"
-                    :data="company.postcards"
+                    :data="postcards"
                     default-sort-direction="asc"
                     default-sort="id">
 
@@ -68,7 +59,7 @@
                 <div v-else class="card">
                     <div class="level p-10">
                         <div class="level-left">
-                            No postcards created yet.
+                            {{companyProp ? company.address.company + " doesn't have postcards created yet" : "You don't have postcards created yet"}}
                         </div>
                         <div class="level-right">
                             <a href="/editor" class="button is-info">Create postcard</a>
@@ -84,10 +75,11 @@
     import RecieversTable from './RecieversTable.vue';
 
     export default {
-        props: ['companyProp'],
+        props: ['companyProp', 'postcardsProp'],
         data() {
             return {
                 company: null,
+                postcards: null,
                 isPaginated: false
             }
         },
@@ -105,6 +97,7 @@
         },
         mounted() {
             this.company = JSON.parse(this.companyProp);
+            this.postcards = JSON.parse(this.postcardsProp);
         }
     }
 </script>

@@ -255,7 +255,8 @@ class CompanyController extends Controller
           return redirect()->route('home');
       endif;
 
-      $company = User::whereIn('role_id', [1, 2, 4])->with('address', 'postcards', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address')->findOrFail($id);
-      return view('pages.companies.postcards', compact('company'));
+      $company = User::whereIn('role_id', [1, 2, 4])->with('address')->findOrFail($id);
+      $postcards = $company->postcards()->with('senderAddress', 'recieverAddresses')->get();
+      return view('pages.companies.postcards', compact('company', 'postcards'));
     }
 }

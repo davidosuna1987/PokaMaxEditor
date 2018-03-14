@@ -46373,23 +46373,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['companyProp'],
+    props: ['companyProp', 'postcardsProp'],
     data: function data() {
         return {
             company: null,
+            postcards: null,
             isPaginated: false
         };
     },
@@ -46408,6 +46400,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         this.company = JSON.parse(this.companyProp);
+        this.postcards = JSON.parse(this.postcardsProp);
     }
 });
 
@@ -46419,232 +46412,228 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.company
-    ? _c("div", { staticClass: "postcards-show" }, [
-        _c("div", { staticClass: "columns is-centered" }, [
-          _c(
-            "div",
-            { staticClass: "column is-10" },
-            [
-              _c("p", { staticClass: "title is-3 has-text-info" }, [
-                _vm._v(_vm._s(_vm.company.address.company) + " postcards")
-              ]),
-              _vm._v(" "),
-              _vm.company.postcards.length
-                ? _c("b-table", {
-                    staticClass: "postcards-table",
-                    attrs: {
-                      narrowed: "",
-                      hoverable: "",
-                      striped: "",
-                      paginated: _vm.isPaginated,
-                      "per-page": "20",
-                      "pagination-size": "is-small",
-                      data: _vm.company.postcards,
-                      "default-sort-direction": "asc",
-                      "default-sort": "id"
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "default",
-                        fn: function(props) {
-                          return [
-                            _c(
-                              "b-table-column",
-                              {
+  return _c("div", { staticClass: "postcards-show" }, [
+    _c("div", { staticClass: "columns is-centered" }, [
+      _c(
+        "div",
+        { staticClass: "column is-10" },
+        [
+          _c("p", { staticClass: "title is-3 has-text-info" }, [
+            _vm._v(
+              _vm._s(_vm.companyProp ? _vm.company.address.company : "Your") +
+                " postcards"
+            )
+          ]),
+          _vm._v(" "),
+          _vm.postcards && _vm.postcards.length
+            ? _c("b-table", {
+                staticClass: "postcards-table",
+                attrs: {
+                  narrowed: "",
+                  hoverable: "",
+                  striped: "",
+                  paginated: _vm.isPaginated,
+                  "per-page": "20",
+                  "pagination-size": "is-small",
+                  data: _vm.postcards,
+                  "default-sort-direction": "asc",
+                  "default-sort": "id"
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(props) {
+                      return [
+                        _c(
+                          "b-table-column",
+                          {
+                            attrs: {
+                              field: "id",
+                              label: "#",
+                              width: "40",
+                              sortable: ""
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(props.row.id) +
+                                "\n                    "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-table-column",
+                          { attrs: { field: "picture", label: "Picture" } },
+                          [
+                            _c("figure", { staticClass: "postcard-picture" }, [
+                              _c("img", {
                                 attrs: {
-                                  field: "id",
-                                  label: "#",
-                                  width: "40",
-                                  sortable: ""
+                                  src: props.row.front_thumbnail_file_path,
+                                  alt: "Postcard picture",
+                                  width: "100"
                                 }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(props.row.id) +
-                                    "\n                    "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
+                              })
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-table-column",
+                          {
+                            attrs: {
+                              field: "recievers",
+                              label: "Recievers",
+                              sortable: ""
+                            }
+                          },
+                          [
                             _c(
-                              "b-table-column",
-                              { attrs: { field: "picture", label: "Picture" } },
-                              [
-                                _c(
-                                  "figure",
-                                  { staticClass: "postcard-picture" },
-                                  [
-                                    _c("img", {
-                                      attrs: {
-                                        src:
-                                          props.row.front_thumbnail_file_path,
-                                        alt: "Postcard picture",
-                                        width: "100"
-                                      }
-                                    })
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "b-table-column",
+                              "a",
                               {
-                                attrs: {
-                                  field: "recievers",
-                                  label: "Recievers",
-                                  sortable: ""
-                                }
-                              },
-                              [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "button is-info is-small",
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        _vm.showRecievers(
-                                          props.row.reciever_addresses
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      _vm._s(
-                                        props.row.reciever_addresses.length
-                                      ) +
-                                        " " +
-                                        _vm._s(
-                                          props.row.reciever_addresses.length ==
-                                          1
-                                            ? "reciever"
-                                            : "recievers"
-                                        )
+                                staticClass: "button is-info is-small",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.showRecievers(
+                                      props.row.reciever_addresses
                                     )
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "b-table-column",
-                              {
-                                attrs: {
-                                  field: "status",
-                                  label: "Status",
-                                  sortable: ""
+                                  }
                                 }
                               },
                               [
                                 _vm._v(
-                                  "\n                        " +
-                                    _vm._s(props.row.status) +
-                                    "\n                    "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "b-table-column",
-                              { attrs: { label: "Actions", width: "290" } },
-                              [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "button is-small m-r-5",
-                                    attrs: { href: "" }
-                                  },
-                                  [
-                                    _c("span", { staticClass: "icon m-r-5" }, [
-                                      _c("i", { staticClass: "mdi mdi-eye" })
-                                    ]),
-                                    _vm._v("Show\n                        ")
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "button is-small m-r-5 is-info",
-                                    attrs: { href: "" }
-                                  },
-                                  [
-                                    _c("span", { staticClass: "icon m-r-5" }, [
-                                      _c("i", { staticClass: "mdi mdi-pencil" })
-                                    ]),
-                                    _vm._v("Edit\n                        ")
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "button is-small m-r-5 is-link",
-                                    attrs: { href: "" }
-                                  },
-                                  [
-                                    _c("span", { staticClass: "icon m-r-5" }, [
-                                      _c("i", {
-                                        staticClass: "fa fa-file-pdf-o"
-                                      })
-                                    ]),
-                                    _vm._v("Invoices\n                        ")
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "delete-invoice-button button is-small is-danger",
-                                    attrs: { href: "" }
-                                  },
-                                  [
-                                    _c("span", { staticClass: "icon" }, [
-                                      _c("i", { staticClass: "mdi mdi-delete" })
-                                    ])
-                                  ]
+                                  _vm._s(props.row.reciever_addresses.length) +
+                                    " " +
+                                    _vm._s(
+                                      props.row.reciever_addresses.length == 1
+                                        ? "reciever"
+                                        : "recievers"
+                                    )
                                 )
                               ]
                             )
                           ]
-                        }
-                      }
-                    ])
-                  })
-                : _c("div", { staticClass: "card" }, [
-                    _c("div", { staticClass: "level p-10" }, [
-                      _c("div", { staticClass: "level-left" }, [
-                        _vm._v(
-                          "\n                        No postcards created yet.\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "level-right" }, [
+                        ),
+                        _vm._v(" "),
                         _c(
-                          "a",
+                          "b-table-column",
                           {
-                            staticClass: "button is-info",
-                            attrs: { href: "/editor" }
+                            attrs: {
+                              field: "status",
+                              label: "Status",
+                              sortable: ""
+                            }
                           },
-                          [_vm._v("Create postcard")]
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(props.row.status) +
+                                "\n                    "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-table-column",
+                          { attrs: { label: "Actions", width: "290" } },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "button is-small m-r-5",
+                                attrs: { href: "" }
+                              },
+                              [
+                                _c("span", { staticClass: "icon m-r-5" }, [
+                                  _c("i", { staticClass: "mdi mdi-eye" })
+                                ]),
+                                _vm._v("Show\n                        ")
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass: "button is-small m-r-5 is-info",
+                                attrs: { href: "" }
+                              },
+                              [
+                                _c("span", { staticClass: "icon m-r-5" }, [
+                                  _c("i", { staticClass: "mdi mdi-pencil" })
+                                ]),
+                                _vm._v("Edit\n                        ")
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass: "button is-small m-r-5 is-link",
+                                attrs: { href: "" }
+                              },
+                              [
+                                _c("span", { staticClass: "icon m-r-5" }, [
+                                  _c("i", { staticClass: "fa fa-file-pdf-o" })
+                                ]),
+                                _vm._v("Invoices\n                        ")
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "delete-invoice-button button is-small is-danger",
+                                attrs: { href: "" }
+                              },
+                              [
+                                _c("span", { staticClass: "icon" }, [
+                                  _c("i", { staticClass: "mdi mdi-delete" })
+                                ])
+                              ]
+                            )
+                          ]
                         )
-                      ])
-                    ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            : _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "level p-10" }, [
+                  _c("div", { staticClass: "level-left" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(
+                          _vm.companyProp
+                            ? _vm.company.address.company +
+                              " doesn't have postcards created yet"
+                            : "You don't have postcards created yet"
+                        ) +
+                        "\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "level-right" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "button is-info",
+                        attrs: { href: "/editor" }
+                      },
+                      [_vm._v("Create postcard")]
+                    )
                   ])
-            ],
-            1
-          )
-        ])
-      ])
-    : _vm._e()
+                ])
+              ])
+        ],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
