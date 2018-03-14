@@ -24820,7 +24820,7 @@ background: #ccc;
 
 .reciever_container .reciever_form .field .error {
   position: absolute;
-  top: 10px;
+  bottom: 6px;
   left: calc(100% - 22px);
 }
 

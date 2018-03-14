@@ -1,4 +1,6 @@
 /*
+- Remove errors computed (like Companies Component)
+
 - Postcard create
     · No create new addresses, only assign address_id
 
@@ -7,7 +9,6 @@
 
 - Validations
     · AddressMultipleInsertRequest cambiar código comentado por el de test
-    · companies->information
     · company->information
 
 - Manuel

@@ -44533,12 +44533,62 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             searchBy: '',
             newCompanyErrors: {},
+            updatedCompanyErrors: {},
             companies: [],
             loadingData: false,
             creatingCompany: false,
@@ -44597,33 +44647,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var fullName = comp.address.name + ' ' + comp.address.surnames;
                 return comp.address.company.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0 || fullName.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0;
             });
-        },
-        newCompanyEmailHasError: function newCompanyEmailHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['email']);
-        },
-        newCompanyPasswordHasError: function newCompanyPasswordHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['password']);
-        },
-        newCompanyCompanyHasError: function newCompanyCompanyHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['company']);
-        },
-        newCompanyNameHasError: function newCompanyNameHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['name']);
-        },
-        newCompanySurnamesHasError: function newCompanySurnamesHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['surnames']);
-        },
-        newCompanyAddressHasError: function newCompanyAddressHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['address_line_1']);
-        },
-        newCompanyCityHasError: function newCompanyCityHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['city']);
-        },
-        newCompanyCountryHasError: function newCompanyCountryHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['country']);
-        },
-        newCompanyZipHasError: function newCompanyZipHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['zip_code']);
         }
     },
     methods: {
@@ -44645,8 +44668,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (isOpened) {
                 $('.card-company[data-id="' + company.id + '"]').removeClass('opened').find('.card-content').slideUp();
             } else {
+                this.setUpdateFields(company);
                 $('.card-company[data-id="' + company.id + '"]').addClass('opened').find('.card-content').slideDown();
             }
+        },
+        setUpdateFields: function setUpdateFields(company) {
+            this.updatedCompanyErrors = {};
+            var ca = company.address;
+            this.updateFields.address_id = ca.id;
+            this.updateFields.address_line_1 = ca.address_line_1;
+            this.updateFields.address_line_2 = ca.address_line_2;
+            this.updateFields.city = ca.city;
+            this.updateFields.country = ca.country;
+            this.updateFields.zip_code = ca.zip_code;
+            this.updateFields.title = ca.title;
+            this.updateFields.company = ca.company;
+            this.updateFields.name = ca.name;
+            this.updateFields.surnames = ca.surnames;
+            this.updateFields.birthday = ca.birthday;
         },
         createCompany: function createCompany() {
             var _this2 = this;
@@ -44693,19 +44732,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateCompany: function updateCompany(company) {
             var _this3 = this;
 
-            var ca = company.address;
-            this.updateFields.address_id = ca.id;
-            this.updateFields.address_line_1 = ca.address_line_1;
-            this.updateFields.address_line_2 = ca.address_line_2;
-            this.updateFields.city = ca.city;
-            this.updateFields.country = ca.country;
-            this.updateFields.zip_code = ca.zip_code;
-            this.updateFields.title = ca.title;
-            this.updateFields.company = ca.company;
-            this.updateFields.name = ca.name;
-            this.updateFields.surnames = ca.surnames;
-            this.updateFields.birthday = ca.birthday;
-
             this.loadingData = true;
             axios.put('/api/companies/' + company.id, this.updateFields).then(function (response) {
                 _this3.loadingData = false;
@@ -44713,7 +44739,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this3.getCompanies();
                 _this3.$snackbar.open(response.data.message);
             }).catch(function (error) {
+                if (error.response.status === 419) {
+                    location.href = '/login';
+                }
                 console.info(error);
+                _this3.updatedCompanyErrors = error.response.data.errors;
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+                _this3.$snackbar.open({
+                    duration: 5000,
+                    message: 'Please correct errors to create a new company.',
+                    type: 'is-danger',
+                    queue: false,
+                    position: 'is-top',
+                    actionText: 'OK',
+                    onAction: function onAction() {
+                        //Do something on click button
+                    }
+                });
             });
         },
         deleteCompany: function deleteCompany(company) {
@@ -44748,6 +44792,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.newCompany.password = Math.random().toString(36).substring(2) + new Date().getTime().toString(36);
         },
         removeErrors: function removeErrors() {
+            // Remove new company errors
             if (!_.isEmpty(this.newCompanyErrors)) {
                 if ('email' in this.newCompanyErrors && !_.isEmpty(this.newCompany.email)) {
                     this.newCompanyErrors['email'] = null;
@@ -44775,6 +44820,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
                 if ('zip_code' in this.newCompanyErrors && !_.isEmpty(this.newCompany.zip_code)) {
                     this.newCompanyErrors['zip_code'] = null;
+                }
+            }
+
+            // Remove updated company errors
+            if (!_.isEmpty(this.updatedCompanyErrors)) {
+                if ('company' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.company)) {
+                    this.updatedCompanyErrors['company'] = null;
+                }
+                if ('name' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.name)) {
+                    this.updatedCompanyErrors['name'] = null;
+                }
+                if ('surnames' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.surnames)) {
+                    this.updatedCompanyErrors['surnames'] = null;
+                }
+                if ('address_line_1' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.address_line_1)) {
+                    this.updatedCompanyErrors['address_line_1'] = null;
+                }
+                if ('city' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.city)) {
+                    this.updatedCompanyErrors['city'] = null;
+                }
+                if ('country' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.country)) {
+                    this.updatedCompanyErrors['country'] = null;
+                }
+                if ('zip_code' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.zip_code)) {
+                    this.updatedCompanyErrors['zip_code'] = null;
                 }
             }
         }
@@ -44857,7 +44927,7 @@ var render = function() {
                           expression: "newCompany.email"
                         }
                       ],
-                      class: [{ "has-error": _vm.newCompanyEmailHasError }],
+                      class: [{ "has-error": _vm.newCompanyErrors["email"] }],
                       attrs: {
                         type: "email",
                         id: "reciever_email",
@@ -44884,7 +44954,7 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm.newCompanyEmailHasError
+                    _vm.newCompanyErrors["email"]
                       ? _c(
                           "span",
                           { staticClass: "error has-text-danger is-size-7" },
@@ -44916,7 +44986,9 @@ var render = function() {
                           expression: "newCompany.password"
                         }
                       ],
-                      class: [{ "has-error": _vm.newCompanyPasswordHasError }],
+                      class: [
+                        { "has-error": _vm.newCompanyErrors["password"] }
+                      ],
                       attrs: {
                         type: "password",
                         id: "reciever_password",
@@ -44962,7 +45034,7 @@ var render = function() {
                       [_vm._v("Generate password")]
                     ),
                     _vm._v(" "),
-                    _vm.newCompanyPasswordHasError
+                    _vm.newCompanyErrors["password"]
                       ? _c(
                           "span",
                           { staticClass: "error has-text-danger is-size-7" },
@@ -44994,7 +45066,7 @@ var render = function() {
                           expression: "newCompany.company"
                         }
                       ],
-                      class: [{ "has-error": _vm.newCompanyCompanyHasError }],
+                      class: [{ "has-error": _vm.newCompanyErrors["company"] }],
                       attrs: {
                         type: "text",
                         id: "reciever_company",
@@ -45025,7 +45097,7 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm.newCompanyCompanyHasError
+                    _vm.newCompanyErrors["company"]
                       ? _c(
                           "span",
                           { staticClass: "error has-text-danger is-size-7" },
@@ -45135,7 +45207,7 @@ var render = function() {
                           expression: "newCompany.name"
                         }
                       ],
-                      class: [{ "has-error": _vm.newCompanyNameHasError }],
+                      class: [{ "has-error": _vm.newCompanyErrors["name"] }],
                       attrs: {
                         type: "text",
                         id: "reciever_name",
@@ -45162,7 +45234,7 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm.newCompanyNameHasError
+                    _vm.newCompanyErrors["name"]
                       ? _c(
                           "span",
                           { staticClass: "error has-text-danger is-size-7" },
@@ -45194,7 +45266,9 @@ var render = function() {
                           expression: "newCompany.surnames"
                         }
                       ],
-                      class: [{ "has-error": _vm.newCompanySurnamesHasError }],
+                      class: [
+                        { "has-error": _vm.newCompanyErrors["surnames"] }
+                      ],
                       attrs: {
                         type: "text",
                         id: "reciever_surnames",
@@ -45225,7 +45299,7 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm.newCompanySurnamesHasError
+                    _vm.newCompanyErrors["surnames"]
                       ? _c(
                           "span",
                           { staticClass: "error has-text-danger is-size-7" },
@@ -45260,7 +45334,11 @@ var render = function() {
                             expression: "newCompany.address_line_1"
                           }
                         ],
-                        class: [{ "has-error": _vm.newCompanyAddressHasError }],
+                        class: [
+                          {
+                            "has-error": _vm.newCompanyErrors["address_line_1"]
+                          }
+                        ],
                         attrs: {
                           type: "text",
                           id: "reciever_address_line_1",
@@ -45291,7 +45369,7 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _vm.newCompanyAddressHasError
+                      _vm.newCompanyErrors["address_line_1"]
                         ? _c(
                             "span",
                             { staticClass: "error has-text-danger is-size-7" },
@@ -45371,7 +45449,7 @@ var render = function() {
                           expression: "newCompany.city"
                         }
                       ],
-                      class: [{ "has-error": _vm.newCompanyCityHasError }],
+                      class: [{ "has-error": _vm.newCompanyErrors["city"] }],
                       attrs: {
                         type: "text",
                         id: "reciever_city",
@@ -45398,7 +45476,7 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm.newCompanyCityHasError
+                    _vm.newCompanyErrors["city"]
                       ? _c(
                           "span",
                           { staticClass: "error has-text-danger is-size-7" },
@@ -45430,7 +45508,7 @@ var render = function() {
                           expression: "newCompany.country"
                         }
                       ],
-                      class: [{ "has-error": _vm.newCompanyCountryHasError }],
+                      class: [{ "has-error": _vm.newCompanyErrors["country"] }],
                       attrs: {
                         type: "text",
                         id: "reciever_country",
@@ -45461,7 +45539,7 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm.newCompanyCountryHasError
+                    _vm.newCompanyErrors["country"]
                       ? _c(
                           "span",
                           { staticClass: "error has-text-danger is-size-7" },
@@ -45493,7 +45571,9 @@ var render = function() {
                           expression: "newCompany.zip_code"
                         }
                       ],
-                      class: [{ "has-error": _vm.newCompanyZipHasError }],
+                      class: [
+                        { "has-error": _vm.newCompanyErrors["zip_code"] }
+                      ],
                       attrs: {
                         type: "number",
                         id: "reciever_zip_code",
@@ -45524,7 +45604,7 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm.newCompanyZipHasError
+                    _vm.newCompanyErrors["zip_code"]
                       ? _c(
                           "span",
                           { staticClass: "error has-text-danger is-size-7" },
@@ -45744,10 +45824,14 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value:
-                                        _vm.companies[index].address.company,
-                                      expression:
-                                        "companies[index].address.company"
+                                      value: _vm.updateFields.company,
+                                      expression: "updateFields.company"
+                                    }
+                                  ],
+                                  class: [
+                                    {
+                                      "has-error":
+                                        _vm.updatedCompanyErrors["company"]
                                     }
                                   ],
                                   attrs: {
@@ -45756,22 +45840,52 @@ var render = function() {
                                     name: "reciever_company",
                                     placeholder: "Company"
                                   },
-                                  domProps: {
-                                    value: _vm.companies[index].address.company
-                                  },
+                                  domProps: { value: _vm.updateFields.company },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.companies[index].address,
+                                        _vm.updateFields,
                                         "company",
                                         $event.target.value
                                       )
                                     }
                                   }
-                                })
+                                }),
+                                _vm._v(" "),
+                                _vm.updatedCompanyErrors["company"]
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "error has-text-danger is-size-7"
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "mdi mdi-alert-circle-outline mdi-18px"
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "error-message" },
+                                          [
+                                            _vm._v(
+                                              "\n                                                " +
+                                                _vm._s(
+                                                  _vm.updatedCompanyErrors[
+                                                    "company"
+                                                  ][0]
+                                                ) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
                               ]
                             ),
                             _vm._v(" "),
@@ -45788,10 +45902,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value:
-                                        _vm.companies[index].address.birthday,
-                                      expression:
-                                        "companies[index].address.birthday"
+                                      value: _vm.updateFields.birthday,
+                                      expression: "updateFields.birthday"
                                     }
                                   ],
                                   attrs: {
@@ -45801,7 +45913,7 @@ var render = function() {
                                     placeholder: "Birthday"
                                   },
                                   domProps: {
-                                    value: _vm.companies[index].address.birthday
+                                    value: _vm.updateFields.birthday
                                   },
                                   on: {
                                     input: function($event) {
@@ -45809,7 +45921,7 @@ var render = function() {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.companies[index].address,
+                                        _vm.updateFields,
                                         "birthday",
                                         $event.target.value
                                       )
@@ -45832,9 +45944,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.companies[index].address.title,
-                                      expression:
-                                        "companies[index].address.title"
+                                      value: _vm.updateFields.title,
+                                      expression: "updateFields.title"
                                     }
                                   ],
                                   attrs: {
@@ -45843,16 +45954,14 @@ var render = function() {
                                     name: "reciever_title",
                                     placeholder: "Title"
                                   },
-                                  domProps: {
-                                    value: _vm.companies[index].address.title
-                                  },
+                                  domProps: { value: _vm.updateFields.title },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.companies[index].address,
+                                        _vm.updateFields,
                                         "title",
                                         $event.target.value
                                       )
@@ -45875,9 +45984,14 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.companies[index].address.name,
-                                      expression:
-                                        "companies[index].address.name"
+                                      value: _vm.updateFields.name,
+                                      expression: "updateFields.name"
+                                    }
+                                  ],
+                                  class: [
+                                    {
+                                      "has-error":
+                                        _vm.updatedCompanyErrors["name"]
                                     }
                                   ],
                                   attrs: {
@@ -45886,22 +46000,52 @@ var render = function() {
                                     name: "reciever_name",
                                     placeholder: "Name *"
                                   },
-                                  domProps: {
-                                    value: _vm.companies[index].address.name
-                                  },
+                                  domProps: { value: _vm.updateFields.name },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.companies[index].address,
+                                        _vm.updateFields,
                                         "name",
                                         $event.target.value
                                       )
                                     }
                                   }
-                                })
+                                }),
+                                _vm._v(" "),
+                                _vm.updatedCompanyErrors["name"]
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "error has-text-danger is-size-7"
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "mdi mdi-alert-circle-outline mdi-18px"
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "error-message" },
+                                          [
+                                            _vm._v(
+                                              "\n                                                " +
+                                                _vm._s(
+                                                  _vm.updatedCompanyErrors[
+                                                    "name"
+                                                  ][0]
+                                                ) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
                               ]
                             ),
                             _vm._v(" "),
@@ -45918,10 +46062,14 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value:
-                                        _vm.companies[index].address.surnames,
-                                      expression:
-                                        "companies[index].address.surnames"
+                                      value: _vm.updateFields.surnames,
+                                      expression: "updateFields.surnames"
+                                    }
+                                  ],
+                                  class: [
+                                    {
+                                      "has-error":
+                                        _vm.updatedCompanyErrors["surnames"]
                                     }
                                   ],
                                   attrs: {
@@ -45931,7 +46079,7 @@ var render = function() {
                                     placeholder: "Surnames *"
                                   },
                                   domProps: {
-                                    value: _vm.companies[index].address.surnames
+                                    value: _vm.updateFields.surnames
                                   },
                                   on: {
                                     input: function($event) {
@@ -45939,13 +46087,45 @@ var render = function() {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.companies[index].address,
+                                        _vm.updateFields,
                                         "surnames",
                                         $event.target.value
                                       )
                                     }
                                   }
-                                })
+                                }),
+                                _vm._v(" "),
+                                _vm.updatedCompanyErrors["surnames"]
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "error has-text-danger is-size-7"
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "mdi mdi-alert-circle-outline mdi-18px"
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "error-message" },
+                                          [
+                                            _vm._v(
+                                              "\n                                                " +
+                                                _vm._s(
+                                                  _vm.updatedCompanyErrors[
+                                                    "surnames"
+                                                  ][0]
+                                                ) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
                               ]
                             ),
                             _vm._v(" "),
@@ -45965,11 +46145,16 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value:
-                                        _vm.companies[index].address
-                                          .address_line_1,
-                                      expression:
-                                        "companies[index].address.address_line_1"
+                                      value: _vm.updateFields.address_line_1,
+                                      expression: "updateFields.address_line_1"
+                                    }
+                                  ],
+                                  class: [
+                                    {
+                                      "has-error":
+                                        _vm.updatedCompanyErrors[
+                                          "address_line_1"
+                                        ]
                                     }
                                   ],
                                   attrs: {
@@ -45979,9 +46164,7 @@ var render = function() {
                                     placeholder: "Address line 1 *"
                                   },
                                   domProps: {
-                                    value:
-                                      _vm.companies[index].address
-                                        .address_line_1
+                                    value: _vm.updateFields.address_line_1
                                   },
                                   on: {
                                     input: function($event) {
@@ -45989,13 +46172,45 @@ var render = function() {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.companies[index].address,
+                                        _vm.updateFields,
                                         "address_line_1",
                                         $event.target.value
                                       )
                                     }
                                   }
-                                })
+                                }),
+                                _vm._v(" "),
+                                _vm.updatedCompanyErrors["address_line_1"]
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "error has-text-danger is-size-7"
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "mdi mdi-alert-circle-outline mdi-18px"
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "error-message" },
+                                          [
+                                            _vm._v(
+                                              "\n                                                " +
+                                                _vm._s(
+                                                  _vm.updatedCompanyErrors[
+                                                    "address_line_1"
+                                                  ][0]
+                                                ) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
                               ]
                             ),
                             _vm._v(" "),
@@ -46015,11 +46230,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value:
-                                        _vm.companies[index].address
-                                          .address_line_2,
-                                      expression:
-                                        "companies[index].address.address_line_2"
+                                      value: _vm.updateFields.address_line_2,
+                                      expression: "updateFields.address_line_2"
                                     }
                                   ],
                                   attrs: {
@@ -46029,9 +46241,7 @@ var render = function() {
                                     placeholder: "Address line 2"
                                   },
                                   domProps: {
-                                    value:
-                                      _vm.companies[index].address
-                                        .address_line_2
+                                    value: _vm.updateFields.address_line_2
                                   },
                                   on: {
                                     input: function($event) {
@@ -46039,7 +46249,7 @@ var render = function() {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.companies[index].address,
+                                        _vm.updateFields,
                                         "address_line_2",
                                         $event.target.value
                                       )
@@ -46062,9 +46272,14 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.companies[index].address.city,
-                                      expression:
-                                        "companies[index].address.city"
+                                      value: _vm.updateFields.city,
+                                      expression: "updateFields.city"
+                                    }
+                                  ],
+                                  class: [
+                                    {
+                                      "has-error":
+                                        _vm.updatedCompanyErrors["city"]
                                     }
                                   ],
                                   attrs: {
@@ -46073,22 +46288,52 @@ var render = function() {
                                     name: "reciever_city",
                                     placeholder: "City *"
                                   },
-                                  domProps: {
-                                    value: _vm.companies[index].address.city
-                                  },
+                                  domProps: { value: _vm.updateFields.city },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.companies[index].address,
+                                        _vm.updateFields,
                                         "city",
                                         $event.target.value
                                       )
                                     }
                                   }
-                                })
+                                }),
+                                _vm._v(" "),
+                                _vm.updatedCompanyErrors["city"]
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "error has-text-danger is-size-7"
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "mdi mdi-alert-circle-outline mdi-18px"
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "error-message" },
+                                          [
+                                            _vm._v(
+                                              "\n                                                " +
+                                                _vm._s(
+                                                  _vm.updatedCompanyErrors[
+                                                    "city"
+                                                  ][0]
+                                                ) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
                               ]
                             ),
                             _vm._v(" "),
@@ -46105,10 +46350,14 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value:
-                                        _vm.companies[index].address.country,
-                                      expression:
-                                        "companies[index].address.country"
+                                      value: _vm.updateFields.country,
+                                      expression: "updateFields.country"
+                                    }
+                                  ],
+                                  class: [
+                                    {
+                                      "has-error":
+                                        _vm.updatedCompanyErrors["country"]
                                     }
                                   ],
                                   attrs: {
@@ -46117,22 +46366,52 @@ var render = function() {
                                     name: "reciever_country",
                                     placeholder: "Country *"
                                   },
-                                  domProps: {
-                                    value: _vm.companies[index].address.country
-                                  },
+                                  domProps: { value: _vm.updateFields.country },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.companies[index].address,
+                                        _vm.updateFields,
                                         "country",
                                         $event.target.value
                                       )
                                     }
                                   }
-                                })
+                                }),
+                                _vm._v(" "),
+                                _vm.updatedCompanyErrors["country"]
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "error has-text-danger is-size-7"
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "mdi mdi-alert-circle-outline mdi-18px"
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "error-message" },
+                                          [
+                                            _vm._v(
+                                              "\n                                                " +
+                                                _vm._s(
+                                                  _vm.updatedCompanyErrors[
+                                                    "country"
+                                                  ][0]
+                                                ) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
                               ]
                             ),
                             _vm._v(" "),
@@ -46149,10 +46428,14 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value:
-                                        _vm.companies[index].address.zip_code,
-                                      expression:
-                                        "companies[index].address.zip_code"
+                                      value: _vm.updateFields.zip_code,
+                                      expression: "updateFields.zip_code"
+                                    }
+                                  ],
+                                  class: [
+                                    {
+                                      "has-error":
+                                        _vm.updatedCompanyErrors["zip_code"]
                                     }
                                   ],
                                   attrs: {
@@ -46162,7 +46445,7 @@ var render = function() {
                                     placeholder: "Zip *"
                                   },
                                   domProps: {
-                                    value: _vm.companies[index].address.zip_code
+                                    value: _vm.updateFields.zip_code
                                   },
                                   on: {
                                     input: function($event) {
@@ -46170,13 +46453,45 @@ var render = function() {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.companies[index].address,
+                                        _vm.updateFields,
                                         "zip_code",
                                         $event.target.value
                                       )
                                     }
                                   }
-                                })
+                                }),
+                                _vm._v(" "),
+                                _vm.updatedCompanyErrors["zip_code"]
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "error has-text-danger is-size-7"
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "mdi mdi-alert-circle-outline mdi-18px"
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "error-message" },
+                                          [
+                                            _vm._v(
+                                              "\n                                                " +
+                                                _vm._s(
+                                                  _vm.updatedCompanyErrors[
+                                                    "zip_code"
+                                                  ][0]
+                                                ) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
                               ]
                             ),
                             _vm._v(" "),

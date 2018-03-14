@@ -22,9 +22,9 @@
                                 name="reciever_email"
                                 placeholder="Email *"
                                 v-on:keyup.enter="createCompany"
-                                :class="[{ 'has-error': newCompanyEmailHasError }]"
+                                :class="[{ 'has-error': newCompanyErrors['email'] }]"
                                 v-model="newCompany.email" />
-                                <span v-if="newCompanyEmailHasError" class="error has-text-danger is-size-7">
+                                <span v-if="newCompanyErrors['email']" class="error has-text-danger is-size-7">
                                     <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                     <span class="error-message">
                                         {{newCompanyErrors['email'][0]}}
@@ -38,10 +38,10 @@
                                 name="reciever_password"
                                 placeholder="Password *"
                                 v-on:keyup.enter="createCompany"
-                                :class="[{ 'has-error': newCompanyPasswordHasError }]"
+                                :class="[{ 'has-error': newCompanyErrors['password'] }]"
                                 v-model="newCompany.password" />
                                 <button class="button is-small is-link generate-password" @click.prevent="generateRandomPassword">Generate password</button>
-                                <span v-if="newCompanyPasswordHasError" class="error has-text-danger is-size-7">
+                                <span v-if="newCompanyErrors['password']" class="error has-text-danger is-size-7">
                                     <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                     <span class="error-message">
                                         {{newCompanyErrors['password'][0]}}
@@ -55,9 +55,9 @@
                                 name="reciever_company"
                                 placeholder="Company *"
                                 v-on:keyup.enter="createCompany"
-                                :class="[{ 'has-error': newCompanyCompanyHasError }]"
+                                :class="[{ 'has-error': newCompanyErrors['company'] }]"
                                 v-model="newCompany.company" />
-                                <span v-if="newCompanyCompanyHasError" class="error has-text-danger is-size-7">
+                                <span v-if="newCompanyErrors['company']" class="error has-text-danger is-size-7">
                                     <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                     <span class="error-message">
                                         {{newCompanyErrors['company'][0]}}
@@ -89,9 +89,9 @@
                                 name="reciever_name"
                                 placeholder="Name *"
                                 v-on:keyup.enter="createCompany"
-                                :class="[{ 'has-error': newCompanyNameHasError }]"
+                                :class="[{ 'has-error': newCompanyErrors['name'] }]"
                                 v-model="newCompany.name" />
-                                <span v-if="newCompanyNameHasError" class="error has-text-danger is-size-7">
+                                <span v-if="newCompanyErrors['name']" class="error has-text-danger is-size-7">
                                     <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                     <span class="error-message">
                                         {{newCompanyErrors['name'][0]}}
@@ -105,9 +105,9 @@
                                 name="reciever_surnames"
                                 placeholder="Surnames *"
                                 v-on:keyup.enter="createCompany"
-                                :class="[{ 'has-error': newCompanySurnamesHasError }]"
+                                :class="[{ 'has-error': newCompanyErrors['surnames'] }]"
                                 v-model="newCompany.surnames" />
-                                <span v-if="newCompanySurnamesHasError" class="error has-text-danger is-size-7">
+                                <span v-if="newCompanyErrors['surnames']" class="error has-text-danger is-size-7">
                                     <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                     <span class="error-message">
                                         {{newCompanyErrors['surnames'][0]}}
@@ -121,9 +121,9 @@
                                 name="reciever_address_line_1"
                                 placeholder="Address line 1 *"
                                 v-on:keyup.enter="createCompany"
-                                :class="[{ 'has-error': newCompanyAddressHasError }]"
+                                :class="[{ 'has-error': newCompanyErrors['address_line_1'] }]"
                                 v-model="newCompany.address_line_1" />
-                                <span v-if="newCompanyAddressHasError" class="error has-text-danger is-size-7">
+                                <span v-if="newCompanyErrors['address_line_1']" class="error has-text-danger is-size-7">
                                     <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                     <span class="error-message">
                                         {{newCompanyErrors['address_line_1'][0]}}
@@ -146,9 +146,9 @@
                                 name="reciever_city"
                                 placeholder="City *"
                                 v-on:keyup.enter="createCompany"
-                                :class="[{ 'has-error': newCompanyCityHasError }]"
+                                :class="[{ 'has-error': newCompanyErrors['city'] }]"
                                 v-model="newCompany.city" />
-                                <span v-if="newCompanyCityHasError" class="error has-text-danger is-size-7">
+                                <span v-if="newCompanyErrors['city']" class="error has-text-danger is-size-7">
                                     <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                     <span class="error-message">
                                         {{newCompanyErrors['city'][0]}}
@@ -162,9 +162,9 @@
                                 name="reciever_country"
                                 placeholder="Country *"
                                 v-on:keyup.enter="createCompany"
-                                :class="[{ 'has-error': newCompanyCountryHasError }]"
+                                :class="[{ 'has-error': newCompanyErrors['country'] }]"
                                 v-model="newCompany.country" />
-                                <span v-if="newCompanyCountryHasError" class="error has-text-danger is-size-7">
+                                <span v-if="newCompanyErrors['country']" class="error has-text-danger is-size-7">
                                     <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                     <span class="error-message">
                                         {{newCompanyErrors['country'][0]}}
@@ -178,9 +178,9 @@
                                 name="reciever_zip_code"
                                 placeholder="Zip *"
                                 v-on:keyup.enter="createCompany"
-                                :class="[{ 'has-error': newCompanyZipHasError }]"
+                                :class="[{ 'has-error': newCompanyErrors['zip_code'] }]"
                                 v-model="newCompany.zip_code" />
-                                <span v-if="newCompanyZipHasError" class="error has-text-danger is-size-7">
+                                <span v-if="newCompanyErrors['zip_code']" class="error has-text-danger is-size-7">
                                     <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
                                     <span class="error-message">
                                         {{newCompanyErrors['zip_code'][0]}}
@@ -247,7 +247,14 @@
                                             id="reciever_company"
                                             name="reciever_company"
                                             placeholder="Company"
-                                            v-model="companies[index].address.company" />
+                                            v-model="updateFields.company"
+                                            :class="[{ 'has-error' : updatedCompanyErrors['company'] }]" />
+                                            <span v-if="updatedCompanyErrors['company']" class="error has-text-danger is-size-7">
+                                                <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                <span class="error-message">
+                                                    {{updatedCompanyErrors['company'][0]}}
+                                                </span>
+                                            </span>
                                     </div>
                                     <div class="field field-reciever-birthday">
                                         <label class="label">Birthday</label>
@@ -256,7 +263,7 @@
                                             id="reciever_birthday"
                                             name="reciever_birthday"
                                             placeholder="Birthday"
-                                            v-model="companies[index].address.birthday" />
+                                            v-model="updateFields.birthday" />
                                     </div>
                                     <div class="field field-reciever-title">
                                         <label class="label">Title</label>
@@ -265,7 +272,7 @@
                                             id="reciever_title"
                                             name="reciever_title"
                                             placeholder="Title"
-                                            v-model="companies[index].address.title" />
+                                            v-model="updateFields.title" />
                                     </div>
                                     <div class="field field-reciever-name">
                                         <label class="label">Name</label>
@@ -274,7 +281,14 @@
                                             id="reciever_name"
                                             name="reciever_name"
                                             placeholder="Name *"
-                                            v-model="companies[index].address.name" />
+                                            v-model="updateFields.name"
+                                            :class="[{ 'has-error' : updatedCompanyErrors['name'] }]" />
+                                            <span v-if="updatedCompanyErrors['name']" class="error has-text-danger is-size-7">
+                                                <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                <span class="error-message">
+                                                    {{updatedCompanyErrors['name'][0]}}
+                                                </span>
+                                            </span>
                                     </div>
                                     <div class="field field-reciever-surnames">
                                         <label class="label">Surnames</label>
@@ -283,7 +297,14 @@
                                             id="reciever_surnames"
                                             name="reciever_surnames"
                                             placeholder="Surnames *"
-                                            v-model="companies[index].address.surnames" />
+                                            v-model="updateFields.surnames"
+                                            :class="[{ 'has-error' : updatedCompanyErrors['surnames'] }]" />
+                                            <span v-if="updatedCompanyErrors['surnames']" class="error has-text-danger is-size-7">
+                                                <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                <span class="error-message">
+                                                    {{updatedCompanyErrors['surnames'][0]}}
+                                                </span>
+                                            </span>
                                     </div>
                                     <div class="field field-reciever-address-line-1">
                                         <label class="label">Address line 1</label>
@@ -292,7 +313,14 @@
                                             id="reciever_address_line_1"
                                             name="reciever_address_line_1"
                                             placeholder="Address line 1 *"
-                                            v-model="companies[index].address.address_line_1" />
+                                            v-model="updateFields.address_line_1"
+                                            :class="[{ 'has-error' : updatedCompanyErrors['address_line_1'] }]" />
+                                            <span v-if="updatedCompanyErrors['address_line_1']" class="error has-text-danger is-size-7">
+                                                <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                <span class="error-message">
+                                                    {{updatedCompanyErrors['address_line_1'][0]}}
+                                                </span>
+                                            </span>
                                     </div>
                                     <div class="field field-reciever-address-line-2">
                                         <label class="label">Address line 2</label>
@@ -301,7 +329,7 @@
                                             id="reciever_address_line_2"
                                             name="reciever_address_line_2"
                                             placeholder="Address line 2"
-                                            v-model="companies[index].address.address_line_2" />
+                                            v-model="updateFields.address_line_2" />
                                     </div>
                                     <div class="field field-reciever-city">
                                         <label class="label">City</label>
@@ -310,7 +338,14 @@
                                             id="reciever_city"
                                             name="reciever_city"
                                             placeholder="City *"
-                                            v-model="companies[index].address.city" />
+                                            v-model="updateFields.city"
+                                            :class="[{ 'has-error' : updatedCompanyErrors['city'] }]" />
+                                            <span v-if="updatedCompanyErrors['city']" class="error has-text-danger is-size-7">
+                                                <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                <span class="error-message">
+                                                    {{updatedCompanyErrors['city'][0]}}
+                                                </span>
+                                            </span>
                                     </div>
                                     <div class="field field-reciever-country">
                                         <label class="label">Country</label>
@@ -319,7 +354,14 @@
                                             id="reciever_country"
                                             name="reciever_country"
                                             placeholder="Country *"
-                                            v-model="companies[index].address.country" />
+                                            v-model="updateFields.country"
+                                            :class="[{ 'has-error' : updatedCompanyErrors['country'] }]" />
+                                            <span v-if="updatedCompanyErrors['country']" class="error has-text-danger is-size-7">
+                                                <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                <span class="error-message">
+                                                    {{updatedCompanyErrors['country'][0]}}
+                                                </span>
+                                            </span>
                                     </div>
                                     <div class="field field-reciever-zip">
                                         <label class="label">Zip code</label>
@@ -328,7 +370,14 @@
                                             id="reciever_zip_code"
                                             name="reciever_zip_code"
                                             placeholder="Zip *"
-                                            v-model="companies[index].address.zip_code" />
+                                            v-model="updateFields.zip_code"
+                                            :class="[{ 'has-error' : updatedCompanyErrors['zip_code'] }]" />
+                                            <span v-if="updatedCompanyErrors['zip_code']" class="error has-text-danger is-size-7">
+                                                <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                <span class="error-message">
+                                                    {{updatedCompanyErrors['zip_code'][0]}}
+                                                </span>
+                                            </span>
                                     </div>
                                     <div class="field has-text-right m-t-30">
                                         <button class="button is-info" @click.prevent="updateCompany(company)">Update company</button>
@@ -349,6 +398,7 @@
             return {
                 searchBy: '',
                 newCompanyErrors: {},
+                updatedCompanyErrors: {},
                 companies: [],
                 loadingData: false,
                 creatingCompany: false,
@@ -404,33 +454,6 @@
                     let fullName = comp.address.name+' '+comp.address.surnames;
                     return comp.address.company.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0 || fullName.toLowerCase().indexOf(vue.searchBy.toLowerCase()) >= 0;
                 });
-            },
-            newCompanyEmailHasError() {
-                return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['email']);
-            },
-            newCompanyPasswordHasError() {
-                return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['password']);
-            },
-            newCompanyCompanyHasError() {
-              return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['company']);
-            },
-            newCompanyNameHasError() {
-              return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['name']);
-            },
-            newCompanySurnamesHasError() {
-              return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['surnames']);
-            },
-            newCompanyAddressHasError() {
-              return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['address_line_1']);
-            },
-            newCompanyCityHasError() {
-              return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['city']);
-            },
-            newCompanyCountryHasError() {
-              return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['country']);
-            },
-            newCompanyZipHasError() {
-              return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['zip_code']);
             }
         },
         methods: {
@@ -451,8 +474,24 @@
                 if(isOpened){
                     $('.card-company[data-id="'+company.id+'"]').removeClass('opened').find('.card-content').slideUp();
                 } else {
+                    this.setUpdateFields(company);
                     $('.card-company[data-id="'+company.id+'"]').addClass('opened').find('.card-content').slideDown();
                 }
+            },
+            setUpdateFields(company) {
+                this.updatedCompanyErrors = {};
+                let ca = company.address;
+                this.updateFields.address_id = ca.id;
+                this.updateFields.address_line_1 = ca.address_line_1;
+                this.updateFields.address_line_2 = ca.address_line_2;
+                this.updateFields.city = ca.city;
+                this.updateFields.country = ca.country;
+                this.updateFields.zip_code = ca.zip_code;
+                this.updateFields.title = ca.title;
+                this.updateFields.company = ca.company;
+                this.updateFields.name = ca.name;
+                this.updateFields.surnames = ca.surnames;
+                this.updateFields.birthday = ca.birthday;
             },
             createCompany() {
                 // if(this.tempData.company_id !== null){
@@ -496,19 +535,6 @@
                 });
             },
             updateCompany(company) {
-                let ca = company.address;
-                this.updateFields.address_id = ca.id;
-                this.updateFields.address_line_1 = ca.address_line_1;
-                this.updateFields.address_line_2 = ca.address_line_2;
-                this.updateFields.city = ca.city;
-                this.updateFields.country = ca.country;
-                this.updateFields.zip_code = ca.zip_code;
-                this.updateFields.title = ca.title;
-                this.updateFields.company = ca.company;
-                this.updateFields.name = ca.name;
-                this.updateFields.surnames = ca.surnames;
-                this.updateFields.birthday = ca.birthday;
-
                 this.loadingData = true;
                 axios.put('/api/companies/'+company.id, this.updateFields)
                 .then(response => {
@@ -517,7 +543,25 @@
                     this.getCompanies();
                     this.$snackbar.open(response.data.message);
                 }).catch(error => {
-                    console.info(error);
+                      if(error.response.status === 419){
+                        location.href = '/login';
+                      }
+                      console.info(error);
+                      this.updatedCompanyErrors = error.response.data.errors;
+                      console.log(error.response.data);
+                      console.log(error.response.status);
+                      console.log(error.response.headers);
+                      this.$snackbar.open({
+                          duration: 5000,
+                          message: 'Please correct errors to create a new company.',
+                          type: 'is-danger',
+                          queue: false,
+                          position: 'is-top',
+                          actionText: 'OK',
+                          onAction: () => {
+                              //Do something on click button
+                          }
+                      });
                 });
             },
             deleteCompany(company) {
@@ -576,35 +620,61 @@
                 this.newCompany.password = Math.random().toString(36).substring(2) + new Date().getTime().toString(36);
             },
             removeErrors() {
-              if(!_.isEmpty(this.newCompanyErrors)){
-                if('email' in this.newCompanyErrors && !_.isEmpty(this.newCompany.email)){
-                  this.newCompanyErrors['email'] = null;
+                // Remove new company errors
+                if(!_.isEmpty(this.newCompanyErrors)){
+                    if('email' in this.newCompanyErrors && !_.isEmpty(this.newCompany.email)){
+                      this.newCompanyErrors['email'] = null;
+                    }
+                    if('password' in this.newCompanyErrors && !_.isEmpty(this.newCompany.password)){
+                      this.newCompanyErrors['password'] = null;
+                    }
+                    if('company' in this.newCompanyErrors && !_.isEmpty(this.newCompany.company)){
+                      this.newCompanyErrors['company'] = null;
+                    }
+                    if('name' in this.newCompanyErrors && !_.isEmpty(this.newCompany.name)){
+                      this.newCompanyErrors['name'] = null;
+                    }
+                    if('surnames' in this.newCompanyErrors && !_.isEmpty(this.newCompany.surnames)){
+                      this.newCompanyErrors['surnames'] = null;
+                    }
+                    if('address_line_1' in this.newCompanyErrors && !_.isEmpty(this.newCompany.address_line_1)){
+                      this.newCompanyErrors['address_line_1'] = null;
+                    }
+                    if('city' in this.newCompanyErrors && !_.isEmpty(this.newCompany.city)){
+                      this.newCompanyErrors['city'] = null;
+                    }
+                    if('country' in this.newCompanyErrors && !_.isEmpty(this.newCompany.country)){
+                      this.newCompanyErrors['country'] = null;
+                    }
+                    if('zip_code' in this.newCompanyErrors && !_.isEmpty(this.newCompany.zip_code)){
+                      this.newCompanyErrors['zip_code'] = null;
+                    }
                 }
-                if('password' in this.newCompanyErrors && !_.isEmpty(this.newCompany.password)){
-                  this.newCompanyErrors['password'] = null;
+
+                // Remove updated company errors
+                if(!_.isEmpty(this.updatedCompanyErrors)){
+                    if('company' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.company)){
+                      this.updatedCompanyErrors['company'] = null;
+                    }
+                    if('name' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.name)){
+                      this.updatedCompanyErrors['name'] = null;
+                    }
+                    if('surnames' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.surnames)){
+                      this.updatedCompanyErrors['surnames'] = null;
+                    }
+                    if('address_line_1' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.address_line_1)){
+                      this.updatedCompanyErrors['address_line_1'] = null;
+                    }
+                    if('city' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.city)){
+                      this.updatedCompanyErrors['city'] = null;
+                    }
+                    if('country' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.country)){
+                      this.updatedCompanyErrors['country'] = null;
+                    }
+                    if('zip_code' in this.updatedCompanyErrors && !_.isEmpty(this.updateFields.zip_code)){
+                      this.updatedCompanyErrors['zip_code'] = null;
+                    }
                 }
-                if('company' in this.newCompanyErrors && !_.isEmpty(this.newCompany.company)){
-                  this.newCompanyErrors['company'] = null;
-                }
-                if('name' in this.newCompanyErrors && !_.isEmpty(this.newCompany.name)){
-                  this.newCompanyErrors['name'] = null;
-                }
-                if('surnames' in this.newCompanyErrors && !_.isEmpty(this.newCompany.surnames)){
-                  this.newCompanyErrors['surnames'] = null;
-                }
-                if('address_line_1' in this.newCompanyErrors && !_.isEmpty(this.newCompany.address_line_1)){
-                  this.newCompanyErrors['address_line_1'] = null;
-                }
-                if('city' in this.newCompanyErrors && !_.isEmpty(this.newCompany.city)){
-                  this.newCompanyErrors['city'] = null;
-                }
-                if('country' in this.newCompanyErrors && !_.isEmpty(this.newCompany.country)){
-                  this.newCompanyErrors['country'] = null;
-                }
-                if('zip_code' in this.newCompanyErrors && !_.isEmpty(this.newCompany.zip_code)){
-                  this.newCompanyErrors['zip_code'] = null;
-                }
-              }
             }
         },
         mounted() {
