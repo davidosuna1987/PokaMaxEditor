@@ -17,6 +17,7 @@
                 @if(auth()->user())
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('companies.index') }}" class="navbar-item">Companies</a>
+                        <a href="{{ route('postcards.index') }}" class="navbar-item">Postcards</a>
                     @endif
 
                     <a href="{{ route('editor') }}" class="navbar-item">Editor</a>

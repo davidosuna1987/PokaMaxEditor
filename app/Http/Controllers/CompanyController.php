@@ -256,7 +256,7 @@ class CompanyController extends Controller
       endif;
 
       $company = User::whereIn('role_id', [1, 2, 4])->with('address')->findOrFail($id);
-      $postcards = $company->postcards()->with('senderAddress', 'recieverAddresses')->get();
+      $postcards = $company->postcards()->with('senderAddress', 'recieverAddresses', 'senderAddress.address', 'recieverAddresses.address')->get();
       return view('pages.companies.postcards', compact('company', 'postcards'));
     }
 }

@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/editor', 'EditorController@index')->name('editor');
 
     // Postcard routes
+    Route::get('postcards', 'PostcardController@index')->name('postcards.index');;
     Route::post('postcard/store', 'PostcardController@store')->name('postcard.store');;
     Route::put('postcard/update/{postcard_id}', 'PostcardController@update')->name('postcard.update');;
     Route::post('postcard/tempfill', 'PostcardController@tempFill')->name('postcard.tempfill');;

@@ -23,11 +23,8 @@ class PostcardController extends Controller
      */
     public function index()
     {
-        $postcards = auth()->user()->postcards()->load('sender_address', 'reciever_address');
-
-        return response()->json([
-            'postcards' => $postcards
-        ]);
+        $postcards = Postcard::with('user', 'user.address', 'senderAddress', 'recieverAddresses', 'senderAddress.address', 'recieverAddresses.address')->get();
+        return view('pages.postcards.index', compact('postcards'));
     }
 
     /**
