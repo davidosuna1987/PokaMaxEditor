@@ -44523,6 +44523,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -45733,6 +45743,10 @@ var render = function() {
                                     staticClass: "field field-reciever-company"
                                   },
                                   [
+                                    _c("label", { staticClass: "label" }, [
+                                      _vm._v("Company name")
+                                    ]),
+                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -45777,6 +45791,10 @@ var render = function() {
                                     staticClass: "field field-reciever-birthday"
                                   },
                                   [
+                                    _c("label", { staticClass: "label" }, [
+                                      _vm._v("Birthday")
+                                    ]),
+                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -45819,6 +45837,10 @@ var render = function() {
                                   "div",
                                   { staticClass: "field field-reciever-title" },
                                   [
+                                    _c("label", { staticClass: "label" }, [
+                                      _vm._v("Title")
+                                    ]),
+                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -45860,6 +45882,10 @@ var render = function() {
                                   "div",
                                   { staticClass: "field field-reciever-name" },
                                   [
+                                    _c("label", { staticClass: "label" }, [
+                                      _vm._v("Name")
+                                    ]),
+                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -45902,6 +45928,10 @@ var render = function() {
                                     staticClass: "field field-reciever-surnames"
                                   },
                                   [
+                                    _c("label", { staticClass: "label" }, [
+                                      _vm._v("Surnames")
+                                    ]),
+                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -45947,6 +45977,10 @@ var render = function() {
                                       "field field-reciever-address-line-1"
                                   },
                                   [
+                                    _c("label", { staticClass: "label" }, [
+                                      _vm._v("Address line 1")
+                                    ]),
+                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -45993,6 +46027,10 @@ var render = function() {
                                       "field field-reciever-address-line-2"
                                   },
                                   [
+                                    _c("label", { staticClass: "label" }, [
+                                      _vm._v("Address line 2")
+                                    ]),
+                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -46036,6 +46074,10 @@ var render = function() {
                                   "div",
                                   { staticClass: "field field-reciever-city" },
                                   [
+                                    _c("label", { staticClass: "label" }, [
+                                      _vm._v("City")
+                                    ]),
+                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -46078,6 +46120,10 @@ var render = function() {
                                     staticClass: "field field-reciever-country"
                                   },
                                   [
+                                    _c("label", { staticClass: "label" }, [
+                                      _vm._v("Country")
+                                    ]),
+                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -46120,6 +46166,10 @@ var render = function() {
                                   "div",
                                   { staticClass: "field field-reciever-zip" },
                                   [
+                                    _c("label", { staticClass: "label" }, [
+                                      _vm._v("Zip code")
+                                    ]),
+                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {

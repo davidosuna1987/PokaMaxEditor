@@ -29,22 +29,22 @@
   width: 100%;
 }
 
+.reciever_form{
+  .label{
+    color: $blue;
+    font-size: 0.65rem;
+    margin-top: 15px;
+    margin-bottom: -9px;
+    position: relative;
+  }
+}
+
 .companies-show{
   .reciever_container{
     width: 100%;
 
     &:not(.new-company-form){
       box-shadow: none;
-    }
-  }
-
-  .reciever_form{
-    .label{
-      color: $blue;
-      font-size: 0.65rem;
-      margin-top: 15px;
-      margin-bottom: -9px;
-      position: relative;
     }
   }
 

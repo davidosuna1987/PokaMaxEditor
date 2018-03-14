@@ -25174,6 +25174,14 @@ background: #ccc;
   width: 100%;
 }
 
+.reciever_form .label {
+  color: #3273dc;
+  font-size: 0.65rem;
+  margin-top: 15px;
+  margin-bottom: -9px;
+  position: relative;
+}
+
 .companies-show .reciever_container {
   width: 100%;
 }
@@ -25181,14 +25189,6 @@ background: #ccc;
 .companies-show .reciever_container:not(.new-company-form) {
   -webkit-box-shadow: none;
           box-shadow: none;
-}
-
-.companies-show .reciever_form .label {
-  color: #3273dc;
-  font-size: 0.65rem;
-  margin-top: 15px;
-  margin-bottom: -9px;
-  position: relative;
 }
 
 .companies-show .card-address-list .card-content {

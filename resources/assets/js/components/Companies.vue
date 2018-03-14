@@ -241,6 +241,7 @@
                             <div class="reciever_container">
                                 <form class="reciever_form">
                                     <div class="field field-reciever-company">
+                                        <label class="label">Company name</label>
                                         <input
                                             type="text"
                                             id="reciever_company"
@@ -249,6 +250,7 @@
                                             v-model="companies[index].address.company" />
                                     </div>
                                     <div class="field field-reciever-birthday">
+                                        <label class="label">Birthday</label>
                                         <input
                                             type="date"
                                             id="reciever_birthday"
@@ -257,6 +259,7 @@
                                             v-model="companies[index].address.birthday" />
                                     </div>
                                     <div class="field field-reciever-title">
+                                        <label class="label">Title</label>
                                         <input
                                             type="text"
                                             id="reciever_title"
@@ -265,6 +268,7 @@
                                             v-model="companies[index].address.title" />
                                     </div>
                                     <div class="field field-reciever-name">
+                                        <label class="label">Name</label>
                                         <input
                                             type="text"
                                             id="reciever_name"
@@ -273,6 +277,7 @@
                                             v-model="companies[index].address.name" />
                                     </div>
                                     <div class="field field-reciever-surnames">
+                                        <label class="label">Surnames</label>
                                         <input
                                             type="text"
                                             id="reciever_surnames"
@@ -281,6 +286,7 @@
                                             v-model="companies[index].address.surnames" />
                                     </div>
                                     <div class="field field-reciever-address-line-1">
+                                        <label class="label">Address line 1</label>
                                         <input
                                             type="text"
                                             id="reciever_address_line_1"
@@ -289,6 +295,7 @@
                                             v-model="companies[index].address.address_line_1" />
                                     </div>
                                     <div class="field field-reciever-address-line-2">
+                                        <label class="label">Address line 2</label>
                                         <input
                                             type="text"
                                             id="reciever_address_line_2"
@@ -297,6 +304,7 @@
                                             v-model="companies[index].address.address_line_2" />
                                     </div>
                                     <div class="field field-reciever-city">
+                                        <label class="label">City</label>
                                         <input
                                             type="text"
                                             id="reciever_city"
@@ -305,6 +313,7 @@
                                             v-model="companies[index].address.city" />
                                     </div>
                                     <div class="field field-reciever-country">
+                                        <label class="label">Country</label>
                                         <input
                                             type="text"
                                             id="reciever_country"
@@ -313,6 +322,7 @@
                                             v-model="companies[index].address.country" />
                                     </div>
                                     <div class="field field-reciever-zip">
+                                        <label class="label">Zip code</label>
                                         <input
                                             type="number"
                                             id="reciever_zip_code"
