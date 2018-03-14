@@ -2,33 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Company;
 use App\Address;
 use App\Postcard;
 use App\AddressList;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\CreateUpdateCompanyRequest;
-use App\Http\Requests\CreateUpdateCompanyFromEditorRequest;
+use App\Http\Requests\CreateCompanyRequest;
+use App\Http\Requests\CreateCompanyFromEditorRequest;
+use App\Http\Requests\UpdateCompanyFromEditorRequest;
 
 class CompanyController extends Controller
 {
     public function index()
     {
-      $companies = Company::with('address', 'postcards')->get();
+      if(!auth()->user()->isAdmin()):
+          return redirect()->route('home');
+      endif;
+
+      $companies = User::whereIn('role_id', [1, 2, 4])->with('address', 'postcards')->get();
       return view('pages.companies.index', compact('companies'));
     }
 
     public function apiIndex()
     {
-      return Company::with('address', 'postcards')->get();
+      if(!auth()->user()->isAdmin()):
+          return redirect()->route('home');
+      endif;
+
+      return User::whereIn('role_id', [1, 2, 4])->with('address', 'postcards')->get();
     }
 
     public function apiIndexFromEditor()
     {
       // return Company::with('address', 'postcards', 'addressLists.addresses')->get();
 
-      $companies = Company::with('address', 'postcards', 'addressLists.addresses')->get();
+      $companies = User::whereIn('role_id', [1, 2, 4])->with('address', 'postcards', 'addressLists.addresses')->get();
       $customCompaniesArray = [];
 
       foreach ($companies as $company):
@@ -52,13 +62,21 @@ class CompanyController extends Controller
 
     public function show($id)
     {
+      if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+          return redirect()->route('home');
+      endif;
+
       $company_id = $id;
       return view('pages.companies.show', compact('company_id'));
     }
 
     public function apiShow($id)
     {
-      return Company::with('address', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address', 'addressLists.addresses')->findOrFail($id);
+      if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+          return redirect()->route('home');
+      endif;
+
+      return User::whereIn('role_id', [1, 2, 4])->with('address', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address', 'addressLists.addresses')->findOrFail($id);
 
       // $company = Company::findOrFail($id);
       // $customCompanyArray = $company->load('address', 'addressLists.addresses')->toArray();
@@ -89,7 +107,7 @@ class CompanyController extends Controller
       // return $customCompanyArray;
     }
 
-    public function apiCreate(CreateUpdateCompanyRequest $request)
+    public function apiCreate(CreateCompanyRequest $request)
     {
         // return response()->json(['request' => $sender_data['address_line_1']]);
 
@@ -106,15 +124,14 @@ class CompanyController extends Controller
           'birthday' => $request->get('birthday')
         ]);
 
-        $company = Company::create([
-          'user_id' => auth()->user()->id,
-          'address_id' => $address->id
+        $company = User::create([
+            'email' => $request->get('email'),
+            'password' => bcrypt($request->get('password')),
+            'api_token' => bcrypt($request->get('email')),
+            'role_id' => 4,
+            'address_id' => $address->id,
+            'active' => false,
         ]);
-
-        // AddressList::create([
-        //     'company_id' => $company->id,
-        //     'name' => 'Uncategorized'
-        // ]);
 
         return response()->json([
           'company' => $company,
@@ -122,11 +139,11 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function apiCreateFromEditor(CreateUpdateCompanyFromEditorRequest $request)
+    public function apiCreateFromEditor(CreateCompanyFromEditorRequest $request)
     {
-        // return response()->json(['request' => $sender_data['address_line_1']]);
 
         $sender_data = $request->get('sender_data');
+        // return response()->json(['request' => $sender_data]);
 
         $address = Address::create([
           'address_line_1' => $sender_data['address_line_1'],
@@ -141,14 +158,13 @@ class CompanyController extends Controller
           'birthday' => $sender_data['birthday']
         ]);
 
-        $company = Company::create([
-          'user_id' => auth()->user()->id,
-          'address_id' => $address->id
-        ]);
-
-        AddressList::create([
-            'company_id' => $company->id,
-            'name' => 'Uncategorized'
+        $company = User::create([
+            'email' => $sender_data['email'],
+            'password' => bcrypt($sender_data['password']),
+            'api_token' => bcrypt($sender_data['email']),
+            'role_id' => 4,
+            'address_id' => $address->id,
+            'active' => false,
         ]);
 
         return response()->json([
@@ -159,7 +175,11 @@ class CompanyController extends Controller
 
     public function apiUpdate(Request $request, $id)
     {
-        $company = Company::findOrFail($id);
+        if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+            return redirect()->route('home');
+        endif;
+
+        $company = User::whereIn('role_id', [1, 2, 4])->findOrFail($id);
         $address = $company->address()->first();
 
         $address->update([
@@ -183,10 +203,13 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function apiUpdateFromEditor(CreateUpdateCompanyFromEditorRequest $request, $id)
+    public function apiUpdateFromEditor(UpdateCompanyFromEditorRequest $request, $id)
     {
+      if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+          return redirect()->route('home');
+      endif;
 
-        $company = Company::findOrFail($id);
+        $company = User::whereIn('role_id', [1, 2, 4])->findOrFail($id);
         $address = $company->address()->first();
 
         $sender_data = $request->get('sender_data');
@@ -214,7 +237,11 @@ class CompanyController extends Controller
 
     public function apiDelete($id)
     {
-        $company = Company::with('address')->findOrFail($id);
+      if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+          return redirect()->route('home');
+      endif;
+
+        $company = User::whereIn('role_id', [1, 2, 4])->with('address')->findOrFail($id);
         $company->delete();
         return response()->json([
           'company' => $company,
@@ -224,7 +251,12 @@ class CompanyController extends Controller
 
     public function postcards($id)
     {
-      $company = Company::with('address', 'postcards', 'postcards.senderAddress.address', 'postcards.recieverAddresses.address')->findOrFail($id);
-      return view('pages.companies.postcards', compact('company'));
+      if(!auth()->user()->isAdmin() and auth()->user()->id !== (int) $id):
+          return redirect()->route('home');
+      endif;
+
+      $company = User::whereIn('role_id', [1, 2, 4])->with('address')->findOrFail($id);
+      $postcards = $company->postcards()->with('senderAddress', 'recieverAddresses', 'senderAddress.address', 'recieverAddresses.address')->get();
+      return view('pages.companies.postcards', compact('company', 'postcards'));
     }
 }

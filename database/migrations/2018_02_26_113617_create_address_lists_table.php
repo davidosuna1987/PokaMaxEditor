@@ -15,11 +15,11 @@ class CreateAddressListsTable extends Migration
     {
         Schema::create('address_lists', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->unsignedInteger('company_id');
+            $table->unsignedInteger('user_id');
             $table->string('name');
             $table->timestamps();
 
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

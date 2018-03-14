@@ -2,8 +2,9 @@
 
 namespace App;
 
-use App\Company;
+use App\Address;
 use App\Postcard;
+use App\AddressList;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -12,24 +13,30 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'surnames', 'email', 'username', 'password',
-        'provider_id', 'api_token', 'active', 'role_id',
+        'email',
+        'username',
+        'password',
+        'provider_id',
+        'api_token',
+        'active',
+        'role_id',
+        'address_id',
     ];
 
     protected $hidden = [
         'password', 'remember_token', 'api_token'
     ];
 
+    public function name(){
+        return $this->address()->first()->name;
+    }
+
     public function fullName(){
-        return $this->name.' '.$this->surnames;
+        return $this->address()->first()->name.' '.$this->address()->first()->surnames;
     }
 
     public function role(){
         return $this->belongsTo(Role::class);
-    }
-
-    public function hasRole($role){
-        return $this->role->slug == $role;
     }
 
     public function isSuperadmin(){
@@ -38,19 +45,26 @@ class User extends Authenticatable
 
     public function isAdmin(){
         return $this->role->slug == 'superadmin'
-                or $this->role->slug == 'admin'
-                or $this->role->slug == 'developer';
+            or $this->role->slug == 'admin';
     }
 
     public function isActiveUser(){
         return $this->active;
     }
 
+    public function hasRole($role){
+        return $this->role->slug == $role;
+    }
+
+    public function address(){
+      return $this->belongsTo(Address::class);
+    }
+
     public function postcards(){
         return $this->hasMany(Postcard::class);
     }
 
-    public function companies(){
-        return $this->hasMany(Company::class);
+    public function addressLists(){
+      return $this->hasMany(AddressList::class);
     }
 }

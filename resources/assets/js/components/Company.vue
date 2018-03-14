@@ -284,14 +284,14 @@
                                 </b-field>
                                 <div v-if="csv_addresses" class="csv-addresses">
                                   <div class="field m-t-30">
-                                    <b-switch v-model="importingPaginated" size="is-small" type="is-info">Paginated</b-switch>
+                                    <b-switch v-model="isPaginated" size="is-small" type="is-info">Paginated</b-switch>
                                   </div>
 
                                   <b-table
                                       narrowed
                                       hoverable
                                       striped
-                                      :paginated="importingPaginated"
+                                      :paginated="isPaginated"
                                       per-page="20"
                                       pagination-size="is-small"
                                       :data="csv_addresses"
@@ -454,10 +454,17 @@
                                     </button>
                                 </template>
 
+                                <div class="field m-t-30">
+                                    <b-switch v-model="isPaginated" size="is-small" type="is-info">Paginated</b-switch>
+                                </div>
+
                                 <b-table
                                   class="address-list-contacts-table"
                                   hoverable
                                   striped
+                                  :paginated="isPaginated"
+                                  per-page="10"
+                                  pagination-size="is-small"
                                   :checkable="bulkActionAddressesActive === index"
                                   :data="addressList.addresses"
                                   :checked-rows.sync="bulkActionAddresses"
@@ -510,14 +517,14 @@
                 bulkActionAddresses: [],
                 isCreatingAddressList: false,
                 isImportingContacts: false,
-                importingPaginated: true,
+                isPaginated: true,
                 csv_file: null,
                 csv_addresses: null,
                 checked_csv_addresses: [],
                 selected_address_list: null,
                 newAddressList: {
                     name: null,
-                    companyId: null
+                    company_id: null
                 },
                 updatedAddressList: {
                     name: null,
@@ -599,16 +606,17 @@
                     axios.post( '/api/addresses/addresslists/'+this.selected_address_list.id+'/insert', {addresses: this.checked_csv_addresses}, axiosConfig)
                     // axios.post( '/api/addresses/addresslists/'+this.selected_address_list.id+'/insert', {addresses: [this.checked_csv_addresses[i]]})
                     .then(response => {
-                      this.restoreImportContacts();
 
-                      // this.$snackbar.open({
-                      //     duration: 5000,
-                      //     message: response.data.message,
-                      //     queue: false,
-                      //     onAction: () => {
-                      //         //Do something on click button
-                      //     }
-                      // });
+                      this.$snackbar.open({
+                          duration: 5000,
+                          message: this.checked_csv_addresses.length+' was added to list correctly!',
+                          queue: false,
+                          onAction: () => {
+                              //Do something on click button
+                          }
+                      });
+
+                      this.restoreImportContacts();
                       this.progressBar.isLoading = false;
                     }).catch(error => {
                       if(error.response.status && error.response.status === 419){
@@ -621,7 +629,7 @@
                 // }
             },
             restoreImportContacts() {
-                this.importingPaginated = true;
+                this.isPaginated = true;
                 this.selected_address_list = null;
                 this.isCreatingAddressList = false;
                 this.isImportingContacts = null;
@@ -816,7 +824,7 @@
                     onConfirm: () => {
                         // alert(this.bulkActionAddresses.length);return;
                         for (var i = this.bulkActionAddresses.length - 1; i >= 0; i--) {
-                            axios.put('/api/address/'+this.bulkActionAddresses[i].id+'/setnulladdresslist')
+                            axios.delete('/api/address/'+this.bulkActionAddresses[i].id)
                             .then(response => {
                                 // Do something on success
                             }).catch(error => {

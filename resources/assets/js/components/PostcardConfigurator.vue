@@ -84,13 +84,46 @@
             <div class="columns m-t-15 p-l-20">
               <div class="column is-8">
                 <div :data-id="tempData.company_id" class="reciever_container">
-                    <div v-if="!isCreatingCompany && tempData.company_id == null" class="level p-20">
+                    <div v-if="!isCreatingCompany && tempData.company_id == null && !companyIdProp" class="level p-20">
                       <p class="level-left">Please, select company or create new</p>
                       <p class="level-right">
-                        <a href="#" class="button is-link" @click.prevent="isCreatingCompany = true">New company</a>
+                        <a href="#" class="button is-link" @click.prevent="createCompany">New company</a>
                       </p>
                     </div>
                     <form v-else class="reciever_form">
+                        <template v-if="isCreatingCompany">
+                            <div class="field field-reciever-email">
+                                <input
+                                    type="email"
+                                    id="reciever_email"
+                                    name="reciever_email"
+                                    placeholder="Email *"
+                                    :class="[{ 'has-error': senderEmailHasError }]"
+                                    v-model="tempData.sender_data.email" />
+                                    <span v-if="senderEmailHasError" class="error has-text-danger is-size-7">
+                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                        <span class="error-message">
+                                            {{errors['sender_data.email'][0]}}
+                                        </span>
+                                    </span>
+                            </div>
+                            <div class="field field-reciever-password">
+                                <input
+                                    type="password"
+                                    id="reciever_password"
+                                    name="reciever_password"
+                                    placeholder="Password *"
+                                    :class="[{ 'has-error': senderPasswordHasError }]"
+                                    v-model="tempData.sender_data.password" />
+                                    <button class="button is-small is-link generate-password" @click.prevent="generateRandomPassword">Generate</button>
+                                    <span v-if="senderPasswordHasError" class="error has-text-danger is-size-7">
+                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                        <span class="error-message">
+                                            {{errors['sender_data.password'][0]}}
+                                        </span>
+                                    </span>
+                            </div>
+                        </template>
                         <div class="field field-reciever-company">
                             <input
                                 type="text"
@@ -220,17 +253,37 @@
                                     </span>
                                 </span>
                         </div>
-                        <small v-if="this.tempData.company_id" class="has-text-link is-8 m-t-15"><strong class="has-text-link">Info:</strong> you can change sender data without updating the company.</small>
-                        <div class="field has-text-right m-t-30">
-                            <button class="button" :class="[{'is-info' : tempData.company_id === null, 'is-link' : tempData.company_id !== null}]" @click.prevent="createCompany">{{tempData.company_id === null ? 'Create company' : 'New company'}}</button>
-                            <button v-if="tempData.company_id !== null" class="button is-info" @click.prevent="updateCompany(tempData.company_id)">Update company</button>
-                        </div>
+
+                        <template v-if="!companyIdProp">
+                            <small v-if="this.tempData.company_id" class="has-text-link is-8 m-t-15"><strong class="has-text-link">Info:</strong> you can change sender data without updating the company.</small>
+                            <div class="field has-text-right m-t-30">
+                                <button
+                                  v-if="tempData.company_id === null"
+                                  class="button"
+                                  @click.prevent="cancelCreateCompany">
+                                    Cancel
+                                </button>
+                                <button
+                                  class="button"
+                                  :class="[{'is-info' : tempData.company_id === null, 'is-link' : tempData.company_id !== null}]"
+                                  @click.prevent="storeCompany">
+                                    {{tempData.company_id === null ? 'Create company' : 'New company'}}
+                                </button>
+                                <button
+                                  v-if="tempData.company_id !== null"
+                                  class="button is-info"
+                                  @click.prevent="updateCompany(tempData.company_id)">
+                                    Update company
+                                </button>
+                            </div>
+                        </template>
                     </form>
                 </div>
               </div>
               <div class="column">
                   <b-field class="is-info">
                     <b-select
+                        v-show="!companyIdProp"
                         v-model="tempData.company_id"
                         @input="changeCompany(tempData.company_id)"
                         placeholder="Select company"
@@ -238,6 +291,7 @@
                         <option v-if="tempData.company_id !== null" value="0">New company</option>
                         <option
                             v-for="(company, index) in companies"
+                            v-if="company.address.company !== null && company.address.company !== ''"
                             :value="company.id"
                             :key="company.id">
                             {{ company.address.company }}
@@ -527,12 +581,20 @@
                                                 </div>
                                             </b-field>
                                             <div v-if="csv_addresses" class="csv-addresses">
+
+                                              <div class="field m-t-30">
+                                                <b-switch v-model="isPaginated" size="is-small" type="is-info">Paginated</b-switch>
+                                              </div>
+
                                               <b-table
                                                   class="m-t-30"
                                                   narrowed
                                                   hoverable
                                                   striped
                                                   :data="csv_addresses"
+                                                  :paginated="isPaginated"
+                                                  per-page="20"
+                                                  pagination-size="is-small"
                                                   :checked-rows.sync="checked_csv_addresses"
                                                   default-sort-direction="asc"
                                                   default-sort="name"
@@ -671,12 +733,23 @@
                                         </div>
                                         <div v-else>
                                           <template v-if="address_list.addresses.length">
-                                              <button class="button is-info is-small is-pulled-right" @click.prevent="setImportContactsToAddressList(index)">Import contacts</button>
+                                              <p class="title is-size-6">
+                                              Select contacts
+                                                <button class="button is-info is-small is-pulled-right" @click.prevent="setImportContactsToAddressList(index)">Import contacts</button>
+                                              </p>
+
+                                              <div class="field m-t-30">
+                                                <b-switch v-model="isPaginated" size="is-small" type="is-info">Paginated</b-switch>
+                                              </div>
+
                                               <b-table
                                                   hoverable
                                                   striped
                                                   checkable
                                                   :data="address_list.addresses"
+                                                  :paginated="isPaginated"
+                                                  per-page="20"
+                                                  pagination-size="is-small"
                                                   :checked-rows.sync="tempData.reciever_data"
                                                   default-sort-direction="asc"
                                                   default-sort="name">
@@ -860,10 +933,17 @@
                           </a>
                       </div>
                       <div class="card-content">
+                              <div class="field m-t-30">
+                                <b-switch v-model="isPaginated" size="is-small" type="is-info">Paginated</b-switch>
+                              </div>
+
                               <b-table
                                   hoverable
                                   striped
                                   narrowed
+                                  :paginated="isPaginated"
+                                  per-page="10"
+                                  pagination-size="is-small"
                                   :selected.sync="previewRecieverData"
                                   :data="tempData.reciever_data"
                                   default-sort-direction="asc"
@@ -911,8 +991,10 @@
 
 <script>
     export default {
+        props: ['companyIdProp'],
         data() {
             return {
+                isPaginated: true,
                 csv_file: null,
                 csv_addresses: null,
                 checked_csv_addresses: [],
@@ -955,6 +1037,9 @@
                     font_size: 21
                   },
                   sender_data: {
+                    is_new: false,
+                    email: '',
+                    password: '',
                     company: '',
                     title: '',
                     name: '',
@@ -1021,6 +1106,12 @@
             backTextHasError() {
               return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors.back_text);
             },
+            senderEmailHasError() {
+              return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors['sender_data.email']);
+            },
+            senderPasswordHasError() {
+              return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors['sender_data.password']);
+            },
             senderCompanyHasError() {
               return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors['sender_data.company']);
             },
@@ -1073,7 +1164,7 @@
               return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors['back_text']);
             },
             stepItemFourHasErrors() {
-              return this.errors != null && !_.isEmpty(this.errors) && (!_.isEmpty(this.errors['reciever_data.name']) || !_.isEmpty(this.errors['reciever_data.surnames']) || !_.isEmpty(this.errors['reciever_data.city']) || !_.isEmpty(this.errors['reciever_data.country']) || !_.isEmpty(this.errors['reciever_data.zip_code']) || !_.isEmpty(this.errors['reciever_data.address_line_1']));
+              return this.errors != null && !_.isEmpty(this.errors) && (!_.isEmpty(this.errors['reciever_data']) || !_.isEmpty(this.errors['reciever_data.name']) || !_.isEmpty(this.errors['reciever_data.surnames']) || !_.isEmpty(this.errors['reciever_data.city']) || !_.isEmpty(this.errors['reciever_data.country']) || !_.isEmpty(this.errors['reciever_data.zip_code']) || !_.isEmpty(this.errors['reciever_data.address_line_1']));
             },
             stepItemFiveHasErrors() {
               return false;
@@ -1152,6 +1243,7 @@
                 this.selected_address_list = null;
                 this.isCreatingAddressList = false;
                 this.getCompanies(this.tempData.company_id);
+                this.tempData.reciever_data = [];
                 this.isImportingContacts = null;
                 this.checked_csv_addresses = [];
                 this.csv_addresses = null;
@@ -1203,6 +1295,7 @@
               this.newAddressList.company_id = this.tempData.company_id;
               this.csv_file = null;
               this.csv_addresses = null;
+              this.isCreatingCompany = false;
               this.isImportingContacts = false;
               this.selected_company_address_lists = this.companies[company_id].address_lists;
               this.tempData.sender_data.address_line_1 = this.companies[company_id].address.address_line_1;
@@ -1250,15 +1343,26 @@
                       });
                 });
             },
+            cancelCreateCompany() {
+                this.isCreatingCompany = false;
+                this.emptyCompanyFields();
+            },
             createCompany() {
+              this.isCreatingCompany = true;
+              this.emptyCompanyFields();
+            },
+            storeCompany() {
                 if(this.tempData.company_id !== null){
                   this.isCreatingCompany = true;
                   this.emptyCompanyFields();
                   return;
                 }
 
+                this.tempData.sender_data.is_new = true;
+
                 axios.post('/api/companies/create-from-editor', {sender_data: this.tempData.sender_data})
                 .then(response => {
+                    this.tempData.sender_data.is_new = false;
                     this.getCompanies(response.data.company.id);
                     // let last_company;
                     // for(last_company in this.companies);
@@ -1294,8 +1398,13 @@
                       });
                 });
             },
+            generateRandomPassword() {
+                this.tempData.sender_data.password = Math.random().toString(36).substring(2) + new Date().getTime().toString(36);
+            },
             emptyCompanyFields() {
                 this.tempData.company_id = null;
+                this.tempData.sender_data.email = '';
+                this.tempData.sender_data.password = '';
                 this.tempData.sender_data.address_id = '';
                 this.tempData.sender_data.address_line_1 = '';
                 this.tempData.sender_data.address_line_2 = '';
@@ -1329,6 +1438,12 @@
                 //Removing sender data errors
                 if('back_text' in this.errors && !_.isEmpty(this.tempData.back_text)){
                   this.errors.back_text = null;
+                }
+                if('sender_data.email' in this.errors && !_.isEmpty(this.tempData.sender_data.email)){
+                  this.errors['sender_data.email'] = null;
+                }
+                if('sender_data.password' in this.errors && !_.isEmpty(this.tempData.sender_data.password)){
+                  this.errors['sender_data.password'] = null;
                 }
                 if('sender_data.company' in this.errors && !_.isEmpty(this.tempData.sender_data.company)){
                   this.errors['sender_data.company'] = null;
@@ -1497,8 +1612,9 @@
         mounted() {
 
             let vue = this;
+
             vue.tempFill();
-            vue.getCompanies();
+            vue.getCompanies(vue.companyIdProp);
 
             $(document).on('click', '.tool-done, .tool-remove', function(){
                 vue.tempFill();

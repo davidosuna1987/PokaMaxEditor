@@ -472,6 +472,27 @@
           }
       }
 
+      .field-reciever-email{
+        width: 50%;
+        margin-right: 15px;
+      }
+
+      .field-reciever-password{
+        width: calc(50% - 15px);
+
+        .generate-password{
+          position: absolute;
+          bottom: 7px;
+          right: 5px;
+        }
+
+        .has-error{
+          +.generate-password{
+            right: 29px;
+          }
+        }
+      }
+
       .field-reciever-company{
         width: calc(100% - 165px);
         margin-right: 15px;

@@ -15,15 +15,18 @@ class CreatePostcardsTable extends Migration
     {
         Schema::create('postcards', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->integer('company_id');
+            $table->unsignedInteger('user_id');
             $table->enum('status', ['SENDED', 'DRAFT'])->default('DRAFT');
             $table->string('product_name');
-            $table->string('front_cropped_file_path');
-            $table->string('front_original_file_path');
+            $table->string('front_cropped_file_path')->nullable();
+            $table->string('front_original_file_path')->nullable();
+            $table->string('front_thumbnail_file_path')->nullable();
             $table->text('back_text');
             $table->integer('font_family');
             $table->integer('font_size');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

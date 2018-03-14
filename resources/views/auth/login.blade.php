@@ -12,10 +12,8 @@
                     <form class="login-form" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
-                        <div class="field is-horizontal">
-                            <div class="field-label">
+                        <div class="field">
                                 <label class="label">E-Mail Address</label>
-                            </div>
 
                             <div class="field-body">
                                 <div class="field">
@@ -33,10 +31,8 @@
                             </div>
                         </div>
 
-                        <div class="field is-horizontal">
-                            <div class="field-label">
+                        <div class="field">
                                 <label class="label">Password</label>
-                            </div>
 
                             <div class="field-body">
                                 <div class="field">
@@ -53,8 +49,7 @@
                             </div>
                         </div>
 
-                        <div class="field is-horizontal">
-                            <div class="field-label"></div>
+                        <div class="field">
 
                             <div class="field-body">
                                 <div class="field">
@@ -68,8 +63,7 @@
                             </div>
                         </div>
 
-                        <div class="field is-horizontal">
-                            <div class="field-label"></div>
+                        <div class="field">
 
                             <div class="field-body">
                                 <div class="field is-grouped">
@@ -78,7 +72,7 @@
                                     </div>
 
                                     <div class="control">
-                                        <a href="{{ route('password.request') }}">
+                                        <a href="{{ route('password.request') }}" class="button is-white">
                                             Forgot Your Password?
                                         </a>
                                     </div>

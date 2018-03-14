@@ -11,32 +11,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->delete();
-
-        //Crear usuario administrador
-        factory(App\User::class)->create([
-            'name' => 'David',
-            'surnames' => 'Osuna Mondaca',
-            'email' => 'davidosuna1987@gmail.com',
-            'username' => 'davidosuna1987',
-            'password' => bcrypt('secret'),
-            'api_token' => bcrypt('davidosuna1987@gmail.com'),
-            'role_id' => 1,
-            'active' => true,
-        ]);
-
-        factory(App\User::class)->create([
-            'name' => 'Manuel',
-            'surnames' => 'Schmid',
-            'email' => 'manuel@pokamax.com',
-            'username' => 'manuelschmid',
-            'password' => bcrypt('secret'),
-            'api_token' => bcrypt('manuel@pokamax.com'),
-            'role_id' => 2,
-            'active' => true,
-        ]);
-
-        //Create address for testing company
+        //Create addresses
         DB::table('addresses')->insert([
             'company' => 'Supermundano',
             'title' => 'Mr',
@@ -48,23 +23,63 @@ class UsersTableSeeder extends Seeder
             'country' => 'España',
             'zip_code' => '46021',
             'birthday' => null,
-            'address_list_id' => null
         ]);
 
-        //Create testing company
-        DB::table('companies')->insert([
-            'user_id' => 1,
-            'address_id' => 1
+        DB::table('addresses')->insert([
+            'company' => 'EmartiDent',
+            'title' => 'Ms',
+            'name' => 'Esther',
+            'surnames' => 'Martínez Martínez',
+            'address_line_1' => 'C/ Alcalá 5',
+            'address_line_2' => null,
+            'city' => 'Madrid',
+            'country' => 'España',
+            'zip_code' => '08080',
+            'birthday' => null,
         ]);
 
-        DB::table('companies')->insert([
-            'user_id' => 1,
-            'address_id' => 2
+        DB::table('addresses')->insert([
+            'company' => 'PokaMax',
+            'title' => 'Mr',
+            'name' => 'Manuel',
+            'surnames' => 'Schmid',
+            'address_line_1' => 'C/ Alameda',
+            'address_line_2' => null,
+            'city' => 'Valencia',
+            'country' => 'España',
+            'zip_code' => '08080',
+            'birthday' => null,
         ]);
 
-        DB::table('companies')->insert([
-            'user_id' => 1,
-            'address_id' => 3
+        // Create users
+        factory(App\User::class)->create([
+            'email' => 'davidosuna1987@gmail.com',
+            'username' => 'davidosuna1987',
+            'password' => bcrypt('secret'),
+            'api_token' => bcrypt('davidosuna1987@gmail.com'),
+            'role_id' => 1,
+            'address_id' => 1,
+            'active' => true,
+        ]);
+
+        factory(App\User::class)->create([
+            'email' => 'esthermaruiz@gmail.com',
+            'username' => 'esthermaruiz',
+            'password' => bcrypt('secret'),
+            'api_token' => bcrypt('esthermaruiz@gmail.com'),
+            'role_id' => 4,
+            'address_id' => 2,
+            'active' => true,
+        ]);
+
+        factory(App\User::class)->create([
+            'email' => 'manuel@pokamax.com',
+            'username' => 'manuelschmid',
+            'password' => bcrypt('secret'),
+            'api_token' => bcrypt('manuel@pokamax.com'),
+            'role_id' => 2,
+            'address_id' => 3,
+            'active' => true,
         ]);
 
         // DB::table('address_lists')->insert([
@@ -81,34 +96,6 @@ class UsersTableSeeder extends Seeder
         //     'company_id' => 3,
         //     'name' => 'Uncategorized'
         // ]);
-
-        DB::table('addresses')->insert([
-            'company' => 'EmartiDent',
-            'title' => 'Ms',
-            'name' => 'Esther',
-            'surnames' => 'Martínez Martínez',
-            'address_line_1' => 'C/ Alcalá 5',
-            'address_line_2' => null,
-            'city' => 'Madrid',
-            'country' => 'España',
-            'zip_code' => '08080',
-            'birthday' => null,
-            // 'address_list_id' => 1
-        ]);
-
-        DB::table('addresses')->insert([
-            'company' => 'PokaMax',
-            'title' => 'Mr',
-            'name' => 'Manuel',
-            'surnames' => 'Schmid',
-            'address_line_1' => 'C/ Alameda',
-            'address_line_2' => null,
-            'city' => 'Valencia',
-            'country' => 'España',
-            'zip_code' => '08080',
-            'birthday' => null,
-            // 'address_list_id' => 1
-        ]);
 
         // //Create testing postcard
         // DB::table('postcards')->insert([

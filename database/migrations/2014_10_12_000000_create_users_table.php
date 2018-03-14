@@ -15,8 +15,6 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->string('name');
-            $table->string('surnames')->nullable();
             $table->string('email')->unique();
             $table->string('username')->unique()->nullable();
             $table->string('password')->nullable();
@@ -24,10 +22,12 @@ class CreateUsersTable extends Migration
             $table->string('api_token', 60)->unique();
             $table->boolean('active')->default(false);
             $table->unsignedInteger('role_id')->nullable();
+            $table->unsignedInteger('address_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
+            // $table->foreign('address_id')->references('id')->on('addresses')->onDelete('set null');
 
         });
     }
