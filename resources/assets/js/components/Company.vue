@@ -41,12 +41,12 @@
                         <div class="reciever_container">
                             <form v-on:submit.prevent="updateCompany" class="reciever_form company-info-form">
                                 <div class="field field-reciever-company">
-                                    <label class="label">Company name *</label>
+                                    <label class="label">Company name</label>
                                     <input
                                         type="text"
                                         id="reciever_company"
                                         name="reciever_company"
-                                        placeholder="Company"
+                                        placeholder="Company *"
                                         :disabled="!isEditingCompany"
                                         v-model="company.address.company"
                                         :class="[{ 'has-error' : updatedCompanyErrors['company'] }]" />

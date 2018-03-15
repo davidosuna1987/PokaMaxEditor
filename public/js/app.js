@@ -41982,7 +41982,7 @@ var render = function() {
                           { staticClass: "field field-reciever-company" },
                           [
                             _c("label", { staticClass: "label" }, [
-                              _vm._v("Company name *")
+                              _vm._v("Company name")
                             ]),
                             _vm._v(" "),
                             _c("input", {
@@ -42004,7 +42004,7 @@ var render = function() {
                                 type: "text",
                                 id: "reciever_company",
                                 name: "reciever_company",
-                                placeholder: "Company",
+                                placeholder: "Company *",
                                 disabled: !_vm.isEditingCompany
                               },
                               domProps: { value: _vm.company.address.company },
