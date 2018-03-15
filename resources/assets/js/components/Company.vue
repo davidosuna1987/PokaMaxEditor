@@ -41,14 +41,21 @@
                         <div class="reciever_container">
                             <form v-on:submit.prevent="updateCompany" class="reciever_form company-info-form">
                                 <div class="field field-reciever-company">
-                                    <label class="label">Company name</label>
+                                    <label class="label">Company name *</label>
                                     <input
                                         type="text"
                                         id="reciever_company"
                                         name="reciever_company"
                                         placeholder="Company"
                                         :disabled="!isEditingCompany"
-                                        v-model="company.address.company" />
+                                        v-model="company.address.company"
+                                        :class="[{ 'has-error' : updatedCompanyErrors['company'] }]" />
+                                        <span v-if="updatedCompanyErrors['company']" class="error has-text-danger is-size-7">
+                                            <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                            <span class="error-message">
+                                                {{updatedCompanyErrors['company'][0]}}
+                                            </span>
+                                        </span>
                                 </div>
                                 <div class="field field-reciever-birthday">
                                     <label class="label">Birthday</label>
@@ -78,7 +85,14 @@
                                         name="reciever_name"
                                         placeholder="Name *"
                                         :disabled="!isEditingCompany"
-                                        v-model="company.address.name" />
+                                        v-model="company.address.name"
+                                        :class="[{ 'has-error' : updatedCompanyErrors['name'] }]" />
+                                        <span v-if="updatedCompanyErrors['name']" class="error has-text-danger is-size-7">
+                                            <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                            <span class="error-message">
+                                                {{updatedCompanyErrors['name'][0]}}
+                                            </span>
+                                        </span>
                                 </div>
                                 <div class="field field-reciever-surnames">
                                     <label class="label">Surnames</label>
@@ -88,7 +102,14 @@
                                         name="reciever_surnames"
                                         placeholder="Surnames *"
                                         :disabled="!isEditingCompany"
-                                        v-model="company.address.surnames" />
+                                        v-model="company.address.surnames"
+                                        :class="[{ 'has-error' : updatedCompanyErrors['surnames'] }]" />
+                                        <span v-if="updatedCompanyErrors['surnames']" class="error has-text-danger is-size-7">
+                                            <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                            <span class="error-message">
+                                                {{updatedCompanyErrors['surnames'][0]}}
+                                            </span>
+                                        </span>
                                 </div>
                                 <div class="field field-reciever-address-line-1">
                                     <label class="label">Address line 1</label>
@@ -98,7 +119,14 @@
                                         name="reciever_address_line_1"
                                         placeholder="Address line 1 *"
                                         :disabled="!isEditingCompany"
-                                        v-model="company.address.address_line_1" />
+                                        v-model="company.address.address_line_1"
+                                        :class="[{ 'has-error' : updatedCompanyErrors['address_line_1'] }]" />
+                                        <span v-if="updatedCompanyErrors['address_line_1']" class="error has-text-danger is-size-7">
+                                            <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                            <span class="error-message">
+                                                {{updatedCompanyErrors['address_line_1'][0]}}
+                                            </span>
+                                        </span>
                                 </div>
                                 <div
                                     v-if="isEditingCompany || (!isEditingCompany && company.address.address_line_2)"
@@ -120,7 +148,14 @@
                                         name="reciever_city"
                                         placeholder="City *"
                                         :disabled="!isEditingCompany"
-                                        v-model="company.address.city" />
+                                        v-model="company.address.city"
+                                        :class="[{ 'has-error' : updatedCompanyErrors['city'] }]" />
+                                        <span v-if="updatedCompanyErrors['city']" class="error has-text-danger is-size-7">
+                                            <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                            <span class="error-message">
+                                                {{updatedCompanyErrors['city'][0]}}
+                                            </span>
+                                        </span>
                                 </div>
                                 <div class="field field-reciever-country">
                                     <label class="label">Country</label>
@@ -130,7 +165,14 @@
                                         name="reciever_country"
                                         placeholder="Country *"
                                         :disabled="!isEditingCompany"
-                                        v-model="company.address.country" />
+                                        v-model="company.address.country"
+                                        :class="[{ 'has-error' : updatedCompanyErrors['country'] }]" />
+                                        <span v-if="updatedCompanyErrors['country']" class="error has-text-danger is-size-7">
+                                            <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                            <span class="error-message">
+                                                {{updatedCompanyErrors['country'][0]}}
+                                            </span>
+                                        </span>
                                 </div>
                                 <div class="field field-reciever-zip">
                                     <label class="label">ZIP</label>
@@ -140,7 +182,14 @@
                                         name="reciever_zip_code"
                                         placeholder="Zip *"
                                         :disabled="!isEditingCompany"
-                                        v-model="company.address.zip_code" />
+                                        v-model="company.address.zip_code"
+                                        :class="[{ 'has-error' : updatedCompanyErrors['zip_code'] }]" />
+                                        <span v-if="updatedCompanyErrors['zip_code']" class="error has-text-danger is-size-7">
+                                            <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                            <span class="error-message">
+                                                {{updatedCompanyErrors['zip_code'][0]}}
+                                            </span>
+                                        </span>
                                 </div>
                                 <div v-if="isEditingCompany" class="field has-text-right m-t-30">
                                     <button class="button is-info" @click.prevent="updateCompany">Update info</button>
@@ -509,7 +558,8 @@
                     barPercent: 100,
                     message: ''
                 },
-                newAddressListErrors: null,
+                updatedCompanyErrors: [],
+                newAddressListErrors: [],
                 company: null,
                 isEditingCompany: false,
                 updatingAddressListIndex: null,
@@ -673,17 +723,17 @@
                 }, 10);
             },
             updateCompany() {
-                this.isEditingCompany = false;
                 axios.put('/api/companies/'+this.companyId, this.company.address)
                 .then(response => {
                     this.getCompany();
+                    this.isEditingCompany = false;
                     this.$snackbar.open(response.data.message);
                 }).catch(error => {
                     if(error.response.status && error.response.status === 419){
                         location.href = '/login';
                     }
                     console.info(error);
-                    this.errorsCompany = error.response.data.errors;
+                    this.updatedCompanyErrors = error.response.data.errors;
                     this.$snackbar.open({
                         duration: 5000,
                         message: 'Please correct errors to update company.',

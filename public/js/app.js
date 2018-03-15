@@ -41361,6 +41361,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['companyId'],
@@ -41371,7 +41420,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 barPercent: 100,
                 message: ''
             },
-            newAddressListErrors: null,
+            updatedCompanyErrors: [],
+            newAddressListErrors: [],
             company: null,
             isEditingCompany: false,
             updatingAddressListIndex: null,
@@ -41543,16 +41593,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateCompany: function updateCompany() {
             var _this4 = this;
 
-            this.isEditingCompany = false;
             axios.put('/api/companies/' + this.companyId, this.company.address).then(function (response) {
                 _this4.getCompany();
+                _this4.isEditingCompany = false;
                 _this4.$snackbar.open(response.data.message);
             }).catch(function (error) {
                 if (error.response.status && error.response.status === 419) {
                     location.href = '/login';
                 }
                 console.info(error);
-                _this4.errorsCompany = error.response.data.errors;
+                _this4.updatedCompanyErrors = error.response.data.errors;
                 _this4.$snackbar.open({
                     duration: 5000,
                     message: 'Please correct errors to update company.',
@@ -41932,7 +41982,7 @@ var render = function() {
                           { staticClass: "field field-reciever-company" },
                           [
                             _c("label", { staticClass: "label" }, [
-                              _vm._v("Company name")
+                              _vm._v("Company name *")
                             ]),
                             _vm._v(" "),
                             _c("input", {
@@ -41942,6 +41992,12 @@ var render = function() {
                                   rawName: "v-model",
                                   value: _vm.company.address.company,
                                   expression: "company.address.company"
+                                }
+                              ],
+                              class: [
+                                {
+                                  "has-error":
+                                    _vm.updatedCompanyErrors["company"]
                                 }
                               ],
                               attrs: {
@@ -41964,7 +42020,39 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _vm.updatedCompanyErrors["company"]
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "error has-text-danger is-size-7"
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass:
+                                        "mdi mdi-alert-circle-outline mdi-18px"
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "error-message" },
+                                      [
+                                        _vm._v(
+                                          "\n                                            " +
+                                            _vm._s(
+                                              _vm.updatedCompanyErrors[
+                                                "company"
+                                              ][0]
+                                            ) +
+                                            "\n                                        "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
                           ]
                         ),
                         _vm._v(" "),
@@ -42067,6 +42155,11 @@ var render = function() {
                                   expression: "company.address.name"
                                 }
                               ],
+                              class: [
+                                {
+                                  "has-error": _vm.updatedCompanyErrors["name"]
+                                }
+                              ],
                               attrs: {
                                 type: "text",
                                 id: "reciever_name",
@@ -42087,7 +42180,39 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _vm.updatedCompanyErrors["name"]
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "error has-text-danger is-size-7"
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass:
+                                        "mdi mdi-alert-circle-outline mdi-18px"
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "error-message" },
+                                      [
+                                        _vm._v(
+                                          "\n                                            " +
+                                            _vm._s(
+                                              _vm.updatedCompanyErrors[
+                                                "name"
+                                              ][0]
+                                            ) +
+                                            "\n                                        "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
                           ]
                         ),
                         _vm._v(" "),
@@ -42106,6 +42231,12 @@ var render = function() {
                                   rawName: "v-model",
                                   value: _vm.company.address.surnames,
                                   expression: "company.address.surnames"
+                                }
+                              ],
+                              class: [
+                                {
+                                  "has-error":
+                                    _vm.updatedCompanyErrors["surnames"]
                                 }
                               ],
                               attrs: {
@@ -42128,7 +42259,39 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _vm.updatedCompanyErrors["surnames"]
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "error has-text-danger is-size-7"
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass:
+                                        "mdi mdi-alert-circle-outline mdi-18px"
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "error-message" },
+                                      [
+                                        _vm._v(
+                                          "\n                                            " +
+                                            _vm._s(
+                                              _vm.updatedCompanyErrors[
+                                                "surnames"
+                                              ][0]
+                                            ) +
+                                            "\n                                        "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
                           ]
                         ),
                         _vm._v(" "),
@@ -42149,6 +42312,12 @@ var render = function() {
                                   rawName: "v-model",
                                   value: _vm.company.address.address_line_1,
                                   expression: "company.address.address_line_1"
+                                }
+                              ],
+                              class: [
+                                {
+                                  "has-error":
+                                    _vm.updatedCompanyErrors["address_line_1"]
                                 }
                               ],
                               attrs: {
@@ -42173,7 +42342,39 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _vm.updatedCompanyErrors["address_line_1"]
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "error has-text-danger is-size-7"
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass:
+                                        "mdi mdi-alert-circle-outline mdi-18px"
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "error-message" },
+                                      [
+                                        _vm._v(
+                                          "\n                                            " +
+                                            _vm._s(
+                                              _vm.updatedCompanyErrors[
+                                                "address_line_1"
+                                              ][0]
+                                            ) +
+                                            "\n                                        "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
                           ]
                         ),
                         _vm._v(" "),
@@ -42245,6 +42446,11 @@ var render = function() {
                                   expression: "company.address.city"
                                 }
                               ],
+                              class: [
+                                {
+                                  "has-error": _vm.updatedCompanyErrors["city"]
+                                }
+                              ],
                               attrs: {
                                 type: "text",
                                 id: "reciever_city",
@@ -42265,7 +42471,39 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _vm.updatedCompanyErrors["city"]
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "error has-text-danger is-size-7"
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass:
+                                        "mdi mdi-alert-circle-outline mdi-18px"
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "error-message" },
+                                      [
+                                        _vm._v(
+                                          "\n                                            " +
+                                            _vm._s(
+                                              _vm.updatedCompanyErrors[
+                                                "city"
+                                              ][0]
+                                            ) +
+                                            "\n                                        "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
                           ]
                         ),
                         _vm._v(" "),
@@ -42284,6 +42522,12 @@ var render = function() {
                                   rawName: "v-model",
                                   value: _vm.company.address.country,
                                   expression: "company.address.country"
+                                }
+                              ],
+                              class: [
+                                {
+                                  "has-error":
+                                    _vm.updatedCompanyErrors["country"]
                                 }
                               ],
                               attrs: {
@@ -42306,7 +42550,39 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _vm.updatedCompanyErrors["country"]
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "error has-text-danger is-size-7"
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass:
+                                        "mdi mdi-alert-circle-outline mdi-18px"
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "error-message" },
+                                      [
+                                        _vm._v(
+                                          "\n                                            " +
+                                            _vm._s(
+                                              _vm.updatedCompanyErrors[
+                                                "country"
+                                              ][0]
+                                            ) +
+                                            "\n                                        "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
                           ]
                         ),
                         _vm._v(" "),
@@ -42322,6 +42598,12 @@ var render = function() {
                                 rawName: "v-model",
                                 value: _vm.company.address.zip_code,
                                 expression: "company.address.zip_code"
+                              }
+                            ],
+                            class: [
+                              {
+                                "has-error":
+                                  _vm.updatedCompanyErrors["zip_code"]
                               }
                             ],
                             attrs: {
@@ -42344,7 +42626,34 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.updatedCompanyErrors["zip_code"]
+                            ? _c(
+                                "span",
+                                {
+                                  staticClass: "error has-text-danger is-size-7"
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass:
+                                      "mdi mdi-alert-circle-outline mdi-18px"
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "error-message" }, [
+                                    _vm._v(
+                                      "\n                                            " +
+                                        _vm._s(
+                                          _vm.updatedCompanyErrors[
+                                            "zip_code"
+                                          ][0]
+                                        ) +
+                                        "\n                                        "
+                                    )
+                                  ])
+                                ]
+                              )
+                            : _vm._e()
                         ]),
                         _vm._v(" "),
                         _vm.isEditingCompany
