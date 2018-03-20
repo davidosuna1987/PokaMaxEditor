@@ -32,5 +32,5 @@
 
 
 ### Completed todo's
-~~_- Remove frame switcher_~~
-~~_- Add update form to address list contacts_~~
+- ~~_Remove frame switcher_~~
+- ~~_ Add update form to address list contacts_~~
