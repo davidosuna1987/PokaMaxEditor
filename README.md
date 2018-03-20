@@ -6,7 +6,6 @@
 
 - Validations
   - AddressMultipleInsertRequest cambiar código comentado por el de test
-  - company->information
 
 - Manuel
   - add 10.000 contacts
@@ -31,5 +30,6 @@
   - ~~_Added birthday column in address lists tables_~~
 - Company
   - ~~_Add update form to address list contacts_~~
+  - ~~_Update validation_~~
 - Profile
   - ~~_Add update form to address list contacts_~~
