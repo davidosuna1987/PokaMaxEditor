@@ -41618,33 +41618,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
-    computed: {
-        newAddressListHasError: function newAddressListHasError() {
-            return this.newAddressListErrors != null && !_.isEmpty(this.newAddressListErrors) && !_.isEmpty(this.newAddressListErrors['name']);
-        },
-        newCompanyCompanyHasError: function newCompanyCompanyHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['company']);
-        },
-        newCompanyNameHasError: function newCompanyNameHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['name']);
-        },
-        newCompanySurnamesHasError: function newCompanySurnamesHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['surnames']);
-        },
-        newCompanyAddressHasError: function newCompanyAddressHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['address_line_1']);
-        },
-        newCompanyCityHasError: function newCompanyCityHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['city']);
-        },
-        newCompanyCountryHasError: function newCompanyCountryHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['country']);
-        },
-        newCompanyZipHasError: function newCompanyZipHasError() {
-            return this.newCompanyErrors != null && !_.isEmpty(this.newCompanyErrors) && !_.isEmpty(this.newCompanyErrors['zip_code']);
-        }
-    },
     watch: {
+        company: {
+            handler: function handler(val) {
+                this.removeErrors();
+            },
+
+            deep: true
+        },
         newAddressList: {
             handler: function handler(val) {
                 this.removeErrors();
@@ -41658,6 +41639,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
 
             deep: true
+        }
+    },
+    computed: {
+        newAddressListHasError: function newAddressListHasError() {
+            return this.newAddressListErrors != null && !_.isEmpty(this.newAddressListErrors) && !_.isEmpty(this.newAddressListErrors['name']);
         }
     },
     methods: {
@@ -42094,27 +42080,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }
 
-            if (!_.isEmpty(this.newCompanyErrors)) {
-                if ('company' in this.newCompanyErrors && !_.isEmpty(this.newCompany.company)) {
-                    this.newCompanyErrors['company'] = null;
+            if (!_.isEmpty(this.updatedCompanyErrors)) {
+                if ('company' in this.updatedCompanyErrors && !_.isEmpty(this.company.address.company)) {
+                    this.updatedCompanyErrors['company'] = null;
                 }
-                if ('name' in this.newCompanyErrors && !_.isEmpty(this.newCompany.name)) {
-                    this.newCompanyErrors['name'] = null;
+                if ('name' in this.updatedCompanyErrors && !_.isEmpty(this.company.address.name)) {
+                    this.updatedCompanyErrors['name'] = null;
                 }
-                if ('surnames' in this.newCompanyErrors && !_.isEmpty(this.newCompany.surnames)) {
-                    this.newCompanyErrors['surnames'] = null;
+                if ('surnames' in this.updatedCompanyErrors && !_.isEmpty(this.company.address.surnames)) {
+                    this.updatedCompanyErrors['surnames'] = null;
                 }
-                if ('address_line_1' in this.newCompanyErrors && !_.isEmpty(this.newCompany.address_line_1)) {
-                    this.newCompanyErrors['address_line_1'] = null;
+                if ('address_line_1' in this.updatedCompanyErrors && !_.isEmpty(this.company.address.address_line_1)) {
+                    this.updatedCompanyErrors['address_line_1'] = null;
                 }
-                if ('city' in this.newCompanyErrors && !_.isEmpty(this.newCompany.city)) {
-                    this.newCompanyErrors['city'] = null;
+                if ('city' in this.updatedCompanyErrors && !_.isEmpty(this.company.address.city)) {
+                    this.updatedCompanyErrors['city'] = null;
                 }
-                if ('country' in this.newCompanyErrors && !_.isEmpty(this.newCompany.country)) {
-                    this.newCompanyErrors['country'] = null;
+                if ('country' in this.updatedCompanyErrors && !_.isEmpty(this.company.address.country)) {
+                    this.updatedCompanyErrors['country'] = null;
                 }
-                if ('zip_code' in this.newCompanyErrors && !_.isEmpty(this.newCompany.zip_code)) {
-                    this.newCompanyErrors['zip_code'] = null;
+                if ('zip_code' in this.updatedCompanyErrors && !_.isEmpty(this.company.address.zip_code)) {
+                    this.updatedCompanyErrors['zip_code'] = null;
                 }
             }
         }

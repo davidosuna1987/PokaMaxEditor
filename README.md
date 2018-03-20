@@ -30,6 +30,7 @@
   - ~~_Added birthday column in address lists tables_~~
 - Company
   - ~~_Add update form to address list contacts_~~
+  - ~~_Update toggle errors~~
   - ~~_Update validation_~~
 - Profile
   - ~~_Add update form to address list contacts_~~
