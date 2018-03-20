@@ -568,7 +568,14 @@
                                                     id="reciever_name"
                                                     name="reciever_name"
                                                     placeholder="Name *"
+                                                    :class="[{'has-error' : updatedContactErrors['name']}]"
                                                     v-model="updatedContact.name" />
+                                                    <span v-if="updatedContactErrors['name']" class="error has-text-danger is-size-7">
+                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                        <span class="error-message">
+                                                            {{updatedContactErrors['name'][0]}}
+                                                        </span>
+                                                    </span>
                                             </div>
                                             <div class="field field-reciever-surnames">
                                                 <input
@@ -576,7 +583,14 @@
                                                     id="reciever_surnames"
                                                     name="reciever_surnames"
                                                     placeholder="Surnames *"
+                                                    :class="[{'has-error' : updatedContactErrors['surnames']}]"
                                                     v-model="updatedContact.surnames" />
+                                                    <span v-if="updatedContactErrors['surnames']" class="error has-text-danger is-size-7">
+                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                        <span class="error-message">
+                                                            {{updatedContactErrors['surnames'][0]}}
+                                                        </span>
+                                                    </span>
                                             </div>
                                             <div class="field field-reciever-address-line-1">
                                                 <input
@@ -584,7 +598,14 @@
                                                     id="reciever_address_line_1"
                                                     name="reciever_address_line_1"
                                                     placeholder="Address line 1 *"
+                                                    :class="[{'has-error' : updatedContactErrors['address_line_1']}]"
                                                     v-model="updatedContact.address_line_1" />
+                                                    <span v-if="updatedContactErrors['address_line_1']" class="error has-text-danger is-size-7">
+                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                        <span class="error-message">
+                                                            {{updatedContactErrors['address_line_1'][0]}}
+                                                        </span>
+                                                    </span>
                                             </div>
                                             <div class="field field-reciever-address-line-2">
                                                 <input
@@ -600,7 +621,14 @@
                                                     id="reciever_city"
                                                     name="reciever_city"
                                                     placeholder="City *"
+                                                    :class="[{'has-error' : updatedContactErrors['city']}]"
                                                     v-model="updatedContact.city" />
+                                                    <span v-if="updatedContactErrors['city']" class="error has-text-danger is-size-7">
+                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                        <span class="error-message">
+                                                            {{updatedContactErrors['city'][0]}}
+                                                        </span>
+                                                    </span>
                                             </div>
                                             <div class="field field-reciever-country">
                                                 <input
@@ -608,7 +636,14 @@
                                                     id="reciever_country"
                                                     name="reciever_country"
                                                     placeholder="Country *"
+                                                    :class="[{'has-error' : updatedContactErrors['country']}]"
                                                     v-model="updatedContact.country" />
+                                                    <span v-if="updatedContactErrors['country']" class="error has-text-danger is-size-7">
+                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                        <span class="error-message">
+                                                            {{updatedContactErrors['country'][0]}}
+                                                        </span>
+                                                    </span>
                                             </div>
                                             <div class="field field-reciever-zip">
                                                 <input
@@ -616,11 +651,18 @@
                                                     id="reciever_zip_code"
                                                     name="reciever_zip_code"
                                                     placeholder="Zip *"
+                                                    :class="[{'has-error' : updatedContactErrors['zip_code']}]"
                                                     v-model="updatedContact.zip_code" />
+                                                    <span v-if="updatedContactErrors['zip_code']" class="error has-text-danger is-size-7">
+                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
+                                                        <span class="error-message">
+                                                            {{updatedContactErrors['zip_code'][0]}}
+                                                        </span>
+                                                    </span>
                                             </div>
                                             <div class="field has-text-right m-t-20">
-                                                <button class="button is-small" @click.prevent="emptyUpdatedContact">Cancel</button>
-                                                <button class="button is-link is-small" @click.prevent="updateContact">Update</button>
+                                                <a class="button is-small" @click.prevent="emptyUpdatedContact">Cancel</a>
+                                                <button type="submit" class="button is-link is-small" @click.prevent="updateContact">Update</button>
                                             </div>
                                         </form>
 
@@ -761,6 +803,7 @@
                     zip_code: '',
                     birthday: ''
                 },
+                updatedContactErrors: [],
                 updatedCompanyErrors: [],
                 newAddressListErrors: [],
                 company: null,
@@ -813,6 +856,12 @@
         },
         watch: {
             newAddressList: {
+                handler(val){
+                    this.removeErrors();
+                },
+                deep: true
+            },
+            updatedContact: {
                 handler(val){
                     this.removeErrors();
                 },
@@ -939,6 +988,7 @@
                 });
             },
             fillUpdatedContact(row) {
+                this.updatedContactErrors = [];
                 this.updatedContact.id = row.id,
                 this.updatedContact.company = row.company,
                 this.updatedContact.title = row.title,
@@ -952,6 +1002,7 @@
                 this.updatedContact.birthday = row.birthday
             },
             emptyUpdatedContact() {
+                this.updatedContactErrors = [];
                 this.updatedContact.id = '',
                 this.updatedContact.company = '',
                 this.updatedContact.title = '',
@@ -1214,29 +1265,50 @@
                     }
                 }
 
-              if(!_.isEmpty(this.newCompanyErrors)){
-                if('company' in this.newCompanyErrors && !_.isEmpty(this.newCompany.company)){
-                  this.newCompanyErrors['company'] = null;
+                if(!_.isEmpty(this.updatedContactErrors)){
+                    if('name' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.name)){
+                      this.updatedContactErrors['name'] = null;
+                    }
+                    if('surnames' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.surnames)){
+                      this.updatedContactErrors['surnames'] = null;
+                    }
+                    if('address_line_1' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.address_line_1)){
+                      this.updatedContactErrors['address_line_1'] = null;
+                    }
+                    if('city' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.city)){
+                      this.updatedContactErrors['city'] = null;
+                    }
+                    if('country' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.country)){
+                      this.updatedContactErrors['country'] = null;
+                    }
+                    if('zip_code' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.zip_code)){
+                      this.updatedContactErrors['zip_code'] = null;
+                    }
                 }
-                if('name' in this.newCompanyErrors && !_.isEmpty(this.newCompany.name)){
-                  this.newCompanyErrors['name'] = null;
+
+                if(!_.isEmpty(this.newCompanyErrors)){
+                    if('company' in this.newCompanyErrors && !_.isEmpty(this.newCompany.company)){
+                      this.newCompanyErrors['company'] = null;
+                    }
+                    if('name' in this.newCompanyErrors && !_.isEmpty(this.newCompany.name)){
+                      this.newCompanyErrors['name'] = null;
+                    }
+                    if('surnames' in this.newCompanyErrors && !_.isEmpty(this.newCompany.surnames)){
+                      this.newCompanyErrors['surnames'] = null;
+                    }
+                    if('address_line_1' in this.newCompanyErrors && !_.isEmpty(this.newCompany.address_line_1)){
+                      this.newCompanyErrors['address_line_1'] = null;
+                    }
+                    if('city' in this.newCompanyErrors && !_.isEmpty(this.newCompany.city)){
+                      this.newCompanyErrors['city'] = null;
+                    }
+                    if('country' in this.newCompanyErrors && !_.isEmpty(this.newCompany.country)){
+                      this.newCompanyErrors['country'] = null;
+                    }
+                    if('zip_code' in this.newCompanyErrors && !_.isEmpty(this.newCompany.zip_code)){
+                      this.newCompanyErrors['zip_code'] = null;
+                    }
                 }
-                if('surnames' in this.newCompanyErrors && !_.isEmpty(this.newCompany.surnames)){
-                  this.newCompanyErrors['surnames'] = null;
-                }
-                if('address_line_1' in this.newCompanyErrors && !_.isEmpty(this.newCompany.address_line_1)){
-                  this.newCompanyErrors['address_line_1'] = null;
-                }
-                if('city' in this.newCompanyErrors && !_.isEmpty(this.newCompany.city)){
-                  this.newCompanyErrors['city'] = null;
-                }
-                if('country' in this.newCompanyErrors && !_.isEmpty(this.newCompany.country)){
-                  this.newCompanyErrors['country'] = null;
-                }
-                if('zip_code' in this.newCompanyErrors && !_.isEmpty(this.newCompany.zip_code)){
-                  this.newCompanyErrors['zip_code'] = null;
-                }
-              }
             }
         },
         mounted() {

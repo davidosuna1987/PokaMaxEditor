@@ -41647,6 +41647,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['companyId'],
@@ -41670,6 +41712,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 zip_code: '',
                 birthday: ''
             },
+            updatedContactErrors: [],
             updatedCompanyErrors: [],
             newAddressListErrors: [],
             company: null,
@@ -41723,6 +41766,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     watch: {
         newAddressList: {
+            handler: function handler(val) {
+                this.removeErrors();
+            },
+
+            deep: true
+        },
+        updatedContact: {
             handler: function handler(val) {
                 this.removeErrors();
             },
@@ -41854,9 +41904,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         fillUpdatedContact: function fillUpdatedContact(row) {
+            this.updatedContactErrors = [];
             this.updatedContact.id = row.id, this.updatedContact.company = row.company, this.updatedContact.title = row.title, this.updatedContact.name = row.name, this.updatedContact.surnames = row.surnames, this.updatedContact.address_line_1 = row.address_line_1, this.updatedContact.address_line_2 = row.address_line_2, this.updatedContact.city = row.city, this.updatedContact.country = row.country, this.updatedContact.zip_code = row.zip_code, this.updatedContact.birthday = row.birthday;
         },
         emptyUpdatedContact: function emptyUpdatedContact() {
+            this.updatedContactErrors = [];
             this.updatedContact.id = '', this.updatedContact.company = '', this.updatedContact.title = '', this.updatedContact.name = '', this.updatedContact.surnames = '', this.updatedContact.address_line_1 = '', this.updatedContact.address_line_2 = '', this.updatedContact.city = '', this.updatedContact.country = '', this.updatedContact.zip_code = '', this.updatedContact.birthday = '';
         },
         getCompany: function getCompany() {
@@ -42112,6 +42164,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!_.isEmpty(this.newAddressListErrors)) {
                 if ('name' in this.newAddressListErrors) {
                     this.newAddressListErrors['name'] = null;
+                }
+            }
+
+            if (!_.isEmpty(this.updatedContactErrors)) {
+                if ('name' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.name)) {
+                    this.updatedContactErrors['name'] = null;
+                }
+                if ('surnames' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.surnames)) {
+                    this.updatedContactErrors['surnames'] = null;
+                }
+                if ('address_line_1' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.address_line_1)) {
+                    this.updatedContactErrors['address_line_1'] = null;
+                }
+                if ('city' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.city)) {
+                    this.updatedContactErrors['city'] = null;
+                }
+                if ('country' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.country)) {
+                    this.updatedContactErrors['country'] = null;
+                }
+                if ('zip_code' in this.updatedContactErrors && !_.isEmpty(this.updatedContact.zip_code)) {
+                    this.updatedContactErrors['zip_code'] = null;
                 }
             }
 
@@ -44795,6 +44868,15 @@ var render = function() {
                                                                         "updatedContact.name"
                                                                     }
                                                                   ],
+                                                                  class: [
+                                                                    {
+                                                                      "has-error":
+                                                                        _vm
+                                                                          .updatedContactErrors[
+                                                                          "name"
+                                                                        ]
+                                                                    }
+                                                                  ],
                                                                   attrs: {
                                                                     type:
                                                                       "text",
@@ -44831,7 +44913,51 @@ var render = function() {
                                                                       )
                                                                     }
                                                                   }
-                                                                })
+                                                                }),
+                                                                _vm._v(" "),
+                                                                _vm
+                                                                  .updatedContactErrors[
+                                                                  "name"
+                                                                ]
+                                                                  ? _c(
+                                                                      "span",
+                                                                      {
+                                                                        staticClass:
+                                                                          "error has-text-danger is-size-7"
+                                                                      },
+                                                                      [
+                                                                        _c(
+                                                                          "i",
+                                                                          {
+                                                                            staticClass:
+                                                                              "mdi mdi-alert-circle-outline mdi-18px"
+                                                                          }
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "span",
+                                                                          {
+                                                                            staticClass:
+                                                                              "error-message"
+                                                                          },
+                                                                          [
+                                                                            _vm._v(
+                                                                              "\n                                                        " +
+                                                                                _vm._s(
+                                                                                  _vm
+                                                                                    .updatedContactErrors[
+                                                                                    "name"
+                                                                                  ][0]
+                                                                                ) +
+                                                                                "\n                                                    "
+                                                                            )
+                                                                          ]
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  : _vm._e()
                                                               ]
                                                             ),
                                                             _vm._v(" "),
@@ -44855,6 +44981,15 @@ var render = function() {
                                                                           .surnames,
                                                                       expression:
                                                                         "updatedContact.surnames"
+                                                                    }
+                                                                  ],
+                                                                  class: [
+                                                                    {
+                                                                      "has-error":
+                                                                        _vm
+                                                                          .updatedContactErrors[
+                                                                          "surnames"
+                                                                        ]
                                                                     }
                                                                   ],
                                                                   attrs: {
@@ -44893,7 +45028,51 @@ var render = function() {
                                                                       )
                                                                     }
                                                                   }
-                                                                })
+                                                                }),
+                                                                _vm._v(" "),
+                                                                _vm
+                                                                  .updatedContactErrors[
+                                                                  "surnames"
+                                                                ]
+                                                                  ? _c(
+                                                                      "span",
+                                                                      {
+                                                                        staticClass:
+                                                                          "error has-text-danger is-size-7"
+                                                                      },
+                                                                      [
+                                                                        _c(
+                                                                          "i",
+                                                                          {
+                                                                            staticClass:
+                                                                              "mdi mdi-alert-circle-outline mdi-18px"
+                                                                          }
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "span",
+                                                                          {
+                                                                            staticClass:
+                                                                              "error-message"
+                                                                          },
+                                                                          [
+                                                                            _vm._v(
+                                                                              "\n                                                        " +
+                                                                                _vm._s(
+                                                                                  _vm
+                                                                                    .updatedContactErrors[
+                                                                                    "surnames"
+                                                                                  ][0]
+                                                                                ) +
+                                                                                "\n                                                    "
+                                                                            )
+                                                                          ]
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  : _vm._e()
                                                               ]
                                                             ),
                                                             _vm._v(" "),
@@ -44917,6 +45096,15 @@ var render = function() {
                                                                           .address_line_1,
                                                                       expression:
                                                                         "updatedContact.address_line_1"
+                                                                    }
+                                                                  ],
+                                                                  class: [
+                                                                    {
+                                                                      "has-error":
+                                                                        _vm
+                                                                          .updatedContactErrors[
+                                                                          "address_line_1"
+                                                                        ]
                                                                     }
                                                                   ],
                                                                   attrs: {
@@ -44955,7 +45143,51 @@ var render = function() {
                                                                       )
                                                                     }
                                                                   }
-                                                                })
+                                                                }),
+                                                                _vm._v(" "),
+                                                                _vm
+                                                                  .updatedContactErrors[
+                                                                  "address_line_1"
+                                                                ]
+                                                                  ? _c(
+                                                                      "span",
+                                                                      {
+                                                                        staticClass:
+                                                                          "error has-text-danger is-size-7"
+                                                                      },
+                                                                      [
+                                                                        _c(
+                                                                          "i",
+                                                                          {
+                                                                            staticClass:
+                                                                              "mdi mdi-alert-circle-outline mdi-18px"
+                                                                          }
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "span",
+                                                                          {
+                                                                            staticClass:
+                                                                              "error-message"
+                                                                          },
+                                                                          [
+                                                                            _vm._v(
+                                                                              "\n                                                        " +
+                                                                                _vm._s(
+                                                                                  _vm
+                                                                                    .updatedContactErrors[
+                                                                                    "address_line_1"
+                                                                                  ][0]
+                                                                                ) +
+                                                                                "\n                                                    "
+                                                                            )
+                                                                          ]
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  : _vm._e()
                                                               ]
                                                             ),
                                                             _vm._v(" "),
@@ -45043,6 +45275,15 @@ var render = function() {
                                                                         "updatedContact.city"
                                                                     }
                                                                   ],
+                                                                  class: [
+                                                                    {
+                                                                      "has-error":
+                                                                        _vm
+                                                                          .updatedContactErrors[
+                                                                          "city"
+                                                                        ]
+                                                                    }
+                                                                  ],
                                                                   attrs: {
                                                                     type:
                                                                       "text",
@@ -45079,7 +45320,51 @@ var render = function() {
                                                                       )
                                                                     }
                                                                   }
-                                                                })
+                                                                }),
+                                                                _vm._v(" "),
+                                                                _vm
+                                                                  .updatedContactErrors[
+                                                                  "city"
+                                                                ]
+                                                                  ? _c(
+                                                                      "span",
+                                                                      {
+                                                                        staticClass:
+                                                                          "error has-text-danger is-size-7"
+                                                                      },
+                                                                      [
+                                                                        _c(
+                                                                          "i",
+                                                                          {
+                                                                            staticClass:
+                                                                              "mdi mdi-alert-circle-outline mdi-18px"
+                                                                          }
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "span",
+                                                                          {
+                                                                            staticClass:
+                                                                              "error-message"
+                                                                          },
+                                                                          [
+                                                                            _vm._v(
+                                                                              "\n                                                        " +
+                                                                                _vm._s(
+                                                                                  _vm
+                                                                                    .updatedContactErrors[
+                                                                                    "city"
+                                                                                  ][0]
+                                                                                ) +
+                                                                                "\n                                                    "
+                                                                            )
+                                                                          ]
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  : _vm._e()
                                                               ]
                                                             ),
                                                             _vm._v(" "),
@@ -45103,6 +45388,15 @@ var render = function() {
                                                                           .country,
                                                                       expression:
                                                                         "updatedContact.country"
+                                                                    }
+                                                                  ],
+                                                                  class: [
+                                                                    {
+                                                                      "has-error":
+                                                                        _vm
+                                                                          .updatedContactErrors[
+                                                                          "country"
+                                                                        ]
                                                                     }
                                                                   ],
                                                                   attrs: {
@@ -45141,7 +45435,51 @@ var render = function() {
                                                                       )
                                                                     }
                                                                   }
-                                                                })
+                                                                }),
+                                                                _vm._v(" "),
+                                                                _vm
+                                                                  .updatedContactErrors[
+                                                                  "country"
+                                                                ]
+                                                                  ? _c(
+                                                                      "span",
+                                                                      {
+                                                                        staticClass:
+                                                                          "error has-text-danger is-size-7"
+                                                                      },
+                                                                      [
+                                                                        _c(
+                                                                          "i",
+                                                                          {
+                                                                            staticClass:
+                                                                              "mdi mdi-alert-circle-outline mdi-18px"
+                                                                          }
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "span",
+                                                                          {
+                                                                            staticClass:
+                                                                              "error-message"
+                                                                          },
+                                                                          [
+                                                                            _vm._v(
+                                                                              "\n                                                        " +
+                                                                                _vm._s(
+                                                                                  _vm
+                                                                                    .updatedContactErrors[
+                                                                                    "country"
+                                                                                  ][0]
+                                                                                ) +
+                                                                                "\n                                                    "
+                                                                            )
+                                                                          ]
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  : _vm._e()
                                                               ]
                                                             ),
                                                             _vm._v(" "),
@@ -45165,6 +45503,15 @@ var render = function() {
                                                                           .zip_code,
                                                                       expression:
                                                                         "updatedContact.zip_code"
+                                                                    }
+                                                                  ],
+                                                                  class: [
+                                                                    {
+                                                                      "has-error":
+                                                                        _vm
+                                                                          .updatedContactErrors[
+                                                                          "zip_code"
+                                                                        ]
                                                                     }
                                                                   ],
                                                                   attrs: {
@@ -45203,7 +45550,51 @@ var render = function() {
                                                                       )
                                                                     }
                                                                   }
-                                                                })
+                                                                }),
+                                                                _vm._v(" "),
+                                                                _vm
+                                                                  .updatedContactErrors[
+                                                                  "zip_code"
+                                                                ]
+                                                                  ? _c(
+                                                                      "span",
+                                                                      {
+                                                                        staticClass:
+                                                                          "error has-text-danger is-size-7"
+                                                                      },
+                                                                      [
+                                                                        _c(
+                                                                          "i",
+                                                                          {
+                                                                            staticClass:
+                                                                              "mdi mdi-alert-circle-outline mdi-18px"
+                                                                          }
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "span",
+                                                                          {
+                                                                            staticClass:
+                                                                              "error-message"
+                                                                          },
+                                                                          [
+                                                                            _vm._v(
+                                                                              "\n                                                        " +
+                                                                                _vm._s(
+                                                                                  _vm
+                                                                                    .updatedContactErrors[
+                                                                                    "zip_code"
+                                                                                  ][0]
+                                                                                ) +
+                                                                                "\n                                                    "
+                                                                            )
+                                                                          ]
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  : _vm._e()
                                                               ]
                                                             ),
                                                             _vm._v(" "),
@@ -45215,7 +45606,7 @@ var render = function() {
                                                               },
                                                               [
                                                                 _c(
-                                                                  "button",
+                                                                  "a",
                                                                   {
                                                                     staticClass:
                                                                       "button is-small",
@@ -45242,6 +45633,10 @@ var render = function() {
                                                                   {
                                                                     staticClass:
                                                                       "button is-link is-small",
+                                                                    attrs: {
+                                                                      type:
+                                                                        "submit"
+                                                                    },
                                                                     on: {
                                                                       click: function(
                                                                         $event

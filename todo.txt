@@ -4,9 +4,6 @@
 - PostcardController@store
     · No create new addresses, only assign address_id
 
-- Address lists
-    · Fill errors on update
-
 - Validations
     · AddressMultipleInsertRequest cambiar código comentado por el de test
     · company->information

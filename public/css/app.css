@@ -25215,6 +25215,10 @@ background: #ccc;
   padding: 0;
 }
 
+.reciever_container .reciever_form.update-contact-form .field .error {
+  bottom: 0;
+}
+
 .postcards-table td {
   vertical-align: middle;
 }
