@@ -533,6 +533,10 @@
                                     <b-table-column field="birthday" label="Birthday" sortable>
                                         {{ formattedDate(props.row.birthday) }}
                                     </b-table-column>
+
+                                    <b-table-column field="actions">
+                                        <a class="has-text-info is-size-6" @click.prevent="editContact(props.row)"><i class="mdi mdi-pencil"></i></a>
+                                    </b-table-column>
                                   </template>
 
                                   <div class="reciever_container" slot="detail" slot-scope="props">

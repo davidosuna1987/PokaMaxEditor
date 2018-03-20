@@ -41567,6 +41567,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -44533,6 +44537,36 @@ var render = function() {
                                                         )
                                                       ) +
                                                       "\n                                "
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "b-table-column",
+                                                { attrs: { field: "actions" } },
+                                                [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "has-text-info is-size-6",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          $event.preventDefault()
+                                                          _vm.editContact(
+                                                            props.row
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "mdi mdi-pencil"
+                                                      })
+                                                    ]
                                                   )
                                                 ]
                                               )
