@@ -20,12 +20,6 @@
 
   - Preview step: send options (now, select date, birthday->check errors empty birthday)
 
-- Company
-  - Edit contacts
-
-- Profile
-  - Edit contacts
-
 - Address lists
   - Download example file
 
