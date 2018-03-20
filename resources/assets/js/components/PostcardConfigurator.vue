@@ -546,6 +546,31 @@
                                     </div>
                                 </div>
 
+                                <template v-else>
+                                  <p class="is-size-6 has-text-link">Birthday filters</p>
+                                  <div class="field">
+                                    <p class="control">
+                                      <span class="select">
+                                        <select v-model="birthdayFilters.month">
+                                          <option value="">By month</option>
+                                          <option value="0">January</option>
+                                          <option value="1">February</option>
+                                          <option value="2">March</option>
+                                          <option value="3">April</option>
+                                          <option value="4">May</option>
+                                          <option value="5">June</option>
+                                          <option value="6">July</option>
+                                          <option value="7">August</option>
+                                          <option value="8">September</option>
+                                          <option value="9">October</option>
+                                          <option value="10">November</option>
+                                          <option value="11">Dicember</option>
+                                        </select>
+                                      </span>
+                                    </p>
+                                  </div>
+                                </template>
+
                                 <div v-for="(address_list, index) in companies[tempData.company_id].address_lists" :key="index">
                                   <b-collapse v-if="address_list.addresses" class="card" :open="index === 0 ? true : false">
                                       <div slot="trigger" slot-scope="props" class="card-header">
@@ -608,6 +633,10 @@
 
                                                       <b-table-column field="surnames" label="Surnames" sortable>
                                                           {{ props.row.surnames }}
+                                                      </b-table-column>
+
+                                                      <b-table-column field="birthday" label="Birthday" sortable>
+                                                          {{ props.row.birthday }}
                                                       </b-table-column>
                                                   </template>
 
@@ -761,6 +790,10 @@
                                                     <b-table-column field="surnames" label="Surnames" sortable>
                                                         {{ props.row.surnames }}
                                                     </b-table-column>
+
+                                                      <b-table-column field="birthday" label="Birthday" sortable>
+                                                          {{ props.row.birthday }}
+                                                      </b-table-column>
                                                   </template>
                                               </b-table>
                                           </template>
@@ -994,6 +1027,9 @@
         props: ['companyIdProp'],
         data() {
             return {
+                birthdayFilters: {
+                  month: '',
+                },
                 isPaginated: true,
                 csv_file: null,
                 csv_addresses: null,
@@ -1614,7 +1650,9 @@
             let vue = this;
 
             vue.tempFill();
-            vue.getCompanies(vue.companyIdProp);
+            if(vue.companyIdProp){
+              vue.getCompanies(vue.companyIdProp);
+            }
 
             $(document).on('click', '.tool-done, .tool-remove', function(){
                 vue.tempFill();

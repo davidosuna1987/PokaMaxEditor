@@ -34,6 +34,7 @@
 ### Completed todo's
 - Editor
   - ~~_Remove frame switcher_~~
+  - ~~_Added birthday column in address lists tables_~~
 - Company
   - ~~_Add update form to address list contacts_~~
 - Profile
