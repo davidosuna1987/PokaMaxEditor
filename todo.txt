@@ -13,9 +13,6 @@
 
 - Manuel
     · add 10.000 contacts
-    · remove postcard frame
-    · company postcards table (id, picture, recievers, status, actions)
-    · empty text reciever data and show in preview step
 
 - Editor
     · Contacts filter by month or between dates
