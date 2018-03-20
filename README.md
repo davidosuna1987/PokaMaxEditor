@@ -36,10 +36,10 @@
 
 - Company
   - ~~_Add update modal form to address list contacts_~~
-  - ~~_Update toggle ifno and address list errors~~
+  - ~~_Update toggle ifno and address list errors_~~
   - ~~_Update info and address list validation_~~
 
 - Profile
   - ~~_Add update modal form to address list contacts_~~
-  - ~~_Update toggle ifno and address list errors~~
+  - ~~_Update toggle ifno and address list errors_~~
   - ~~_Update info and address list validation_~~
