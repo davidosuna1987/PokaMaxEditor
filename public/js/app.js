@@ -41549,6 +41549,104 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['companyId'],
@@ -41724,8 +41822,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
         },
-        editContact: function editContact(row, index) {
+        editContact: function editContact(row, event) {
             this.fillUpdatedContact(row);
+            setTimeout(function () {
+                $('.update-contact-form #reciever_company').focus();
+            }, 10);
         },
         updateContact: function updateContact() {
             var _this3 = this;
@@ -44390,7 +44491,8 @@ var render = function() {
                                         "update:checkedRows": function($event) {
                                           _vm.bulkActionAddresses = $event
                                         },
-                                        "details-open": _vm.editContact
+                                        "details-open": _vm.emptyUpdatedContact,
+                                        "details-close": _vm.emptyUpdatedContact
                                       },
                                       scopedSlots: _vm._u([
                                         {
@@ -44476,642 +44578,1362 @@ var render = function() {
                                                       "contact-details"
                                                   },
                                                   [
-                                                    _c(
-                                                      "form",
-                                                      {
-                                                        staticClass:
-                                                          "reciever_form"
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "div",
+                                                    _vm.updatedContact.id ===
+                                                    props.row.id
+                                                      ? _c(
+                                                          "form",
                                                           {
                                                             staticClass:
-                                                              "field field-reciever-company"
-                                                          },
-                                                          [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .updatedContact
-                                                                      .company,
-                                                                  expression:
-                                                                    "updatedContact.company"
-                                                                }
-                                                              ],
-                                                              attrs: {
-                                                                type: "text",
-                                                                id:
-                                                                  "reciever_company",
-                                                                name:
-                                                                  "reciever_company",
-                                                                placeholder:
-                                                                  "Company"
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  _vm
-                                                                    .updatedContact
-                                                                    .company
-                                                              },
-                                                              on: {
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.updatedContact,
-                                                                    "company",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "field field-reciever-birthday"
-                                                          },
-                                                          [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .updatedContact
-                                                                      .birthday,
-                                                                  expression:
-                                                                    "updatedContact.birthday"
-                                                                }
-                                                              ],
-                                                              attrs: {
-                                                                type: "date",
-                                                                id:
-                                                                  "reciever_birthday",
-                                                                name:
-                                                                  "reciever_birthday",
-                                                                placeholder:
-                                                                  "Birthday"
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  _vm
-                                                                    .updatedContact
-                                                                    .birthday
-                                                              },
-                                                              on: {
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.updatedContact,
-                                                                    "birthday",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "field field-reciever-title"
-                                                          },
-                                                          [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .updatedContact
-                                                                      .title,
-                                                                  expression:
-                                                                    "updatedContact.title"
-                                                                }
-                                                              ],
-                                                              attrs: {
-                                                                type: "text",
-                                                                id:
-                                                                  "reciever_title",
-                                                                name:
-                                                                  "reciever_title",
-                                                                placeholder:
-                                                                  "Mr"
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  _vm
-                                                                    .updatedContact
-                                                                    .title
-                                                              },
-                                                              on: {
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.updatedContact,
-                                                                    "title",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "field field-reciever-name"
-                                                          },
-                                                          [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .updatedContact
-                                                                      .name,
-                                                                  expression:
-                                                                    "updatedContact.name"
-                                                                }
-                                                              ],
-                                                              attrs: {
-                                                                type: "text",
-                                                                id:
-                                                                  "reciever_name",
-                                                                name:
-                                                                  "reciever_name",
-                                                                placeholder:
-                                                                  "Name *"
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  _vm
-                                                                    .updatedContact
-                                                                    .name
-                                                              },
-                                                              on: {
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.updatedContact,
-                                                                    "name",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "field field-reciever-surnames"
-                                                          },
-                                                          [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .updatedContact
-                                                                      .surnames,
-                                                                  expression:
-                                                                    "updatedContact.surnames"
-                                                                }
-                                                              ],
-                                                              attrs: {
-                                                                type: "text",
-                                                                id:
-                                                                  "reciever_surnames",
-                                                                name:
-                                                                  "reciever_surnames",
-                                                                placeholder:
-                                                                  "Surnames *"
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  _vm
-                                                                    .updatedContact
-                                                                    .surnames
-                                                              },
-                                                              on: {
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.updatedContact,
-                                                                    "surnames",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "field field-reciever-address-line-1"
-                                                          },
-                                                          [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .updatedContact
-                                                                      .address_line_1,
-                                                                  expression:
-                                                                    "updatedContact.address_line_1"
-                                                                }
-                                                              ],
-                                                              attrs: {
-                                                                type: "text",
-                                                                id:
-                                                                  "reciever_address_line_1",
-                                                                name:
-                                                                  "reciever_address_line_1",
-                                                                placeholder:
-                                                                  "Address line 1 *"
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  _vm
-                                                                    .updatedContact
-                                                                    .address_line_1
-                                                              },
-                                                              on: {
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.updatedContact,
-                                                                    "address_line_1",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "field field-reciever-address-line-2"
-                                                          },
-                                                          [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .updatedContact
-                                                                      .address_line_2,
-                                                                  expression:
-                                                                    "updatedContact.address_line_2"
-                                                                }
-                                                              ],
-                                                              attrs: {
-                                                                type: "text",
-                                                                id:
-                                                                  "reciever_address_line_2",
-                                                                name:
-                                                                  "reciever_address_line_2",
-                                                                placeholder:
-                                                                  "Address line 2"
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  _vm
-                                                                    .updatedContact
-                                                                    .address_line_2
-                                                              },
-                                                              on: {
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.updatedContact,
-                                                                    "address_line_2",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "field field-reciever-city"
-                                                          },
-                                                          [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .updatedContact
-                                                                      .city,
-                                                                  expression:
-                                                                    "updatedContact.city"
-                                                                }
-                                                              ],
-                                                              attrs: {
-                                                                type: "text",
-                                                                id:
-                                                                  "reciever_city",
-                                                                name:
-                                                                  "reciever_city",
-                                                                placeholder:
-                                                                  "City *"
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  _vm
-                                                                    .updatedContact
-                                                                    .city
-                                                              },
-                                                              on: {
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.updatedContact,
-                                                                    "city",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "field field-reciever-country"
-                                                          },
-                                                          [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .updatedContact
-                                                                      .country,
-                                                                  expression:
-                                                                    "updatedContact.country"
-                                                                }
-                                                              ],
-                                                              attrs: {
-                                                                type: "text",
-                                                                id:
-                                                                  "reciever_country",
-                                                                name:
-                                                                  "reciever_country",
-                                                                placeholder:
-                                                                  "Country *"
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  _vm
-                                                                    .updatedContact
-                                                                    .country
-                                                              },
-                                                              on: {
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.updatedContact,
-                                                                    "country",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "field field-reciever-zip"
-                                                          },
-                                                          [
-                                                            _c("input", {
-                                                              directives: [
-                                                                {
-                                                                  name: "model",
-                                                                  rawName:
-                                                                    "v-model",
-                                                                  value:
-                                                                    _vm
-                                                                      .updatedContact
-                                                                      .zip_code,
-                                                                  expression:
-                                                                    "updatedContact.zip_code"
-                                                                }
-                                                              ],
-                                                              attrs: {
-                                                                type: "number",
-                                                                id:
-                                                                  "reciever_zip_code",
-                                                                name:
-                                                                  "reciever_zip_code",
-                                                                placeholder:
-                                                                  "Zip *"
-                                                              },
-                                                              domProps: {
-                                                                value:
-                                                                  _vm
-                                                                    .updatedContact
-                                                                    .zip_code
-                                                              },
-                                                              on: {
-                                                                input: function(
-                                                                  $event
-                                                                ) {
-                                                                  if (
-                                                                    $event
-                                                                      .target
-                                                                      .composing
-                                                                  ) {
-                                                                    return
-                                                                  }
-                                                                  _vm.$set(
-                                                                    _vm.updatedContact,
-                                                                    "zip_code",
-                                                                    $event
-                                                                      .target
-                                                                      .value
-                                                                  )
-                                                                }
-                                                              }
-                                                            })
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "field has-text-right m-t-20"
+                                                              "reciever_form update-contact-form"
                                                           },
                                                           [
                                                             _c(
-                                                              "button",
+                                                              "div",
                                                               {
                                                                 staticClass:
-                                                                  "button is-info is-small",
-                                                                on: {
-                                                                  click: function(
-                                                                    $event
-                                                                  ) {
-                                                                    $event.preventDefault()
-                                                                    _vm.updateContact(
-                                                                      $event
-                                                                    )
-                                                                  }
-                                                                }
+                                                                  "field field-reciever-company"
                                                               },
-                                                              [_vm._v("Update")]
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        _vm
+                                                                          .updatedContact
+                                                                          .company,
+                                                                      expression:
+                                                                        "updatedContact.company"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_company",
+                                                                    name:
+                                                                      "reciever_company",
+                                                                    placeholder:
+                                                                      "Company"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      _vm
+                                                                        .updatedContact
+                                                                        .company
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.updatedContact,
+                                                                        "company",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-birthday"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        _vm
+                                                                          .updatedContact
+                                                                          .birthday,
+                                                                      expression:
+                                                                        "updatedContact.birthday"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    type:
+                                                                      "date",
+                                                                    id:
+                                                                      "reciever_birthday",
+                                                                    name:
+                                                                      "reciever_birthday",
+                                                                    placeholder:
+                                                                      "Birthday"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      _vm
+                                                                        .updatedContact
+                                                                        .birthday
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.updatedContact,
+                                                                        "birthday",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-title"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        _vm
+                                                                          .updatedContact
+                                                                          .title,
+                                                                      expression:
+                                                                        "updatedContact.title"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_title",
+                                                                    name:
+                                                                      "reciever_title",
+                                                                    placeholder:
+                                                                      "Mr"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      _vm
+                                                                        .updatedContact
+                                                                        .title
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.updatedContact,
+                                                                        "title",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-name"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        _vm
+                                                                          .updatedContact
+                                                                          .name,
+                                                                      expression:
+                                                                        "updatedContact.name"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_name",
+                                                                    name:
+                                                                      "reciever_name",
+                                                                    placeholder:
+                                                                      "Name *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      _vm
+                                                                        .updatedContact
+                                                                        .name
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.updatedContact,
+                                                                        "name",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-surnames"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        _vm
+                                                                          .updatedContact
+                                                                          .surnames,
+                                                                      expression:
+                                                                        "updatedContact.surnames"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_surnames",
+                                                                    name:
+                                                                      "reciever_surnames",
+                                                                    placeholder:
+                                                                      "Surnames *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      _vm
+                                                                        .updatedContact
+                                                                        .surnames
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.updatedContact,
+                                                                        "surnames",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-address-line-1"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        _vm
+                                                                          .updatedContact
+                                                                          .address_line_1,
+                                                                      expression:
+                                                                        "updatedContact.address_line_1"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_address_line_1",
+                                                                    name:
+                                                                      "reciever_address_line_1",
+                                                                    placeholder:
+                                                                      "Address line 1 *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      _vm
+                                                                        .updatedContact
+                                                                        .address_line_1
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.updatedContact,
+                                                                        "address_line_1",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-address-line-2"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        _vm
+                                                                          .updatedContact
+                                                                          .address_line_2,
+                                                                      expression:
+                                                                        "updatedContact.address_line_2"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_address_line_2",
+                                                                    name:
+                                                                      "reciever_address_line_2",
+                                                                    placeholder:
+                                                                      "Address line 2"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      _vm
+                                                                        .updatedContact
+                                                                        .address_line_2
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.updatedContact,
+                                                                        "address_line_2",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-city"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        _vm
+                                                                          .updatedContact
+                                                                          .city,
+                                                                      expression:
+                                                                        "updatedContact.city"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_city",
+                                                                    name:
+                                                                      "reciever_city",
+                                                                    placeholder:
+                                                                      "City *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      _vm
+                                                                        .updatedContact
+                                                                        .city
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.updatedContact,
+                                                                        "city",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-country"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        _vm
+                                                                          .updatedContact
+                                                                          .country,
+                                                                      expression:
+                                                                        "updatedContact.country"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_country",
+                                                                    name:
+                                                                      "reciever_country",
+                                                                    placeholder:
+                                                                      "Country *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      _vm
+                                                                        .updatedContact
+                                                                        .country
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.updatedContact,
+                                                                        "country",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-zip"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        _vm
+                                                                          .updatedContact
+                                                                          .zip_code,
+                                                                      expression:
+                                                                        "updatedContact.zip_code"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    type:
+                                                                      "number",
+                                                                    id:
+                                                                      "reciever_zip_code",
+                                                                    name:
+                                                                      "reciever_zip_code",
+                                                                    placeholder:
+                                                                      "Zip *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      _vm
+                                                                        .updatedContact
+                                                                        .zip_code
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        _vm.updatedContact,
+                                                                        "zip_code",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field has-text-right m-t-20"
+                                                              },
+                                                              [
+                                                                _c(
+                                                                  "button",
+                                                                  {
+                                                                    staticClass:
+                                                                      "button is-small",
+                                                                    on: {
+                                                                      click: function(
+                                                                        $event
+                                                                      ) {
+                                                                        $event.preventDefault()
+                                                                        _vm.emptyUpdatedContact(
+                                                                          $event
+                                                                        )
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "Cancel"
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "button",
+                                                                  {
+                                                                    staticClass:
+                                                                      "button is-link is-small",
+                                                                    on: {
+                                                                      click: function(
+                                                                        $event
+                                                                      ) {
+                                                                        $event.preventDefault()
+                                                                        _vm.updateContact(
+                                                                          $event
+                                                                        )
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "Update"
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]
                                                             )
                                                           ]
                                                         )
-                                                      ]
-                                                    )
+                                                      : _c(
+                                                          "form",
+                                                          {
+                                                            staticClass:
+                                                              "reciever_form"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-company"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        props
+                                                                          .row
+                                                                          .company,
+                                                                      expression:
+                                                                        "props.row.company"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    disabled:
+                                                                      "",
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_company",
+                                                                    name:
+                                                                      "reciever_company",
+                                                                    placeholder:
+                                                                      "Company"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      props.row
+                                                                        .company
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        props.row,
+                                                                        "company",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-birthday"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        props
+                                                                          .row
+                                                                          .birthday,
+                                                                      expression:
+                                                                        "props.row.birthday"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    disabled:
+                                                                      "",
+                                                                    type:
+                                                                      "date",
+                                                                    id:
+                                                                      "reciever_birthday",
+                                                                    name:
+                                                                      "reciever_birthday",
+                                                                    placeholder:
+                                                                      "Birthday"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      props.row
+                                                                        .birthday
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        props.row,
+                                                                        "birthday",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-title"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        props
+                                                                          .row
+                                                                          .title,
+                                                                      expression:
+                                                                        "props.row.title"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    disabled:
+                                                                      "",
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_title",
+                                                                    name:
+                                                                      "reciever_title",
+                                                                    placeholder:
+                                                                      "Mr"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      props.row
+                                                                        .title
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        props.row,
+                                                                        "title",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-name"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        props
+                                                                          .row
+                                                                          .name,
+                                                                      expression:
+                                                                        "props.row.name"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    disabled:
+                                                                      "",
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_name",
+                                                                    name:
+                                                                      "reciever_name",
+                                                                    placeholder:
+                                                                      "Name *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      props.row
+                                                                        .name
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        props.row,
+                                                                        "name",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-surnames"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        props
+                                                                          .row
+                                                                          .surnames,
+                                                                      expression:
+                                                                        "props.row.surnames"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    disabled:
+                                                                      "",
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_surnames",
+                                                                    name:
+                                                                      "reciever_surnames",
+                                                                    placeholder:
+                                                                      "Surnames *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      props.row
+                                                                        .surnames
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        props.row,
+                                                                        "surnames",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-address-line-1"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        props
+                                                                          .row
+                                                                          .address_line_1,
+                                                                      expression:
+                                                                        "props.row.address_line_1"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    disabled:
+                                                                      "",
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_address_line_1",
+                                                                    name:
+                                                                      "reciever_address_line_1",
+                                                                    placeholder:
+                                                                      "Address line 1 *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      props.row
+                                                                        .address_line_1
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        props.row,
+                                                                        "address_line_1",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-address-line-2"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        props
+                                                                          .row
+                                                                          .address_line_2,
+                                                                      expression:
+                                                                        "props.row.address_line_2"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    disabled:
+                                                                      "",
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_address_line_2",
+                                                                    name:
+                                                                      "reciever_address_line_2",
+                                                                    placeholder:
+                                                                      "Address line 2"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      props.row
+                                                                        .address_line_2
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        props.row,
+                                                                        "address_line_2",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-city"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        props
+                                                                          .row
+                                                                          .city,
+                                                                      expression:
+                                                                        "props.row.city"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    disabled:
+                                                                      "",
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_city",
+                                                                    name:
+                                                                      "reciever_city",
+                                                                    placeholder:
+                                                                      "City *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      props.row
+                                                                        .city
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        props.row,
+                                                                        "city",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-country"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        props
+                                                                          .row
+                                                                          .country,
+                                                                      expression:
+                                                                        "props.row.country"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    disabled:
+                                                                      "",
+                                                                    type:
+                                                                      "text",
+                                                                    id:
+                                                                      "reciever_country",
+                                                                    name:
+                                                                      "reciever_country",
+                                                                    placeholder:
+                                                                      "Country *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      props.row
+                                                                        .country
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        props.row,
+                                                                        "country",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field field-reciever-zip"
+                                                              },
+                                                              [
+                                                                _c("input", {
+                                                                  directives: [
+                                                                    {
+                                                                      name:
+                                                                        "model",
+                                                                      rawName:
+                                                                        "v-model",
+                                                                      value:
+                                                                        props
+                                                                          .row
+                                                                          .zip_code,
+                                                                      expression:
+                                                                        "props.row.zip_code"
+                                                                    }
+                                                                  ],
+                                                                  attrs: {
+                                                                    disabled:
+                                                                      "",
+                                                                    type:
+                                                                      "number",
+                                                                    id:
+                                                                      "reciever_zip_code",
+                                                                    name:
+                                                                      "reciever_zip_code",
+                                                                    placeholder:
+                                                                      "Zip *"
+                                                                  },
+                                                                  domProps: {
+                                                                    value:
+                                                                      props.row
+                                                                        .zip_code
+                                                                  },
+                                                                  on: {
+                                                                    input: function(
+                                                                      $event
+                                                                    ) {
+                                                                      if (
+                                                                        $event
+                                                                          .target
+                                                                          .composing
+                                                                      ) {
+                                                                        return
+                                                                      }
+                                                                      _vm.$set(
+                                                                        props.row,
+                                                                        "zip_code",
+                                                                        $event
+                                                                          .target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "field has-text-right m-t-20"
+                                                              },
+                                                              [
+                                                                _c(
+                                                                  "button",
+                                                                  {
+                                                                    staticClass:
+                                                                      "button is-info is-small",
+                                                                    on: {
+                                                                      click: function(
+                                                                        $event
+                                                                      ) {
+                                                                        $event.preventDefault()
+                                                                        _vm.editContact(
+                                                                          props.row,
+                                                                          $event
+                                                                        )
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "Edit"
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]
+                                                            )
+                                                          ]
+                                                        )
                                                   ]
                                                 )
                                               ]

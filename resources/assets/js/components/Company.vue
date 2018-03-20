@@ -520,7 +520,8 @@
                                   default-sort-direction="asc"
                                   default-sort="name"
                                   detailed
-                                  @details-open="editContact">
+                                  @details-open="emptyUpdatedContact"
+                                  @details-close="emptyUpdatedContact">
 
                                   <template slot-scope="props">
                                     <b-table-column field="name" label="Name" sortable>
@@ -536,7 +537,7 @@
 
                                   <div class="reciever_container" slot="detail" slot-scope="props">
                                       <article class="contact-details">
-                                          <form class="reciever_form">
+                                        <form v-if="updatedContact.id === props.row.id" class="reciever_form update-contact-form">
                                             <div class="field field-reciever-company">
                                                 <input
                                                     type="text"
@@ -618,7 +619,104 @@
                                                     v-model="updatedContact.zip_code" />
                                             </div>
                                             <div class="field has-text-right m-t-20">
-                                                <button class="button is-info is-small" @click.prevent="updateContact">Update</button>
+                                                <button class="button is-small" @click.prevent="emptyUpdatedContact">Cancel</button>
+                                                <button class="button is-link is-small" @click.prevent="updateContact">Update</button>
+                                            </div>
+                                        </form>
+
+                                        <form v-else class="reciever_form">
+                                            <div class="field field-reciever-company">
+                                                <input
+                                                    disabled
+                                                    type="text"
+                                                    id="reciever_company"
+                                                    name="reciever_company"
+                                                    placeholder="Company"
+                                                    v-model="props.row.company" />
+                                            </div>
+                                            <div class="field field-reciever-birthday">
+                                                <input
+                                                    disabled
+                                                    type="date"
+                                                    id="reciever_birthday"
+                                                    name="reciever_birthday"
+                                                    placeholder="Birthday"
+                                                    v-model="props.row.birthday" />
+                                            </div>
+                                            <div class="field field-reciever-title">
+                                                <input
+                                                    disabled
+                                                    type="text"
+                                                    id="reciever_title"
+                                                    name="reciever_title"
+                                                    placeholder="Mr"
+                                                    v-model="props.row.title" />
+                                            </div>
+                                            <div class="field field-reciever-name">
+                                                <input
+                                                    disabled
+                                                    type="text"
+                                                    id="reciever_name"
+                                                    name="reciever_name"
+                                                    placeholder="Name *"
+                                                    v-model="props.row.name" />
+                                            </div>
+                                            <div class="field field-reciever-surnames">
+                                                <input
+                                                    disabled
+                                                    type="text"
+                                                    id="reciever_surnames"
+                                                    name="reciever_surnames"
+                                                    placeholder="Surnames *"
+                                                    v-model="props.row.surnames" />
+                                            </div>
+                                            <div class="field field-reciever-address-line-1">
+                                                <input
+                                                    disabled
+                                                    type="text"
+                                                    id="reciever_address_line_1"
+                                                    name="reciever_address_line_1"
+                                                    placeholder="Address line 1 *"
+                                                    v-model="props.row.address_line_1" />
+                                            </div>
+                                            <div class="field field-reciever-address-line-2">
+                                                <input
+                                                    disabled
+                                                    type="text"
+                                                    id="reciever_address_line_2"
+                                                    name="reciever_address_line_2"
+                                                    placeholder="Address line 2"
+                                                    v-model="props.row.address_line_2" />
+                                            </div>
+                                            <div class="field field-reciever-city">
+                                                <input
+                                                    disabled
+                                                    type="text"
+                                                    id="reciever_city"
+                                                    name="reciever_city"
+                                                    placeholder="City *"
+                                                    v-model="props.row.city" />
+                                            </div>
+                                            <div class="field field-reciever-country">
+                                                <input
+                                                    disabled
+                                                    type="text"
+                                                    id="reciever_country"
+                                                    name="reciever_country"
+                                                    placeholder="Country *"
+                                                    v-model="props.row.country" />
+                                            </div>
+                                            <div class="field field-reciever-zip">
+                                                <input
+                                                    disabled
+                                                    type="number"
+                                                    id="reciever_zip_code"
+                                                    name="reciever_zip_code"
+                                                    placeholder="Zip *"
+                                                    v-model="props.row.zip_code" />
+                                            </div>
+                                            <div class="field has-text-right m-t-20">
+                                                <button class="button is-info is-small" @click.prevent="editContact(props.row, $event)">Edit</button>
                                             </div>
                                         </form>
                                       </article>
@@ -810,8 +908,11 @@
                   }
                 });
             },
-            editContact(row, index) {
+            editContact(row, event) {
                 this.fillUpdatedContact(row);
+                setTimeout(function(){
+                    $('.update-contact-form #reciever_company').focus();
+                }, 10);
             },
             updateContact() {
                 axios.put('/api/address/'+this.updatedContact.id, this.updatedContact)
