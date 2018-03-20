@@ -16,7 +16,6 @@
   - Upload company logo (customize size and position)
   - Sets identifier xxxx(set)-xxx(postcard)
   - Custom font
-  - Font color
   - Upload back image
 
   - Preview step: send options (now, select date, birthday->check errors empty birthday)
@@ -34,6 +33,7 @@
 ### Completed todo's
 - Editor
   - ~~_Remove frame switcher_~~
+  - ~~_Back text color picker_~~
   - ~~_Added birthday column in address lists tables_~~
 - Company
   - ~~_Add update form to address list contacts_~~
