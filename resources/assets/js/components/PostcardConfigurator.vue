@@ -364,12 +364,12 @@
                 </form>
               </div>
               <div class="column m-t-50">
-                <div class="field">
+                <!-- <div class="field">
                   <b-switch v-model="tempData.has_frame"
                   type="is-info">
                       Show frame and front text
                   </b-switch>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
