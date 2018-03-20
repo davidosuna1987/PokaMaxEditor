@@ -9,6 +9,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import VueColor from 'vue-color';
+
 import VueSession from 'vue-session';
 Vue.use(VueSession);
 
@@ -26,6 +28,7 @@ Vue.use(Buefy, {
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('slider-picker', VueColor.Slider);
 Vue.component('company', require('./components/Company.vue'));
 Vue.component('companies', require('./components/Companies.vue'));
 Vue.component('postcards', require('./components/Postcards.vue'));

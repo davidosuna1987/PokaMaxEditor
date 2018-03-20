@@ -383,6 +383,7 @@
                       <div class="field">
                           <textarea
                               v-model="tempData.back_text"
+                              :style="{color: tempData.back_color.hex}"
                               :class="[{ 'has-error': backTextHasError }, 'font-family-'+tempData.font_data.font_family+' font-size-'+tempData.font_data.font_size]"
                               name="back_text"
                               id="back_text"
@@ -465,7 +466,7 @@
                         </li>
                     </ul>
                   </div>
-                  <div class="font-size">
+                  <div class="font-size m-b-25">
                     <p class="title is-5">Select font size</p>
                     <ul class="font-size-list" @click="changeFontSize">
                         <li
@@ -489,6 +490,10 @@
                           L
                         </li>
                     </ul>
+                  </div>
+                  <div class="font-color">
+                    <p class="title is-5">Select text color</p>
+                    <slider-picker v-model="tempData.back_color"></slider-picker>
                   </div>
                 </div>
               </div>
@@ -547,27 +552,29 @@
                                 </div>
 
                                 <template v-else>
-                                  <p class="is-size-6 has-text-link">Birthday filters</p>
-                                  <div class="field">
-                                    <p class="control">
-                                      <span class="select">
-                                        <select v-model="birthdayFilters.month">
-                                          <option value="">By month</option>
-                                          <option value="0">January</option>
-                                          <option value="1">February</option>
-                                          <option value="2">March</option>
-                                          <option value="3">April</option>
-                                          <option value="4">May</option>
-                                          <option value="5">June</option>
-                                          <option value="6">July</option>
-                                          <option value="7">August</option>
-                                          <option value="8">September</option>
-                                          <option value="9">October</option>
-                                          <option value="10">November</option>
-                                          <option value="11">Dicember</option>
-                                        </select>
-                                      </span>
-                                    </p>
+                                  <div v-if="tempData.company_id && companies[tempData.company_id].address_lists.length">
+                                    <p class="is-size-6 has-text-link">Birthday filters</p>
+                                    <div class="field">
+                                      <p class="control">
+                                        <span class="select">
+                                          <select v-model="birthdayFilters.month">
+                                            <option value="">By month</option>
+                                            <option value="0">January</option>
+                                            <option value="1">February</option>
+                                            <option value="2">March</option>
+                                            <option value="3">April</option>
+                                            <option value="4">May</option>
+                                            <option value="5">June</option>
+                                            <option value="6">July</option>
+                                            <option value="7">August</option>
+                                            <option value="8">September</option>
+                                            <option value="9">October</option>
+                                            <option value="10">November</option>
+                                            <option value="11">Dicember</option>
+                                          </select>
+                                        </span>
+                                      </p>
+                                    </div>
                                   </div>
                                 </template>
 
@@ -1068,6 +1075,7 @@
                   front_cropped_file_path: null,
                   front_original_file_path: null,
                   back_text: '',
+                  back_color: '#031993',
                   font_data: {
                     font_family: 1,
                     font_size: 21
@@ -1652,6 +1660,8 @@
             vue.tempFill();
             if(vue.companyIdProp){
               vue.getCompanies(vue.companyIdProp);
+            }else{
+              vue.getCompanies();
             }
 
             $(document).on('click', '.tool-done, .tool-remove', function(){

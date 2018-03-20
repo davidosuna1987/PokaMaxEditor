@@ -23828,6 +23828,10 @@ input[type=range].slider.is-danger .has-output-tooltip + output {
   width: 500px !important;
 }
 
+.vc-slider {
+  max-width: 100%;
+}
+
 .b-checkbox.checkbox input[type=checkbox]:checked + .check {
   background-color: #209cee;
   border-color: #209cee;

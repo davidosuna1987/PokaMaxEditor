@@ -24,6 +24,7 @@
     "dependencies": {
         "buefy": "^0.6.3",
         "form-data": "^2.3.2",
+        "vue-color": "^2.4.5",
         "vue-session": "^1.0.0"
     }
 }

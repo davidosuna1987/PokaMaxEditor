@@ -5,6 +5,11 @@ $primary: $cyan !default;
 $steps-active-color: $cyan !important;
 $steps-completed-color: $cyan !important;
 
+// Vue-color overrides
+.vc-slider{
+  max-width: 100%;
+}
+
 // Buefy table selectable checkbox
 .b-checkbox.checkbox input[type=checkbox]:checked + .check{
   background-color: $cyan;
