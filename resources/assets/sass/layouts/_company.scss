@@ -19,3 +19,32 @@
     }
   }
 }
+
+.modal-card,
+.modal-content,
+.modal-card-body{
+  overflow: visible !important;
+}
+
+.modal-card-foot{
+  justify-content: flex-end;
+}
+
+.address-edit-form{
+  .reciever_container{
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    overflow: visible !important;
+
+    .reciever_form{
+      &.update-contact-form{
+        .field{
+          .error{
+            bottom: 6px;
+          }
+        }
+      }
+    }
+  }
+}

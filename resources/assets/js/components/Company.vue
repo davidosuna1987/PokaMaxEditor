@@ -519,7 +519,7 @@
                                   :checked-rows.sync="bulkActionAddresses"
                                   default-sort-direction="asc"
                                   default-sort="name"
-                                  detailed
+                                  :detailed="bulkActionAddressesActive !== index"
                                   @details-open="emptyUpdatedContact"
                                   @details-close="emptyUpdatedContact">
 
@@ -537,136 +537,7 @@
 
                                   <div class="reciever_container" slot="detail" slot-scope="props">
                                       <article class="contact-details">
-                                        <form v-if="updatedContact.id === props.row.id" class="reciever_form update-contact-form">
-                                            <div class="field field-reciever-company">
-                                                <input
-                                                    type="text"
-                                                    id="reciever_company"
-                                                    name="reciever_company"
-                                                    placeholder="Company"
-                                                    v-model="updatedContact.company" />
-                                            </div>
-                                            <div class="field field-reciever-birthday">
-                                                <input
-                                                    type="date"
-                                                    id="reciever_birthday"
-                                                    name="reciever_birthday"
-                                                    placeholder="Birthday"
-                                                    v-model="updatedContact.birthday" />
-                                            </div>
-                                            <div class="field field-reciever-title">
-                                                <input
-                                                    type="text"
-                                                    id="reciever_title"
-                                                    name="reciever_title"
-                                                    placeholder="Mr"
-                                                    v-model="updatedContact.title" />
-                                            </div>
-                                            <div class="field field-reciever-name">
-                                                <input
-                                                    type="text"
-                                                    id="reciever_name"
-                                                    name="reciever_name"
-                                                    placeholder="Name *"
-                                                    :class="[{'has-error' : updatedContactErrors['name']}]"
-                                                    v-model="updatedContact.name" />
-                                                    <span v-if="updatedContactErrors['name']" class="error has-text-danger is-size-7">
-                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
-                                                        <span class="error-message">
-                                                            {{updatedContactErrors['name'][0]}}
-                                                        </span>
-                                                    </span>
-                                            </div>
-                                            <div class="field field-reciever-surnames">
-                                                <input
-                                                    type="text"
-                                                    id="reciever_surnames"
-                                                    name="reciever_surnames"
-                                                    placeholder="Surnames *"
-                                                    :class="[{'has-error' : updatedContactErrors['surnames']}]"
-                                                    v-model="updatedContact.surnames" />
-                                                    <span v-if="updatedContactErrors['surnames']" class="error has-text-danger is-size-7">
-                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
-                                                        <span class="error-message">
-                                                            {{updatedContactErrors['surnames'][0]}}
-                                                        </span>
-                                                    </span>
-                                            </div>
-                                            <div class="field field-reciever-address-line-1">
-                                                <input
-                                                    type="text"
-                                                    id="reciever_address_line_1"
-                                                    name="reciever_address_line_1"
-                                                    placeholder="Address line 1 *"
-                                                    :class="[{'has-error' : updatedContactErrors['address_line_1']}]"
-                                                    v-model="updatedContact.address_line_1" />
-                                                    <span v-if="updatedContactErrors['address_line_1']" class="error has-text-danger is-size-7">
-                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
-                                                        <span class="error-message">
-                                                            {{updatedContactErrors['address_line_1'][0]}}
-                                                        </span>
-                                                    </span>
-                                            </div>
-                                            <div class="field field-reciever-address-line-2">
-                                                <input
-                                                    type="text"
-                                                    id="reciever_address_line_2"
-                                                    name="reciever_address_line_2"
-                                                    placeholder="Address line 2"
-                                                    v-model="updatedContact.address_line_2" />
-                                            </div>
-                                            <div class="field field-reciever-city">
-                                                <input
-                                                    type="text"
-                                                    id="reciever_city"
-                                                    name="reciever_city"
-                                                    placeholder="City *"
-                                                    :class="[{'has-error' : updatedContactErrors['city']}]"
-                                                    v-model="updatedContact.city" />
-                                                    <span v-if="updatedContactErrors['city']" class="error has-text-danger is-size-7">
-                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
-                                                        <span class="error-message">
-                                                            {{updatedContactErrors['city'][0]}}
-                                                        </span>
-                                                    </span>
-                                            </div>
-                                            <div class="field field-reciever-country">
-                                                <input
-                                                    type="text"
-                                                    id="reciever_country"
-                                                    name="reciever_country"
-                                                    placeholder="Country *"
-                                                    :class="[{'has-error' : updatedContactErrors['country']}]"
-                                                    v-model="updatedContact.country" />
-                                                    <span v-if="updatedContactErrors['country']" class="error has-text-danger is-size-7">
-                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
-                                                        <span class="error-message">
-                                                            {{updatedContactErrors['country'][0]}}
-                                                        </span>
-                                                    </span>
-                                            </div>
-                                            <div class="field field-reciever-zip">
-                                                <input
-                                                    type="number"
-                                                    id="reciever_zip_code"
-                                                    name="reciever_zip_code"
-                                                    placeholder="Zip *"
-                                                    :class="[{'has-error' : updatedContactErrors['zip_code']}]"
-                                                    v-model="updatedContact.zip_code" />
-                                                    <span v-if="updatedContactErrors['zip_code']" class="error has-text-danger is-size-7">
-                                                        <i class="mdi mdi-alert-circle-outline mdi-18px"></i>
-                                                        <span class="error-message">
-                                                            {{updatedContactErrors['zip_code'][0]}}
-                                                        </span>
-                                                    </span>
-                                            </div>
-                                            <div class="field has-text-right m-t-20">
-                                                <a class="button is-small" @click.prevent="emptyUpdatedContact">Cancel</a>
-                                                <button type="submit" class="button is-link is-small" @click.prevent="updateContact">Update</button>
-                                            </div>
-                                        </form>
-
-                                        <form v-else class="reciever_form">
+                                        <form class="reciever_form">
                                             <div class="field field-reciever-company">
                                                 <input
                                                     disabled
@@ -758,7 +629,7 @@
                                                     v-model="props.row.zip_code" />
                                             </div>
                                             <div class="field has-text-right m-t-20">
-                                                <button class="button is-info is-small" @click.prevent="editContact(props.row, $event)">Edit</button>
+                                                <button class="button is-info is-small" @click.prevent="editContact(props.row)">Edit contact</button>
                                             </div>
                                         </form>
                                       </article>
@@ -781,6 +652,8 @@
 </template>
 
 <script>
+    import AddressEditForm from './AddressEditForm.vue';
+
     export default {
         props: ['companyId'],
         data() {
@@ -957,11 +830,17 @@
                   }
                 });
             },
-            editContact(row, event) {
-                this.fillUpdatedContact(row);
-                setTimeout(function(){
-                    $('.update-contact-form #reciever_company').focus();
-                }, 10);
+            editContact(address) {
+                this.fillUpdatedContact(address);
+
+                this.$modal.open({
+                    parent: this,
+                    component: AddressEditForm,
+                    props: {addressProps: address},
+                    onCancel: () => {
+                        // Do something on close modal
+                    }
+                });
             },
             updateContact() {
                 axios.put('/api/address/'+this.updatedContact.id, this.updatedContact)
@@ -989,31 +868,31 @@
             },
             fillUpdatedContact(row) {
                 this.updatedContactErrors = [];
-                this.updatedContact.id = row.id,
-                this.updatedContact.company = row.company,
-                this.updatedContact.title = row.title,
-                this.updatedContact.name = row.name,
-                this.updatedContact.surnames = row.surnames,
-                this.updatedContact.address_line_1 = row.address_line_1,
-                this.updatedContact.address_line_2 = row.address_line_2,
-                this.updatedContact.city = row.city,
-                this.updatedContact.country = row.country,
-                this.updatedContact.zip_code = row.zip_code,
-                this.updatedContact.birthday = row.birthday
+                this.updatedContact.id = row.id;
+                this.updatedContact.company = row.company;
+                this.updatedContact.title = row.title;
+                this.updatedContact.name = row.name;
+                this.updatedContact.surnames = row.surnames;
+                this.updatedContact.address_line_1 = row.address_line_1;
+                this.updatedContact.address_line_2 = row.address_line_2;
+                this.updatedContact.city = row.city;
+                this.updatedContact.country = row.country;
+                this.updatedContact.zip_code = row.zip_code;
+                this.updatedContact.birthday = row.birthday;
             },
             emptyUpdatedContact() {
                 this.updatedContactErrors = [];
-                this.updatedContact.id = '',
-                this.updatedContact.company = '',
-                this.updatedContact.title = '',
-                this.updatedContact.name = '',
-                this.updatedContact.surnames = '',
-                this.updatedContact.address_line_1 = '',
-                this.updatedContact.address_line_2 = '',
-                this.updatedContact.city = '',
-                this.updatedContact.country = '',
-                this.updatedContact.zip_code = '',
-                this.updatedContact.birthday = ''
+                this.updatedContact.id = '';
+                this.updatedContact.company = '';
+                this.updatedContact.title = '';
+                this.updatedContact.name = '';
+                this.updatedContact.surnames = '';
+                this.updatedContact.address_line_1 = '';
+                this.updatedContact.address_line_2 = '';
+                this.updatedContact.city = '';
+                this.updatedContact.country = '';
+                this.updatedContact.zip_code = '';
+                this.updatedContact.birthday = '';
             },
             getCompany() {
                 axios.get('/api/companies/'+this.companyId)
