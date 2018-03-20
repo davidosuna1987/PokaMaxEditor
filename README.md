@@ -1,5 +1,5 @@
 ## Todo list
-- Remove errors computed (like Companies Component)
+- Remove errors computed in PostcardConfigurator Component
 
 - PostcardController@store
   - No create new addresses, only assign address_id
@@ -24,14 +24,21 @@
 
 
 ### Completed todo's
+- Computed errors
+  - ~~_Company_~~
+  - ~~_Companies_~~
+  - ~~_AddressEditForm_~~
+
 - Editor
   - ~~_Remove frame switcher_~~
   - ~~_Back text color picker_~~
   - ~~_Added birthday column in address lists tables_~~
+
 - Company
   - ~~_Add update modal form to address list contacts_~~
   - ~~_Update toggle ifno and address list errors~~
   - ~~_Update info and address list validation_~~
+
 - Profile
   - ~~_Add update modal form to address list contacts_~~
   - ~~_Update toggle ifno and address list errors~~
