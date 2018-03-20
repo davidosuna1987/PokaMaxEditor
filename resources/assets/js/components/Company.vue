@@ -518,7 +518,9 @@
                                   :data="addressList.addresses"
                                   :checked-rows.sync="bulkActionAddresses"
                                   default-sort-direction="asc"
-                                  default-sort="name">
+                                  default-sort="name"
+                                  detailed
+                                  @details-open="editContact">
 
                                   <template slot-scope="props">
                                     <b-table-column field="name" label="Name" sortable>
@@ -531,6 +533,96 @@
                                         {{ formattedDate(props.row.birthday) }}
                                     </b-table-column>
                                   </template>
+
+                                  <div class="reciever_container" slot="detail" slot-scope="props">
+                                      <article class="contact-details">
+                                          <form class="reciever_form">
+                                            <div class="field field-reciever-company">
+                                                <input
+                                                    type="text"
+                                                    id="reciever_company"
+                                                    name="reciever_company"
+                                                    placeholder="Company"
+                                                    v-model="updatedContact.company" />
+                                            </div>
+                                            <div class="field field-reciever-birthday">
+                                                <input
+                                                    type="date"
+                                                    id="reciever_birthday"
+                                                    name="reciever_birthday"
+                                                    placeholder="Birthday"
+                                                    v-model="updatedContact.birthday" />
+                                            </div>
+                                            <div class="field field-reciever-title">
+                                                <input
+                                                    type="text"
+                                                    id="reciever_title"
+                                                    name="reciever_title"
+                                                    placeholder="Mr"
+                                                    v-model="updatedContact.title" />
+                                            </div>
+                                            <div class="field field-reciever-name">
+                                                <input
+                                                    type="text"
+                                                    id="reciever_name"
+                                                    name="reciever_name"
+                                                    placeholder="Name *"
+                                                    v-model="updatedContact.name" />
+                                            </div>
+                                            <div class="field field-reciever-surnames">
+                                                <input
+                                                    type="text"
+                                                    id="reciever_surnames"
+                                                    name="reciever_surnames"
+                                                    placeholder="Surnames *"
+                                                    v-model="updatedContact.surnames" />
+                                            </div>
+                                            <div class="field field-reciever-address-line-1">
+                                                <input
+                                                    type="text"
+                                                    id="reciever_address_line_1"
+                                                    name="reciever_address_line_1"
+                                                    placeholder="Address line 1 *"
+                                                    v-model="updatedContact.address_line_1" />
+                                            </div>
+                                            <div class="field field-reciever-address-line-2">
+                                                <input
+                                                    type="text"
+                                                    id="reciever_address_line_2"
+                                                    name="reciever_address_line_2"
+                                                    placeholder="Address line 2"
+                                                    v-model="updatedContact.address_line_2" />
+                                            </div>
+                                            <div class="field field-reciever-city">
+                                                <input
+                                                    type="text"
+                                                    id="reciever_city"
+                                                    name="reciever_city"
+                                                    placeholder="City *"
+                                                    v-model="updatedContact.city" />
+                                            </div>
+                                            <div class="field field-reciever-country">
+                                                <input
+                                                    type="text"
+                                                    id="reciever_country"
+                                                    name="reciever_country"
+                                                    placeholder="Country *"
+                                                    v-model="updatedContact.country" />
+                                            </div>
+                                            <div class="field field-reciever-zip">
+                                                <input
+                                                    type="number"
+                                                    id="reciever_zip_code"
+                                                    name="reciever_zip_code"
+                                                    placeholder="Zip *"
+                                                    v-model="updatedContact.zip_code" />
+                                            </div>
+                                            <div class="field has-text-right m-t-20">
+                                                <button class="button is-info is-small" @click.prevent="updateContact">Update</button>
+                                            </div>
+                                        </form>
+                                      </article>
+                                  </div>
                                 </b-table>
                             </template>
 
@@ -557,6 +649,19 @@
                     isLoading: false,
                     barPercent: 100,
                     message: ''
+                },
+                updatedContact: {
+                    id: '',
+                    company: '',
+                    title: '',
+                    name: '',
+                    surnames: '',
+                    address_line_1: '',
+                    address_line_2: '',
+                    city: '',
+                    country: '',
+                    zip_code: '',
+                    birthday: ''
                 },
                 updatedCompanyErrors: [],
                 newAddressListErrors: [],
@@ -627,7 +732,7 @@
                     if (month.length < 2) month = '0' + month;
                     if (day.length < 2) day = '0' + day;
 
-                    return `${month}/${day}/${year}`;
+                    return `${day}/${month}/${year}`;
                 }
                 return '';
             },
@@ -704,6 +809,59 @@
                     location.href = '/login';
                   }
                 });
+            },
+            editContact(row, index) {
+                this.fillUpdatedContact(row);
+            },
+            updateContact() {
+                axios.put('/api/address/'+this.updatedContact.id, this.updatedContact)
+                .then(response => {
+                    this.$snackbar.open(response.data.message);
+                    this.getCompany();
+                }).catch(error => {
+                    if(error.response.status && error.response.status === 419){
+                        location.href = '/login';
+                    }
+                    console.info(error);
+                    this.updatedContactErrors = error.response.data.errors;
+                    this.$snackbar.open({
+                        duration: 5000,
+                        message: 'Please correct errors to update company.',
+                        type: 'is-danger',
+                        queue: false,
+                        position: 'is-top',
+                        actionText: 'OK',
+                        onAction: () => {
+                            //Do something on click button
+                        }
+                    });
+                });
+            },
+            fillUpdatedContact(row) {
+                this.updatedContact.id = row.id,
+                this.updatedContact.company = row.company,
+                this.updatedContact.title = row.title,
+                this.updatedContact.name = row.name,
+                this.updatedContact.surnames = row.surnames,
+                this.updatedContact.address_line_1 = row.address_line_1,
+                this.updatedContact.address_line_2 = row.address_line_2,
+                this.updatedContact.city = row.city,
+                this.updatedContact.country = row.country,
+                this.updatedContact.zip_code = row.zip_code,
+                this.updatedContact.birthday = row.birthday
+            },
+            emptyUpdatedContact() {
+                this.updatedContact.id = '',
+                this.updatedContact.company = '',
+                this.updatedContact.title = '',
+                this.updatedContact.name = '',
+                this.updatedContact.surnames = '',
+                this.updatedContact.address_line_1 = '',
+                this.updatedContact.address_line_2 = '',
+                this.updatedContact.city = '',
+                this.updatedContact.country = '',
+                this.updatedContact.zip_code = '',
+                this.updatedContact.birthday = ''
             },
             getCompany() {
                 axios.get('/api/companies/'+this.companyId)

@@ -1,11 +1,11 @@
 /*
 - Remove errors computed (like Companies Component)
 
-- Postcard create
+- PostcardController@store
     · No create new addresses, only assign address_id
 
 - Address lists
-    · Edit addresses
+    · Fill errors
 
 - Validations
     · AddressMultipleInsertRequest cambiar código comentado por el de test

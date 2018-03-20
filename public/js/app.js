@@ -41457,6 +41457,98 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['companyId'],
@@ -41466,6 +41558,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 isLoading: false,
                 barPercent: 100,
                 message: ''
+            },
+            updatedContact: {
+                id: '',
+                company: '',
+                title: '',
+                name: '',
+                surnames: '',
+                address_line_1: '',
+                address_line_2: '',
+                city: '',
+                country: '',
+                zip_code: '',
+                birthday: ''
             },
             updatedCompanyErrors: [],
             newAddressListErrors: [],
@@ -41538,7 +41643,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (month.length < 2) month = '0' + month;
                 if (day.length < 2) day = '0' + day;
 
-                return month + '/' + day + '/' + year;
+                return day + '/' + month + '/' + year;
             }
             return '';
         },
@@ -41619,11 +41724,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
         },
-        getCompany: function getCompany() {
+        editContact: function editContact(row, index) {
+            this.fillUpdatedContact(row);
+        },
+        updateContact: function updateContact() {
             var _this3 = this;
 
+            axios.put('/api/address/' + this.updatedContact.id, this.updatedContact).then(function (response) {
+                _this3.$snackbar.open(response.data.message);
+                _this3.getCompany();
+            }).catch(function (error) {
+                if (error.response.status && error.response.status === 419) {
+                    location.href = '/login';
+                }
+                console.info(error);
+                _this3.updatedContactErrors = error.response.data.errors;
+                _this3.$snackbar.open({
+                    duration: 5000,
+                    message: 'Please correct errors to update company.',
+                    type: 'is-danger',
+                    queue: false,
+                    position: 'is-top',
+                    actionText: 'OK',
+                    onAction: function onAction() {
+                        //Do something on click button
+                    }
+                });
+            });
+        },
+        fillUpdatedContact: function fillUpdatedContact(row) {
+            this.updatedContact.id = row.id, this.updatedContact.company = row.company, this.updatedContact.title = row.title, this.updatedContact.name = row.name, this.updatedContact.surnames = row.surnames, this.updatedContact.address_line_1 = row.address_line_1, this.updatedContact.address_line_2 = row.address_line_2, this.updatedContact.city = row.city, this.updatedContact.country = row.country, this.updatedContact.zip_code = row.zip_code, this.updatedContact.birthday = row.birthday;
+        },
+        emptyUpdatedContact: function emptyUpdatedContact() {
+            this.updatedContact.id = '', this.updatedContact.company = '', this.updatedContact.title = '', this.updatedContact.name = '', this.updatedContact.surnames = '', this.updatedContact.address_line_1 = '', this.updatedContact.address_line_2 = '', this.updatedContact.city = '', this.updatedContact.country = '', this.updatedContact.zip_code = '', this.updatedContact.birthday = '';
+        },
+        getCompany: function getCompany() {
+            var _this4 = this;
+
             axios.get('/api/companies/' + this.companyId).then(function (response) {
-                _this3.company = response.data;
+                _this4.company = response.data;
             }).catch(function (error) {
                 if (error.response.status && error.response.status === 419) {
                     location.href = '/login';
@@ -41638,19 +41777,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }, 10);
         },
         updateCompany: function updateCompany() {
-            var _this4 = this;
+            var _this5 = this;
 
             axios.put('/api/companies/' + this.companyId, this.company.address).then(function (response) {
-                _this4.getCompany();
-                _this4.isEditingCompany = false;
-                _this4.$snackbar.open(response.data.message);
+                _this5.getCompany();
+                _this5.isEditingCompany = false;
+                _this5.$snackbar.open(response.data.message);
             }).catch(function (error) {
                 if (error.response.status && error.response.status === 419) {
                     location.href = '/login';
                 }
                 console.info(error);
-                _this4.updatedCompanyErrors = error.response.data.errors;
-                _this4.$snackbar.open({
+                _this5.updatedCompanyErrors = error.response.data.errors;
+                _this5.$snackbar.open({
                     duration: 5000,
                     message: 'Please correct errors to update company.',
                     type: 'is-danger',
@@ -41664,7 +41803,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         deleteCompany: function deleteCompany() {
-            var _this5 = this;
+            var _this6 = this;
 
             this.$dialog.confirm({
                 message: 'Are you sure you want to <b>delete</b> ' + this.company.address.company + '? This action cannot be undone.',
@@ -41672,9 +41811,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 type: 'is-danger',
                 hasIcon: true,
                 onConfirm: function onConfirm() {
-                    axios.delete('/api/companies/' + _this5.companyId).then(function (response) {
+                    axios.delete('/api/companies/' + _this6.companyId).then(function (response) {
                         console.info(response.data);
-                        _this5.$snackbar.open(response.data.message);
+                        _this6.$snackbar.open(response.data.message);
                         window.location = '/companies/';
                     }).catch(function (error) {
                         if (error.response.status && error.response.status === 419) {
@@ -41713,25 +41852,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         updateAddressList: function updateAddressList(index) {
-            var _this6 = this;
+            var _this7 = this;
 
             var addressList = this.company.address_lists[index];
             axios.put('/api/addresslists/' + addressList.id, { name: this.updatedAddressList.name, company_id: this.company.id }).then(function (response) {
-                _this6.$snackbar.open(response.data.message);
-                _this6.updatingAddressListIndex = null;
-                _this6.isEditingCompany = false;
-                _this6.getCompany();
+                _this7.$snackbar.open(response.data.message);
+                _this7.updatingAddressListIndex = null;
+                _this7.isEditingCompany = false;
+                _this7.getCompany();
             }).catch(function (error) {
                 if (error.response.status && error.response.status === 419) {
                     location.href = '/login';
                 }
                 console.info(error);
-                if (_.isEmpty(_this6.updatedAddressList.name)) {
-                    _this6.newAddressListErrors = { name: ['This field is required.'] };
+                if (_.isEmpty(_this7.updatedAddressList.name)) {
+                    _this7.newAddressListErrors = { name: ['This field is required.'] };
                 } else {
-                    _this6.newAddressListErrors = error.response.data.errors;
+                    _this7.newAddressListErrors = error.response.data.errors;
                 }
-                _this6.$snackbar.open({
+                _this7.$snackbar.open({
                     duration: 5000,
                     message: 'Please correct errors to update an address list.',
                     type: 'is-danger',
@@ -41749,7 +41888,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.updatingAddressListIndex = null;
         },
         deleteAddressList: function deleteAddressList(addressList) {
-            var _this7 = this;
+            var _this8 = this;
 
             this.$dialog.confirm({
                 message: 'Are you sure you want to <b>delete ' + addressList.name + '</b> address list? This action cannot be undone.',
@@ -41758,8 +41897,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 hasIcon: true,
                 onConfirm: function onConfirm() {
                     axios.delete('/api/addresslists/' + addressList.id).then(function (response) {
-                        _this7.getCompany();
-                        _this7.$snackbar.open({
+                        _this8.getCompany();
+                        _this8.$snackbar.open({
                             duration: 5000,
                             message: response.data.message,
                             queue: false,
@@ -41785,7 +41924,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         deleteBulkActionAddresses: function deleteBulkActionAddresses() {
-            var _this8 = this;
+            var _this9 = this;
 
             this.$dialog.confirm({
                 message: 'Are you sure you want to <b>delete</b> selected contacts from address list? This action cannot be undone.',
@@ -41794,26 +41933,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 hasIcon: true,
                 onConfirm: function onConfirm() {
                     // alert(this.bulkActionAddresses.length);return;
-                    for (var i = _this8.bulkActionAddresses.length - 1; i >= 0; i--) {
-                        axios.delete('/api/address/' + _this8.bulkActionAddresses[i].id).then(function (response) {
+                    for (var i = _this9.bulkActionAddresses.length - 1; i >= 0; i--) {
+                        axios.delete('/api/address/' + _this9.bulkActionAddresses[i].id).then(function (response) {
                             // Do something on success
                         }).catch(function (error) {
                             console.info(error);
                         });
                     }
 
-                    var address_word = _this8.bulkActionAddresses.length > 1 ? ' addresses ' : ' address ';
-                    _this8.$snackbar.open({
+                    var address_word = _this9.bulkActionAddresses.length > 1 ? ' addresses ' : ' address ';
+                    _this9.$snackbar.open({
                         duration: 5000,
-                        message: _this8.bulkActionAddresses.length + address_word + 'was deleted from address list correctly!',
+                        message: _this9.bulkActionAddresses.length + address_word + 'was deleted from address list correctly!',
                         queue: false,
                         onAction: function onAction() {
                             //Do something on click button
                         }
                     });
 
-                    _this8.editBulkActions(_this8.bulkActionAddressesActive);
-                    _this8.getCompany();
+                    _this9.editBulkActions(_this9.bulkActionAddressesActive);
+                    _this9.getCompany();
                 }
             });
         },
@@ -41827,12 +41966,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }, 10);
         },
         storeAddresList: function storeAddresList() {
-            var _this9 = this;
+            var _this10 = this;
 
             axios.post('/api/addresslists/create', this.newAddressList).then(function (response) {
-                _this9.isCreatingAddressList = false;
-                _this9.getCompany();
-                _this9.$snackbar.open({
+                _this10.isCreatingAddressList = false;
+                _this10.getCompany();
+                _this10.$snackbar.open({
                     duration: 5000,
                     message: response.data.message,
                     queue: false,
@@ -41846,12 +41985,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
                 console.info(error);
                 $('.card-create-address-list .update-address-list-input').focus();
-                if (_.isEmpty(_this9.newAddressList.name)) {
-                    _this9.newAddressListErrors = { name: ['This field is required.'] };
+                if (_.isEmpty(_this10.newAddressList.name)) {
+                    _this10.newAddressListErrors = { name: ['This field is required.'] };
                 } else {
-                    _this9.newAddressListErrors = error.response.data.errors;
+                    _this10.newAddressListErrors = error.response.data.errors;
                 }
-                _this9.$snackbar.open({
+                _this10.$snackbar.open({
                     duration: 5000,
                     message: 'Please correct errors to create an address list.',
                     type: 'is-danger',
@@ -44244,12 +44383,14 @@ var render = function() {
                                         data: addressList.addresses,
                                         "checked-rows": _vm.bulkActionAddresses,
                                         "default-sort-direction": "asc",
-                                        "default-sort": "name"
+                                        "default-sort": "name",
+                                        detailed: ""
                                       },
                                       on: {
                                         "update:checkedRows": function($event) {
                                           _vm.bulkActionAddresses = $event
-                                        }
+                                        },
+                                        "details-open": _vm.editContact
                                       },
                                       scopedSlots: _vm._u([
                                         {
@@ -44316,6 +44457,665 @@ var render = function() {
                                                 ]
                                               )
                                             ]
+                                          }
+                                        },
+                                        {
+                                          key: "detail",
+                                          fn: function(props) {
+                                            return _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "reciever_container"
+                                              },
+                                              [
+                                                _c(
+                                                  "article",
+                                                  {
+                                                    staticClass:
+                                                      "contact-details"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "form",
+                                                      {
+                                                        staticClass:
+                                                          "reciever_form"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "field field-reciever-company"
+                                                          },
+                                                          [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .updatedContact
+                                                                      .company,
+                                                                  expression:
+                                                                    "updatedContact.company"
+                                                                }
+                                                              ],
+                                                              attrs: {
+                                                                type: "text",
+                                                                id:
+                                                                  "reciever_company",
+                                                                name:
+                                                                  "reciever_company",
+                                                                placeholder:
+                                                                  "Company"
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .updatedContact
+                                                                    .company
+                                                              },
+                                                              on: {
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.updatedContact,
+                                                                    "company",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "field field-reciever-birthday"
+                                                          },
+                                                          [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .updatedContact
+                                                                      .birthday,
+                                                                  expression:
+                                                                    "updatedContact.birthday"
+                                                                }
+                                                              ],
+                                                              attrs: {
+                                                                type: "date",
+                                                                id:
+                                                                  "reciever_birthday",
+                                                                name:
+                                                                  "reciever_birthday",
+                                                                placeholder:
+                                                                  "Birthday"
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .updatedContact
+                                                                    .birthday
+                                                              },
+                                                              on: {
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.updatedContact,
+                                                                    "birthday",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "field field-reciever-title"
+                                                          },
+                                                          [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .updatedContact
+                                                                      .title,
+                                                                  expression:
+                                                                    "updatedContact.title"
+                                                                }
+                                                              ],
+                                                              attrs: {
+                                                                type: "text",
+                                                                id:
+                                                                  "reciever_title",
+                                                                name:
+                                                                  "reciever_title",
+                                                                placeholder:
+                                                                  "Mr"
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .updatedContact
+                                                                    .title
+                                                              },
+                                                              on: {
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.updatedContact,
+                                                                    "title",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "field field-reciever-name"
+                                                          },
+                                                          [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .updatedContact
+                                                                      .name,
+                                                                  expression:
+                                                                    "updatedContact.name"
+                                                                }
+                                                              ],
+                                                              attrs: {
+                                                                type: "text",
+                                                                id:
+                                                                  "reciever_name",
+                                                                name:
+                                                                  "reciever_name",
+                                                                placeholder:
+                                                                  "Name *"
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .updatedContact
+                                                                    .name
+                                                              },
+                                                              on: {
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.updatedContact,
+                                                                    "name",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "field field-reciever-surnames"
+                                                          },
+                                                          [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .updatedContact
+                                                                      .surnames,
+                                                                  expression:
+                                                                    "updatedContact.surnames"
+                                                                }
+                                                              ],
+                                                              attrs: {
+                                                                type: "text",
+                                                                id:
+                                                                  "reciever_surnames",
+                                                                name:
+                                                                  "reciever_surnames",
+                                                                placeholder:
+                                                                  "Surnames *"
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .updatedContact
+                                                                    .surnames
+                                                              },
+                                                              on: {
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.updatedContact,
+                                                                    "surnames",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "field field-reciever-address-line-1"
+                                                          },
+                                                          [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .updatedContact
+                                                                      .address_line_1,
+                                                                  expression:
+                                                                    "updatedContact.address_line_1"
+                                                                }
+                                                              ],
+                                                              attrs: {
+                                                                type: "text",
+                                                                id:
+                                                                  "reciever_address_line_1",
+                                                                name:
+                                                                  "reciever_address_line_1",
+                                                                placeholder:
+                                                                  "Address line 1 *"
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .updatedContact
+                                                                    .address_line_1
+                                                              },
+                                                              on: {
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.updatedContact,
+                                                                    "address_line_1",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "field field-reciever-address-line-2"
+                                                          },
+                                                          [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .updatedContact
+                                                                      .address_line_2,
+                                                                  expression:
+                                                                    "updatedContact.address_line_2"
+                                                                }
+                                                              ],
+                                                              attrs: {
+                                                                type: "text",
+                                                                id:
+                                                                  "reciever_address_line_2",
+                                                                name:
+                                                                  "reciever_address_line_2",
+                                                                placeholder:
+                                                                  "Address line 2"
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .updatedContact
+                                                                    .address_line_2
+                                                              },
+                                                              on: {
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.updatedContact,
+                                                                    "address_line_2",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "field field-reciever-city"
+                                                          },
+                                                          [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .updatedContact
+                                                                      .city,
+                                                                  expression:
+                                                                    "updatedContact.city"
+                                                                }
+                                                              ],
+                                                              attrs: {
+                                                                type: "text",
+                                                                id:
+                                                                  "reciever_city",
+                                                                name:
+                                                                  "reciever_city",
+                                                                placeholder:
+                                                                  "City *"
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .updatedContact
+                                                                    .city
+                                                              },
+                                                              on: {
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.updatedContact,
+                                                                    "city",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "field field-reciever-country"
+                                                          },
+                                                          [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .updatedContact
+                                                                      .country,
+                                                                  expression:
+                                                                    "updatedContact.country"
+                                                                }
+                                                              ],
+                                                              attrs: {
+                                                                type: "text",
+                                                                id:
+                                                                  "reciever_country",
+                                                                name:
+                                                                  "reciever_country",
+                                                                placeholder:
+                                                                  "Country *"
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .updatedContact
+                                                                    .country
+                                                              },
+                                                              on: {
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.updatedContact,
+                                                                    "country",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "field field-reciever-zip"
+                                                          },
+                                                          [
+                                                            _c("input", {
+                                                              directives: [
+                                                                {
+                                                                  name: "model",
+                                                                  rawName:
+                                                                    "v-model",
+                                                                  value:
+                                                                    _vm
+                                                                      .updatedContact
+                                                                      .zip_code,
+                                                                  expression:
+                                                                    "updatedContact.zip_code"
+                                                                }
+                                                              ],
+                                                              attrs: {
+                                                                type: "number",
+                                                                id:
+                                                                  "reciever_zip_code",
+                                                                name:
+                                                                  "reciever_zip_code",
+                                                                placeholder:
+                                                                  "Zip *"
+                                                              },
+                                                              domProps: {
+                                                                value:
+                                                                  _vm
+                                                                    .updatedContact
+                                                                    .zip_code
+                                                              },
+                                                              on: {
+                                                                input: function(
+                                                                  $event
+                                                                ) {
+                                                                  if (
+                                                                    $event
+                                                                      .target
+                                                                      .composing
+                                                                  ) {
+                                                                    return
+                                                                  }
+                                                                  _vm.$set(
+                                                                    _vm.updatedContact,
+                                                                    "zip_code",
+                                                                    $event
+                                                                      .target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                              }
+                                                            })
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "field has-text-right m-t-20"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "button",
+                                                              {
+                                                                staticClass:
+                                                                  "button is-info is-small",
+                                                                on: {
+                                                                  click: function(
+                                                                    $event
+                                                                  ) {
+                                                                    $event.preventDefault()
+                                                                    _vm.updateContact(
+                                                                      $event
+                                                                    )
+                                                                  }
+                                                                }
+                                                              },
+                                                              [_vm._v("Update")]
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
                                           }
                                         }
                                       ])

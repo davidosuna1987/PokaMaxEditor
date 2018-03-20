@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use Excel;
 use App\Address;
 use App\AddressList;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Http\Request;
+use App\Http\Requests\UpdateAddressRequest;
 use App\Http\Requests\AddressMultipleInsertRequest;
 
 class AddressController extends Controller
@@ -67,9 +68,25 @@ class AddressController extends Controller
         //
     }
 
-    public function apiUpdate(Request $request, $id)
+    public function apiUpdate(UpdateAddressRequest $request, $id)
     {
-        //
+        $address = Address::findOrFail($id);
+        $address->company = $request->company;
+        $address->title = $request->title;
+        $address->name = $request->name;
+        $address->surnames = $request->surnames;
+        $address->address_line_1 = $request->address_line_1;
+        $address->address_line_2 = $request->address_line_2;
+        $address->city = $request->city;
+        $address->country = $request->country;
+        $address->zip_code = $request->zip_code;
+        $address->birthday = $request->birthday;
+        $address->save();
+
+        return response()->json([
+            'address' => $address,
+            'message' => $address->name.' '.$address->surnames.' address was updated correctly!'
+        ]);
     }
 
     public function delete($id)
