@@ -29,8 +29,10 @@
   - ~~_Back text color picker_~~
   - ~~_Added birthday column in address lists tables_~~
 - Company
-  - ~~_Add update form to address list contacts_~~
-  - ~~_Update toggle errors~~
-  - ~~_Update validation_~~
+  - ~~_Add update modal form to address list contacts_~~
+  - ~~_Update toggle ifno and address list errors~~
+  - ~~_Update info and address list validation_~~
 - Profile
-  - ~~_Add update form to address list contacts_~~
+  - ~~_Add update modal form to address list contacts_~~
+  - ~~_Update toggle ifno and address list errors~~
+  - ~~_Update info and address list validation_~~

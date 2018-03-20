@@ -216,9 +216,9 @@
                                 placeholder="Address list name"
                                 class="update-address-list-input"
                                 v-on:keyup.enter="storeAddresList"
-                                :class="[{ 'has-error': newAddressListHasError }]"
+                                :class="[{ 'has-error': newAddressListErrors['name'] }]"
                                 v-model="newAddressList.name">
-                                <span v-if="newAddressListHasError" class="error has-text-danger is-size-7">
+                                <span v-if="newAddressListErrors['name']" class="error has-text-danger is-size-7">
                                     <span class="error-message">
                                         {{newAddressListErrors['name'][0]}}
                                     </span>
@@ -282,9 +282,9 @@
                                     class="update-address-list-input"
                                     v-on:keyup.enter="updateAddressList(index)"
                                     v-model="updatedAddressList.name">
-                                    <span v-if="newAddressListHasError" class="error has-text-danger is-size-7">
+                                    <span v-if="updatedAddressListErrors['name']" class="error has-text-danger is-size-7">
                                         <span class="error-message">
-                                            {{newAddressListErrors['name'][0]}}
+                                            {{updatedAddressListErrors['name'][0]}}
                                         </span>
                                     </span>
                             </p>
@@ -679,6 +679,7 @@
                 updatedContactErrors: [],
                 updatedCompanyErrors: [],
                 newAddressListErrors: [],
+                updatedAddressListErrors: [],
                 company: null,
                 isEditingCompany: false,
                 updatingAddressListIndex: null,
@@ -714,17 +715,18 @@
                 },
                 deep: true
             },
+            updatedAddressList: {
+                handler(val){
+                    this.removeErrors();
+                },
+                deep: true
+            },
             updatedContact: {
                 handler(val){
                     this.removeErrors();
                 },
                 deep: true
             },
-        },
-        computed: {
-            newAddressListHasError() {
-              return this.newAddressListErrors != null && !_.isEmpty(this.newAddressListErrors) && !_.isEmpty(this.newAddressListErrors['name']);
-            }
         },
         methods: {
             formattedDate(date) {
@@ -983,9 +985,9 @@
                     }
                     console.info(error);
                     if(_.isEmpty(this.updatedAddressList.name)){
-                        this.newAddressListErrors = {name: ['This field is required.']}
+                        this.updatedAddressListErrors = {name: ['This field is required.']}
                     }else{
-                        this.newAddressListErrors = error.response.data.errors;
+                        this.updatedAddressListErrors = error.response.data.errors;
                     }
                     this.$snackbar.open({
                         duration: 5000,
@@ -1001,7 +1003,7 @@
                 });
             },
             cancelUpdateAddressList() {
-                this.newAddressListErrors = null;
+                this.updatedAddressListErrors = [];
                 this.updatingAddressListIndex = null;
             },
             deleteAddressList(addressList) {
@@ -1119,13 +1121,19 @@
                 });
             },
             cancelAddresList() {
-                this.newAddressListErrors = null;
+                this.newAddressListErrors = [];
                 this.isCreatingAddressList = false;
             },
             removeErrors() {
                 if(!_.isEmpty(this.newAddressListErrors)){
                     if('name' in this.newAddressListErrors){
                       this.newAddressListErrors['name'] = null;
+                    }
+                }
+
+                if(!_.isEmpty(this.updatedAddressListErrors)){
+                    if('name' in this.updatedAddressListErrors){
+                      this.updatedAddressListErrors['name'] = null;
                     }
                 }
 

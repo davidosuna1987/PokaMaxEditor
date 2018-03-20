@@ -41595,6 +41595,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             updatedContactErrors: [],
             updatedCompanyErrors: [],
             newAddressListErrors: [],
+            updatedAddressListErrors: [],
             company: null,
             isEditingCompany: false,
             updatingAddressListIndex: null,
@@ -41633,17 +41634,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             deep: true
         },
+        updatedAddressList: {
+            handler: function handler(val) {
+                this.removeErrors();
+            },
+
+            deep: true
+        },
         updatedContact: {
             handler: function handler(val) {
                 this.removeErrors();
             },
 
             deep: true
-        }
-    },
-    computed: {
-        newAddressListHasError: function newAddressListHasError() {
-            return this.newAddressListErrors != null && !_.isEmpty(this.newAddressListErrors) && !_.isEmpty(this.newAddressListErrors['name']);
         }
     },
     methods: {
@@ -41911,9 +41914,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
                 console.info(error);
                 if (_.isEmpty(_this7.updatedAddressList.name)) {
-                    _this7.newAddressListErrors = { name: ['This field is required.'] };
+                    _this7.updatedAddressListErrors = { name: ['This field is required.'] };
                 } else {
-                    _this7.newAddressListErrors = error.response.data.errors;
+                    _this7.updatedAddressListErrors = error.response.data.errors;
                 }
                 _this7.$snackbar.open({
                     duration: 5000,
@@ -41929,7 +41932,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         cancelUpdateAddressList: function cancelUpdateAddressList() {
-            this.newAddressListErrors = null;
+            this.updatedAddressListErrors = [];
             this.updatingAddressListIndex = null;
         },
         deleteAddressList: function deleteAddressList(addressList) {
@@ -42049,13 +42052,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         cancelAddresList: function cancelAddresList() {
-            this.newAddressListErrors = null;
+            this.newAddressListErrors = [];
             this.isCreatingAddressList = false;
         },
         removeErrors: function removeErrors() {
             if (!_.isEmpty(this.newAddressListErrors)) {
                 if ('name' in this.newAddressListErrors) {
                     this.newAddressListErrors['name'] = null;
+                }
+            }
+
+            if (!_.isEmpty(this.updatedAddressListErrors)) {
+                if ('name' in this.updatedAddressListErrors) {
+                    this.updatedAddressListErrors['name'] = null;
                 }
             }
 
@@ -42971,7 +42980,9 @@ var render = function() {
                             }
                           ],
                           staticClass: "update-address-list-input",
-                          class: [{ "has-error": _vm.newAddressListHasError }],
+                          class: [
+                            { "has-error": _vm.newAddressListErrors["name"] }
+                          ],
                           attrs: {
                             type: "text",
                             placeholder: "Address list name"
@@ -43000,7 +43011,7 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _vm.newAddressListHasError
+                        _vm.newAddressListErrors["name"]
                           ? _c(
                               "span",
                               {
@@ -43198,7 +43209,7 @@ var render = function() {
                                   }
                                 }),
                                 _vm._v(" "),
-                                _vm.newAddressListHasError
+                                _vm.updatedAddressListErrors["name"]
                                   ? _c(
                                       "span",
                                       {
@@ -43213,7 +43224,7 @@ var render = function() {
                                             _vm._v(
                                               "\n                                        " +
                                                 _vm._s(
-                                                  _vm.newAddressListErrors[
+                                                  _vm.updatedAddressListErrors[
                                                     "name"
                                                   ][0]
                                                 ) +
