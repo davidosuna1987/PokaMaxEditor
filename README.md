@@ -32,5 +32,9 @@
 
 
 ### Completed todo's
-- ~~_Remove frame switcher_~~
-- ~~_Add update form to address list contacts_~~
+- Editor
+  - ~~_Remove frame switcher_~~
+- Company
+  - ~~_Add update form to address list contacts_~~
+- Profile
+  - ~~_Add update form to address list contacts_~~
