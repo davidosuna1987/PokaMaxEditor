@@ -50084,10 +50084,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       front_cropped_file_path: null,
       front_original_file_path: null,
       back_text: '',
-      back_color: '#031993',
       font_data: {
         font_family: 1,
-        font_size: 21
+        font_size: 21,
+        color: '#031993'
       },
       sender_data: {
         is_new: false,
@@ -51974,7 +51974,7 @@ var render = function() {
                                 " font-size-" +
                                 _vm.tempData.font_data.font_size
                             ],
-                            style: { color: _vm.tempData.back_color.hex },
+                            style: { color: _vm.tempData.font_data.color.hex },
                             attrs: {
                               name: "back_text",
                               id: "back_text",
@@ -52243,11 +52243,11 @@ var render = function() {
                     _vm._v(" "),
                     _c("slider-picker", {
                       model: {
-                        value: _vm.tempData.back_color,
+                        value: _vm.tempData.font_data.color,
                         callback: function($$v) {
-                          _vm.$set(_vm.tempData, "back_color", $$v)
+                          _vm.$set(_vm.tempData.font_data, "color", $$v)
                         },
-                        expression: "tempData.back_color"
+                        expression: "tempData.font_data.color"
                       }
                     })
                   ],

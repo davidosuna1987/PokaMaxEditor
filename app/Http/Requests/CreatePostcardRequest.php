@@ -30,6 +30,7 @@ class CreatePostcardRequest extends FormRequest
             'back_text' => 'required|string',
             'font_data.font_family' => 'required|integer',
             'font_data.font_size' => 'required|integer',
+            'font_data.color' => 'required|array',
 
             'sender_data.company' => 'required|string',
             'sender_data.title' => 'string|nullable',

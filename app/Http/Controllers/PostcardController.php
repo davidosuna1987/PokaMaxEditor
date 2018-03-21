@@ -29,7 +29,8 @@ class PostcardController extends Controller
 
     public function store(CreatePostcardRequest $request)
     {
-        // return response()->json(['request' => $request->all()]);
+        // return response()->json(['font_data' => $request->get('font_data')]);
+
         if($request->ajax()):
 
             $temp_postcard = [];
@@ -76,6 +77,7 @@ class PostcardController extends Controller
               'front_cropped_file_path' => 'waiting',
               'front_original_file_path' => 'waiting',
               'back_text' => $request->get('back_text'),
+              'back_color' => $font_data['color']['hex'],
               'font_family' => $font_data['font_family'],
               'font_size' => $font_data['font_size']
             ]);
@@ -234,6 +236,7 @@ class PostcardController extends Controller
               'front_cropped_file_path' => $temp_postcard['front_cropped_file_path'],
               'front_original_file_path' => $temp_postcard['front_original_file_path'],
               'back_text' => $request->get('back_text'),
+              'back_color' => $request->get('back_color')['hex'],
               'font_family' => $font_data['font_family'],
               'font_size' => $font_data['font_size'],
               'sender_address_id' => $sender_address->id,

@@ -383,7 +383,7 @@
                       <div class="field">
                           <textarea
                               v-model="tempData.back_text"
-                              :style="{color: tempData.back_color.hex}"
+                              :style="{color: tempData.font_data.color.hex}"
                               :class="[{ 'has-error': backTextHasError }, 'font-family-'+tempData.font_data.font_family+' font-size-'+tempData.font_data.font_size]"
                               name="back_text"
                               id="back_text"
@@ -493,7 +493,7 @@
                   </div>
                   <div class="font-color">
                     <p class="title is-5">Select text color</p>
-                    <slider-picker v-model="tempData.back_color"></slider-picker>
+                    <slider-picker v-model="tempData.font_data.color"></slider-picker>
                   </div>
                 </div>
               </div>
@@ -1075,10 +1075,10 @@
                   front_cropped_file_path: null,
                   front_original_file_path: null,
                   back_text: '',
-                  back_color: '#031993',
                   font_data: {
                     font_family: 1,
-                    font_size: 21
+                    font_size: 21,
+                    color: '#031993'
                   },
                   sender_data: {
                     is_new: false,

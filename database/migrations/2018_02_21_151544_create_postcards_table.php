@@ -22,7 +22,7 @@ class CreatePostcardsTable extends Migration
             $table->string('front_original_file_path')->nullable();
             $table->string('front_thumbnail_file_path')->nullable();
             $table->text('back_text');
-            $table->string('back_color');
+            $table->string('back_color')->default('#031993');
             $table->integer('font_family');
             $table->integer('font_size');
             $table->timestamps();
