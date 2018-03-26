@@ -12,6 +12,7 @@
 
 - Editor
   - Contacts filter by month or between dates
+  - Upload signature
   - Upload company logo store
   - Upload company customize size
   - Sets identifier xxxx(set)-xxx(postcard)

@@ -1727,6 +1727,7 @@
             changeFontFamily(event){
                 if(event.target.tagName === 'LI'){
                     this.tempData.font_data.font_family = parseInt(event.target.dataset.fontid);
+                    $('.font-selector .font-family').removeClass('opened');
                 }
             },
             changeFontSize(event){
