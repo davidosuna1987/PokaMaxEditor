@@ -438,7 +438,10 @@
                 </div>
                 <div class="font-selector">
                   <div class="font-family">
-                    <p class="title is-5">Select font</p>
+                    <p class="title is-5">
+                      Select font
+                      <i class="mdi mdi-chevron-down mdi-24px"></i>
+                    </p>
                     <ul class="font-family-list" @click="changeFontFamily">
                         <li
                             class="font-family-1"

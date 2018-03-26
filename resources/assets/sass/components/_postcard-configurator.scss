@@ -352,30 +352,56 @@
 
     .font-family{
       margin-bottom: 25px;
-    }
 
-    .font-family-list{
-      li {
-        border: solid 3px gainsboro;
-        border-bottom: none;
-        padding: 0 13px;
-        height: 45px;
-        display: flex;
-        align-items: center;
+      .title{
         cursor: pointer;
 
-        &:last-child{
-          border-bottom: solid 3px gainsboro;
+        i{
+          display: inline-block;
+          position: relative;
+          top: 3px;
+        }
+      }
+
+      .font-family-list{
+        li {
+          border: solid 3px gainsboro;
+          border-bottom: none;
+          padding: 0 13px;
+          height: 45px;
+          display: none;
+          align-items: center;
+          cursor: pointer;
+
+          &:last-child{
+            border-bottom: solid 3px gainsboro;
+          }
+
+          &.active {
+            background-color: gainsboro;
+            color: white;
+            display: flex;
+          }
+
+          &:hover{
+            background-color: gainsboro;
+            color: white;
+          }
+        }
+      }
+
+      &.opened{
+        .title{
+          i{
+            transform: rotate(180deg);
+            top: 2px;
+          }
         }
 
-        &.active {
-          background-color: gainsboro;
-          color: white;
-        }
-
-        &:hover{
-          background-color: gainsboro;
-          color: white;
+        .font-family-list{
+          li{
+            display: flex;
+          }
         }
       }
     }
