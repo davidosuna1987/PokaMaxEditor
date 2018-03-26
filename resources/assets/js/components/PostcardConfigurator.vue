@@ -380,7 +380,8 @@
 
                   <div class="col-1">
                     <div id="postcard_back" class="postcard-back" :class="[{'full-text' : tempData.hide_back_reciever}]">
-                      <div class="field">
+                      <div id="back_text_field" class="field">
+                          <img class="company-logo-img is-hidden" alt="Company logo">
                           <textarea
                               v-model="tempData.back_text"
                               :style="{color: tempData.font_data.color.hex}"
@@ -498,6 +499,42 @@
                     <p class="title is-5">Select text color</p>
                     <slider-picker v-model="tempData.font_data.color"></slider-picker>
                   </div>
+                </div>
+                <div class="upload-logo m-t-20 m-b-20">
+                  <p class="title is-5 m-b-10">Company logo</p>
+                  <template v-if="!isSetCompanyLogo" class="fake-upload-logo-field">
+                    <input class="is-hidden" id="upload_logo_input" type="file" @change="setCompanyLogo($event)">
+
+                    <a class="button is-info" @click.prevent="selectCompanyLogo()">
+                        <b-icon pack="fa" icon="upload"></b-icon>
+                        <span>Upload company logo</span>
+                    </a>
+                  </template>
+
+                  <template v-else>
+                    <div class="company-logo-position m-b-10">
+                      <b-field class="m-t-10">
+                          <b-select
+                            v-model="tempData.company_logo.position"
+                            @input="setCompanyLogoClass($event)"
+                            placeholder="Logo position" icon="grid">
+                              <option value="bottom-right">Bottom right</option>
+                              <option value="bottom-center">Bottom center</option>
+                              <option value="bottom-left">Bottom left</option>
+                              <option value="center-right">Center right</option>
+                              <option value="center-center">Center center</option>
+                              <option value="center-left">Center left</option>
+                              <option value="top-right">Top right</option>
+                              <option value="top-center">Top center</option>
+                              <option value="top-left">Top left</option>
+                          </b-select>
+                      </b-field>
+                    </div>
+                    <span class="tag is-info">
+                      {{ tempData.company_logo.name }}
+                      <button class="delete is-small" @click.prevent="clearCompanyLogo()"></button>
+                    </span>
+                  </template>
                 </div>
               </div>
             </div>
@@ -848,14 +885,14 @@
 
                           <div class="col-1">
                             <div id="postcard_back" class="postcard-back" :class="[{'full-text' : tempData.hide_back_reciever}]">
-                              <div class="field">
+                              <div id="back_text_field" class="field">
+                                  <img class="company-logo-img is-hidden" alt="Company logo">
                                   <textarea
                                       disabled
                                       v-model="tempData.back_text"
                                       :class="[{ 'has-error': backTextHasError }, 'font-family-'+tempData.font_data.font_family+' font-size-'+tempData.font_data.font_size]"
                                       name="back_text"
-                                      id="back_text"
-                                      placeholder="Click here to write your text ...">
+                                      id="back_text">
                                   </textarea>
                                   <span v-if="backTextHasError" class="back-text-error-frame">
                                     <span class="error has-text-danger is-size-7">
@@ -966,7 +1003,7 @@
 
                   <div class="column m-t-30">
                     <button class="button is-info p-l-35 p-r-35" @click="flipPostcard">Rotate postcard</button>
-                    <b-collapse v-if="previewRecieverData" class="card m-t-10" :open="false">
+                    <b-collapse v-if="previewRecieverData && !tempData.hide_back_reciever" class="card m-t-10" :open="false">
                       <div slot="trigger" slot-scope="props" class="card-header">
                           <p class="card-header-title">Preview with other reciever</p>
                           <a class="card-header-icon">
@@ -1002,7 +1039,7 @@
                                   </template>
                               </b-table>
                       </div>
-                  </b-collapse>
+                    </b-collapse>
                   </div>
                 </div>
             </div>
@@ -1037,6 +1074,7 @@
         props: ['companyIdProp'],
         data() {
             return {
+                isSetCompanyLogo: false,
                 birthdayFilters: {
                   month: '',
                 },
@@ -1069,6 +1107,13 @@
                 tempData: {
                   postcard_id: null,
                   company_id: null,
+                  company_logo: {
+                    is_set: false,
+                    name: '',
+                    size: '',
+                    image: '',
+                    position: 'bottom-right'
+                  },
                   is_set: null,
                   has_frame: false,
                   hide_back_reciever: false,
@@ -1221,6 +1266,58 @@
             },
         },
         methods: {
+            setCompanyLogo(event) {
+              let vue = this;
+              let files = event.target.files;
+              if (files && files[0]){
+                let file = files[0];
+
+                vue.isSetCompanyLogo = true;
+                vue.tempData.company_logo = {};
+                vue.tempData.company_logo.is_set = true;
+                vue.tempData.company_logo.name = file.name;
+                vue.tempData.company_logo.size = file.size;
+                vue.tempData.company_logo.position = 'bottom-right';
+
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                  $('.company-logo-img').attr({
+                    src: e.target.result,
+                    class: 'company-logo-img bottom-right'
+                  });
+                  vue.tempData.company_logo.image = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+              }else{
+                vue.isSetCompanyLogo = false;
+                vue.tempData.company_logo.is_set = false;
+                vue.tempData.company_logo.name = '';
+                vue.tempData.company_logo.size = '';
+                vue.tempData.company_logo.position = 'bottom-right';
+                vue.tempData.company_logo.image = '';
+              }
+            },
+            setCompanyLogoClass(value) {
+              $('.company-logo-img').attr('class', 'company-logo-img '+value);
+            },
+            clearCompanyLogo() {
+              console.info('0');
+              this.isSetCompanyLogo = false;
+              console.info('1');
+              this.tempData.company_logo.is_set = false;
+              console.info('2');
+              this.tempData.company_logo.name = '';
+              this.tempData.company_logo.size = '';
+              this.tempData.company_logo.position = 'bottom-right';
+              this.tempData.company_logo.image = '';
+              $('#upload_logo_input').val('');
+              $('.company-logo-img').attr('src', '').addClass('is-hidden');
+              console.info('3');
+            },
+            selectCompanyLogo() {
+              $('#upload_logo_input').click();
+            },
             storeAddresList() {
                 axios.post( '/api/addresslists/create', this.newAddressList)
                 .then(response => {

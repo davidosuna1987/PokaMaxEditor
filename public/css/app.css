@@ -23918,6 +23918,10 @@ input[type=range].slider.is-danger .has-output-tooltip + output {
   border-color: #ff3860 !important;
 }
 
+.steps .step-item .step-marker.is-disabled {
+  pointer-events: none;
+}
+
 .steps .steps-actions {
   position: fixed;
   bottom: 0;
@@ -24795,6 +24799,70 @@ background: #ccc;
 .font-selector .font-size-list li:hover {
   background-color: gainsboro;
   color: white;
+}
+
+#back_text_field {
+  position: relative;
+}
+
+#back_text_field .company-logo-img {
+  position: absolute;
+  width: 125px;
+}
+
+#back_text_field .company-logo-img.bottom-right {
+  bottom: 40px;
+  right: 10px;
+}
+
+#back_text_field .company-logo-img.bottom-left {
+  bottom: 40px;
+  left: 10px;
+}
+
+#back_text_field .company-logo-img.bottom-center {
+  bottom: 40px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+#back_text_field .company-logo-img.center-right {
+  top: 50%;
+  right: 10px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+#back_text_field .company-logo-img.center-left {
+  top: 50%;
+  left: 10px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+#back_text_field .company-logo-img.center-center {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+#back_text_field .company-logo-img.top-right {
+  top: 10px;
+  right: 10px;
+}
+
+#back_text_field .company-logo-img.top-left {
+  top: 10px;
+  left: 10px;
+}
+
+#back_text_field .company-logo-img.top-center {
+  top: 10px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
 }
 
 /* POSTCARD CONTACTS */

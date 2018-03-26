@@ -434,6 +434,27 @@
     }
   }
 
+  #back_text_field{
+    position: relative;
+
+    .company-logo-img{
+      position: absolute;
+      width: 125px;
+
+      &.bottom-right{ bottom: 40px; right: 10px; }
+      &.bottom-left{ bottom: 40px; left: 10px; }
+      &.bottom-center{ bottom: 40px; left: 50%; transform: translateX(-50%); }
+
+      &.center-right{ top: 50%; right: 10px; transform: translateY(-50%); }
+      &.center-left{ top: 50%; left: 10px; transform: translateY(-50%); }
+      &.center-center{ top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+      &.top-right{ top: 10px; right: 10px; }
+      &.top-left{ top: 10px; left: 10px; }
+      &.top-center{ top: 10px; left: 50%; transform: translateX(-50%); }
+    }
+  }
+
 /* POSTCARD CONTACTS */
   .reciever_container{
     width: 621px;

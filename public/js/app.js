@@ -50825,6 +50825,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['companyIdProp'],
@@ -50832,6 +50869,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      isSetCompanyLogo: false,
       birthdayFilters: {
         month: ''
       },
@@ -50854,6 +50892,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }, _defineProperty(_ref, 'isCreatingAddressList', false), _defineProperty(_ref, 'isCreatingCompany', false), _defineProperty(_ref, 'newListName', ''), _defineProperty(_ref, 'selected_address_list', null), _defineProperty(_ref, 'postcard_flipped', false), _defineProperty(_ref, 'steps_actions_next_button_disabled', true), _defineProperty(_ref, 'empty_file_cropped', _.isEmpty($('#file1cropped').val())), _defineProperty(_ref, 'empty_file_original', _.isEmpty($('#file1cropped').val())), _defineProperty(_ref, 'errors', {}), _defineProperty(_ref, 'errorsAddressList', {}), _defineProperty(_ref, 'tempData', {
       postcard_id: null,
       company_id: null,
+      company_logo: {
+        is_set: false,
+        name: '',
+        size: '',
+        image: '',
+        position: 'bottom-right'
+      },
       is_set: null,
       has_frame: false,
       hide_back_reciever: false,
@@ -51009,6 +51054,58 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: {
+    setCompanyLogo: function setCompanyLogo(event) {
+      var vue = this;
+      var files = event.target.files;
+      if (files && files[0]) {
+        var file = files[0];
+
+        vue.isSetCompanyLogo = true;
+        vue.tempData.company_logo = {};
+        vue.tempData.company_logo.is_set = true;
+        vue.tempData.company_logo.name = file.name;
+        vue.tempData.company_logo.size = file.size;
+        vue.tempData.company_logo.position = 'bottom-right';
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('.company-logo-img').attr({
+            src: e.target.result,
+            class: 'company-logo-img bottom-right'
+          });
+          vue.tempData.company_logo.image = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        vue.isSetCompanyLogo = false;
+        vue.tempData.company_logo.is_set = false;
+        vue.tempData.company_logo.name = '';
+        vue.tempData.company_logo.size = '';
+        vue.tempData.company_logo.position = 'bottom-right';
+        vue.tempData.company_logo.image = '';
+      }
+    },
+    setCompanyLogoClass: function setCompanyLogoClass(value) {
+      $('.company-logo-img').attr('class', 'company-logo-img ' + value);
+    },
+    clearCompanyLogo: function clearCompanyLogo() {
+      console.info('0');
+      this.isSetCompanyLogo = false;
+      console.info('1');
+      this.tempData.company_logo.is_set = false;
+      console.info('2');
+      this.tempData.company_logo.name = '';
+      this.tempData.company_logo.size = '';
+      this.tempData.company_logo.position = 'bottom-right';
+      this.tempData.company_logo.image = '';
+      $('#upload_logo_input').val('');
+      $('.company-logo-img').attr('src', '').addClass('is-hidden');
+      console.info('3');
+    },
+    selectCompanyLogo: function selectCompanyLogo() {
+      $('#upload_logo_input').click();
+    },
     storeAddresList: function storeAddresList() {
       var _this = this;
 
@@ -52736,81 +52833,95 @@ var render = function() {
                         attrs: { id: "postcard_back" }
                       },
                       [
-                        _c("div", { staticClass: "field" }, [
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.tempData.back_text,
-                                expression: "tempData.back_text"
-                              }
-                            ],
-                            class: [
-                              { "has-error": _vm.backTextHasError },
-                              "font-family-" +
-                                _vm.tempData.font_data.font_family +
-                                " font-size-" +
-                                _vm.tempData.font_data.font_size
-                            ],
-                            style: { color: _vm.tempData.font_data.color.hex },
-                            attrs: {
-                              name: "back_text",
-                              id: "back_text",
-                              maxlength: "420",
-                              placeholder: "Click here to write your text ..."
-                            },
-                            domProps: { value: _vm.tempData.back_text },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                        _c(
+                          "div",
+                          {
+                            staticClass: "field",
+                            attrs: { id: "back_text_field" }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "company-logo-img is-hidden",
+                              attrs: { alt: "Company logo" }
+                            }),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.tempData.back_text,
+                                  expression: "tempData.back_text"
                                 }
-                                _vm.$set(
-                                  _vm.tempData,
-                                  "back_text",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.backTextHasError
-                            ? _c(
-                                "span",
-                                { staticClass: "back-text-error-frame" },
-                                [
-                                  _c(
-                                    "span",
-                                    {
-                                      staticClass:
-                                        "error has-text-danger is-size-7"
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass:
-                                          "mdi mdi-alert-circle-outline mdi-18px"
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        { staticClass: "error-message" },
-                                        [
-                                          _vm._v(
-                                            "\n                                " +
-                                              _vm._s(
-                                                _vm.errors["back_text"][0]
-                                              ) +
-                                              "\n                            "
-                                          )
-                                        ]
-                                      )
-                                    ]
+                              ],
+                              class: [
+                                { "has-error": _vm.backTextHasError },
+                                "font-family-" +
+                                  _vm.tempData.font_data.font_family +
+                                  " font-size-" +
+                                  _vm.tempData.font_data.font_size
+                              ],
+                              style: {
+                                color: _vm.tempData.font_data.color.hex
+                              },
+                              attrs: {
+                                name: "back_text",
+                                id: "back_text",
+                                maxlength: "420",
+                                placeholder: "Click here to write your text ..."
+                              },
+                              domProps: { value: _vm.tempData.back_text },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.tempData,
+                                    "back_text",
+                                    $event.target.value
                                   )
-                                ]
-                              )
-                            : _vm._e()
-                        ]),
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.backTextHasError
+                              ? _c(
+                                  "span",
+                                  { staticClass: "back-text-error-frame" },
+                                  [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "error has-text-danger is-size-7"
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "mdi mdi-alert-circle-outline mdi-18px"
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "error-message" },
+                                          [
+                                            _vm._v(
+                                              "\n                                " +
+                                                _vm._s(
+                                                  _vm.errors["back_text"][0]
+                                                ) +
+                                                "\n                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ]
+                        ),
                         _vm._v(" "),
                         _c("span", { staticClass: "vertical-line" }),
                         _vm._v(" "),
@@ -53030,7 +53141,166 @@ var render = function() {
                   ],
                   1
                 )
-              ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "upload-logo m-t-20 m-b-20" },
+                [
+                  _c("p", { staticClass: "title is-5 m-b-10" }, [
+                    _vm._v("Company logo")
+                  ]),
+                  _vm._v(" "),
+                  !_vm.isSetCompanyLogo
+                    ? [
+                        _c("input", {
+                          staticClass: "is-hidden",
+                          attrs: { id: "upload_logo_input", type: "file" },
+                          on: {
+                            change: function($event) {
+                              _vm.setCompanyLogo($event)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "button is-info",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.selectCompanyLogo()
+                              }
+                            }
+                          },
+                          [
+                            _c("b-icon", {
+                              attrs: { pack: "fa", icon: "upload" }
+                            }),
+                            _vm._v(" "),
+                            _c("span", [_vm._v("Upload company logo")])
+                          ],
+                          1
+                        )
+                      ]
+                    : [
+                        _c(
+                          "div",
+                          { staticClass: "company-logo-position m-b-10" },
+                          [
+                            _c(
+                              "b-field",
+                              { staticClass: "m-t-10" },
+                              [
+                                _c(
+                                  "b-select",
+                                  {
+                                    attrs: {
+                                      placeholder: "Logo position",
+                                      icon: "grid"
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        _vm.setCompanyLogoClass($event)
+                                      }
+                                    },
+                                    model: {
+                                      value: _vm.tempData.company_logo.position,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.tempData.company_logo,
+                                          "position",
+                                          $$v
+                                        )
+                                      },
+                                      expression:
+                                        "tempData.company_logo.position"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "bottom-right" } },
+                                      [_vm._v("Bottom right")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "bottom-center" } },
+                                      [_vm._v("Bottom center")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "bottom-left" } },
+                                      [_vm._v("Bottom left")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "center-right" } },
+                                      [_vm._v("Center right")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "center-center" } },
+                                      [_vm._v("Center center")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "center-left" } },
+                                      [_vm._v("Center left")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "top-right" } },
+                                      [_vm._v("Top right")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "top-center" } },
+                                      [_vm._v("Top center")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "top-left" } },
+                                      [_vm._v("Top left")]
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "tag is-info" }, [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(_vm.tempData.company_logo.name) +
+                              "\n                  "
+                          ),
+                          _c("button", {
+                            staticClass: "delete is-small",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.clearCompanyLogo()
+                              }
+                            }
+                          })
+                        ])
+                      ]
+                ],
+                2
+              )
             ])
           ])
         ]),
@@ -55146,81 +55416,97 @@ var render = function() {
                               attrs: { id: "postcard_back" }
                             },
                             [
-                              _c("div", { staticClass: "field" }, [
-                                _c("textarea", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.tempData.back_text,
-                                      expression: "tempData.back_text"
-                                    }
-                                  ],
-                                  class: [
-                                    { "has-error": _vm.backTextHasError },
-                                    "font-family-" +
-                                      _vm.tempData.font_data.font_family +
-                                      " font-size-" +
-                                      _vm.tempData.font_data.font_size
-                                  ],
-                                  attrs: {
-                                    disabled: "",
-                                    name: "back_text",
-                                    id: "back_text",
-                                    placeholder:
-                                      "Click here to write your text ..."
-                                  },
-                                  domProps: { value: _vm.tempData.back_text },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "field",
+                                  attrs: { id: "back_text_field" }
+                                },
+                                [
+                                  _c("img", {
+                                    staticClass: "company-logo-img is-hidden",
+                                    attrs: { alt: "Company logo" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("textarea", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.tempData.back_text,
+                                        expression: "tempData.back_text"
                                       }
-                                      _vm.$set(
-                                        _vm.tempData,
-                                        "back_text",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _vm.backTextHasError
-                                  ? _c(
-                                      "span",
-                                      { staticClass: "back-text-error-frame" },
-                                      [
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "error has-text-danger is-size-7"
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass:
-                                                "mdi mdi-alert-circle-outline mdi-18px"
-                                            }),
-                                            _vm._v(" "),
-                                            _c(
-                                              "span",
-                                              { staticClass: "error-message" },
-                                              [
-                                                _vm._v(
-                                                  "\n                                        " +
-                                                    _vm._s(
-                                                      _vm.errors["back_text"][0]
-                                                    ) +
-                                                    "\n                                    "
-                                                )
-                                              ]
-                                            )
-                                          ]
+                                    ],
+                                    class: [
+                                      { "has-error": _vm.backTextHasError },
+                                      "font-family-" +
+                                        _vm.tempData.font_data.font_family +
+                                        " font-size-" +
+                                        _vm.tempData.font_data.font_size
+                                    ],
+                                    attrs: {
+                                      disabled: "",
+                                      name: "back_text",
+                                      id: "back_text"
+                                    },
+                                    domProps: { value: _vm.tempData.back_text },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.tempData,
+                                          "back_text",
+                                          $event.target.value
                                         )
-                                      ]
-                                    )
-                                  : _vm._e()
-                              ]),
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.backTextHasError
+                                    ? _c(
+                                        "span",
+                                        {
+                                          staticClass: "back-text-error-frame"
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "error has-text-danger is-size-7"
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "mdi mdi-alert-circle-outline mdi-18px"
+                                              }),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass: "error-message"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                        " +
+                                                      _vm._s(
+                                                        _vm.errors[
+                                                          "back_text"
+                                                        ][0]
+                                                      ) +
+                                                      "\n                                    "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e()
+                                ]
+                              ),
                               _vm._v(" "),
                               _c("span", { staticClass: "vertical-line" }),
                               _vm._v(" "),
@@ -55571,7 +55857,7 @@ var render = function() {
                     [_vm._v("Rotate postcard")]
                   ),
                   _vm._v(" "),
-                  _vm.previewRecieverData
+                  _vm.previewRecieverData && !_vm.tempData.hide_back_reciever
                     ? _c(
                         "b-collapse",
                         {

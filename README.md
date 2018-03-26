@@ -12,7 +12,8 @@
 
 - Editor
   - Contacts filter by month or between dates
-  - Upload company logo (customize size and position)
+  - Upload company logo store
+  - Upload company customize size
   - Sets identifier xxxx(set)-xxx(postcard)
   - Custom font
   - Upload back image
@@ -32,7 +33,9 @@
 - Editor
   - ~~_Remove frame switcher_~~
   - ~~_Back text color picker_~~
+  - ~~_Font selector dropdown_~~
   - ~~_Added birthday column in address lists tables_~~
+  - ~~_Upload company logo_~~
 
 - Company
   - ~~_Add update modal form to address list contacts_~~
