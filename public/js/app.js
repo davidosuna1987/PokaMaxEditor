@@ -50863,6 +50863,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['companyIdProp'],
@@ -50890,7 +50897,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       selected_company_contacts: [],
       selected_company_address_lists: [],
       isModalAddressListsActive: false
-    }, _defineProperty(_ref, 'isCreatingAddressList', false), _defineProperty(_ref, 'isCreatingCompany', false), _defineProperty(_ref, 'newListName', ''), _defineProperty(_ref, 'selected_address_list', null), _defineProperty(_ref, 'postcard_flipped', false), _defineProperty(_ref, 'steps_actions_next_button_disabled', true), _defineProperty(_ref, 'empty_file_cropped', _.isEmpty($('#file1cropped').val())), _defineProperty(_ref, 'empty_file_original', _.isEmpty($('#file1cropped').val())), _defineProperty(_ref, 'errors', {}), _defineProperty(_ref, 'errorsAddressList', {}), _defineProperty(_ref, 'tempData', {
+    }, _defineProperty(_ref, 'isCreatingAddressList', false), _defineProperty(_ref, 'isCreatingCompany', false), _defineProperty(_ref, 'newListName', ''), _defineProperty(_ref, 'selected_address_list', null), _defineProperty(_ref, 'postcard_flipped', false), _defineProperty(_ref, 'steps_actions_next_button_disabled', true), _defineProperty(_ref, 'empty_file_cropped', _.isEmpty($('#file1cropped').val())), _defineProperty(_ref, 'empty_file_original', _.isEmpty($('#file1cropped').val())), _defineProperty(_ref, 'errors', {}), _defineProperty(_ref, 'errorsAddressList', {}), _defineProperty(_ref, 'showCustomColor', false), _defineProperty(_ref, 'tempData', {
       postcard_id: null,
       company_id: null,
       company_logo: {
@@ -53133,17 +53140,77 @@ var render = function() {
                       _vm._v("Select text color")
                     ]),
                     _vm._v(" "),
-                    _c("slider-picker", {
-                      model: {
-                        value: _vm.tempData.font_data.color,
-                        callback: function($$v) {
-                          _vm.$set(_vm.tempData.font_data, "color", $$v)
-                        },
-                        expression: "tempData.font_data.color"
-                      }
-                    })
+                    _vm.showCustomColor
+                      ? [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.tempData.font_data.color.hex,
+                                expression: "tempData.font_data.color.hex"
+                              }
+                            ],
+                            staticClass: "input",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.tempData.font_data.color.hex
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.tempData.font_data.color,
+                                  "hex",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button is-small is-info m-t-10",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.showCustomColor = false
+                                }
+                              }
+                            },
+                            [_vm._v("Show color picker")]
+                          )
+                        ]
+                      : [
+                          _c("slider-picker", {
+                            model: {
+                              value: _vm.tempData.font_data.color,
+                              callback: function($$v) {
+                                _vm.$set(_vm.tempData.font_data, "color", $$v)
+                              },
+                              expression: "tempData.font_data.color"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button is-small is-info m-t-10",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.showCustomColor = true
+                                }
+                              }
+                            },
+                            [_vm._v("Set custom color")]
+                          )
+                        ]
                   ],
-                  1
+                  2
                 )
               ]),
               _vm._v(" "),

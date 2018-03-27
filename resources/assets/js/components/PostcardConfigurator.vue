@@ -497,7 +497,14 @@
                   </div>
                   <div class="font-color">
                     <p class="title is-5">Select text color</p>
-                    <slider-picker v-model="tempData.font_data.color"></slider-picker>
+                    <template v-if="showCustomColor">
+                      <input v-model="tempData.font_data.color.hex" type="text" class="input">
+                      <button class="button is-small is-info m-t-10" @click.prevent="showCustomColor = false">Show color picker</button>
+                    </template>
+                    <template v-else>
+                      <slider-picker v-model="tempData.font_data.color"></slider-picker>
+                      <button class="button is-small is-info m-t-10" @click.prevent="showCustomColor = true">Set custom color</button>
+                    </template>
                   </div>
                 </div>
                 <div class="upload-logo m-t-20 m-b-20">
@@ -1105,6 +1112,7 @@
                 empty_file_original: _.isEmpty($('#file1cropped').val()),
                 errors: {},
                 errorsAddressList: {},
+                showCustomColor: false,
                 tempData: {
                   postcard_id: null,
                   company_id: null,
