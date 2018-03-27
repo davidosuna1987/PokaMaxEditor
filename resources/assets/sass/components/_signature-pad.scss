@@ -1,0 +1,14 @@
+#signature_pad{
+  .modal-card-body{
+    display: flex;
+    justify-content: center;
+  }
+
+  canvas{
+    border: solid 1px gainsboro;
+  }
+
+  .signature-pad-footer{
+    justify-content: space-between;
+  }
+}

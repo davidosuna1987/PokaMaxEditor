@@ -49,7 +49,7 @@
             </span>
           </div>
           <div class="step-details">
-            <p class="step-title">Text</p>
+            <p class="step-title">Back</p>
           </div>
         </div>
         <div class="step-item">
@@ -382,6 +382,7 @@
                     <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
                       <div id="back_text_field" class="field">
                           <img class="company-logo-img is-hidden" alt="Company logo">
+                          <img v-show="tempData.signature.image" :src="tempData.signature.image" class="company-signature bottom-left" alt="Company signature">
                           <textarea
                               v-model="tempData.back_text"
                               :style="{color: tempData.font_data.color.hex}"
@@ -499,11 +500,11 @@
                     <p class="title is-5">Select text color</p>
                     <template v-if="showCustomColor">
                       <input v-model="tempData.font_data.color.hex" type="text" class="input">
-                      <button class="button is-small is-info m-t-10" @click.prevent="showCustomColor = false">Show color picker</button>
+                      <button class="button is-small m-t-10" @click.prevent="showCustomColor = false">Show color picker</button>
                     </template>
                     <template v-else>
                       <slider-picker v-model="tempData.font_data.color"></slider-picker>
-                      <button class="button is-small is-info m-t-10" @click.prevent="showCustomColor = true">Set custom color</button>
+                      <button class="button is-small m-t-10" @click.prevent="showCustomColor = true">Set custom color</button>
                     </template>
                   </div>
                 </div>
@@ -537,9 +538,46 @@
                           </b-select>
                       </b-field>
                     </div>
-                    <span class="tag is-info">
+                    <span class="tag is-danger">
                       {{ tempData.company_logo.name }}
                       <button class="delete is-small" @click.prevent="clearCompanyLogo()"></button>
+                    </span>
+                  </template>
+                </div>
+
+                <div class="create-signature m-t-20 m-b-20">
+                  <p class="title is-5 m-b-10">Add signature</p>
+                  <template v-if="!tempData.signature.image" class="fake-upload-logo-field">
+                    <input class="is-hidden" id="upload_logo_input" type="file" @change="setCompanyLogo($event)">
+
+                    <a class="button is-info" @click.prevent="showSignaturePad()">
+                        <b-icon icon="pen"></b-icon>
+                        <span>Draw signature</span>
+                    </a>
+                  </template>
+
+                  <template v-else>
+                    <div class="company-logo-position m-b-10">
+                      <b-field class="m-t-10">
+                          <b-select
+                            v-model="tempData.signature.position"
+                            @input="setSignatureClass($event)"
+                            placeholder="Signature position" icon="grid">
+                              <option value="bottom-right">Bottom right</option>
+                              <option value="bottom-center">Bottom center</option>
+                              <option value="bottom-left">Bottom left</option>
+                              <option value="center-right">Center right</option>
+                              <option value="center-center">Center center</option>
+                              <option value="center-left">Center left</option>
+                              <option value="top-right">Top right</option>
+                              <option value="top-center">Top center</option>
+                              <option value="top-left">Top left</option>
+                          </b-select>
+                      </b-field>
+                    </div>
+                    <span class="tag is-danger">
+                      Custom signature
+                      <button class="delete is-small" @click.prevent="tempData.signature.image = null"></button>
                     </span>
                   </template>
                 </div>
@@ -894,6 +932,7 @@
                             <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
                               <div id="back_text_field" class="field">
                                   <img class="company-logo-img is-hidden" alt="Company logo">
+                                  <img v-show="tempData.signature.image" :src="tempData.signature.image" class="company-signature bottom-left" alt="Company signature">
                                   <textarea
                                       disabled
                                       v-model="tempData.back_text"
@@ -1078,6 +1117,8 @@
 </template>
 
 <script>
+    import SignaturePad from './SignaturePad.vue';
+
     export default {
         props: ['companyIdProp'],
         data() {
@@ -1114,6 +1155,10 @@
                 errorsAddressList: {},
                 showCustomColor: false,
                 tempData: {
+                  signature: {
+                    image: null,
+                    position: 'bottom-left'
+                  },
                   postcard_id: null,
                   company_id: null,
                   company_logo: {
@@ -1278,6 +1323,25 @@
             },
         },
         methods: {
+            showSignaturePad() {
+                let vue = this;
+                vue.$modal.open({
+                    parent: vue,
+                    component: SignaturePad,
+                    props: {},
+                    events: {
+                      'signature-created': function (response) {
+                        vue.tempData.signature.image = response;
+                      }
+                    },
+                    onCancel: () => {
+                        //
+                    }
+                });
+            },
+            setSignatureClass(value) {
+              $('.company-signature').attr('class', 'company-signature '+value);
+            },
             setCompanyLogo(event) {
               let vue = this;
               let files = event.target.files;
@@ -1757,16 +1821,7 @@
                 },10);
             }
         },
-        created() {
-          // var localStorageTempData = JSON.parse(localStorage.tempData || null) || {};
-          // if(!_.isEmpty(localStorageTempData)){
-          //   this.tempData = localStorageTempData;
-          // } else {
-          //   this.tempFill();
-          // }
-        },
         mounted() {
-
             let vue = this;
 
             vue.tempFill();
@@ -1779,14 +1834,6 @@
             $(document).on('click', '.tool-done, .tool-remove', function(){
                 vue.tempFill();
             });
-
-            // window.onbeforeunload = function(e) {
-            //   var dialogText = 'Dialog text here';
-            //   e.returnValue = dialogText;
-            //   return dialogText;
-            // };
-
-            // console.log('PostcardConfigurator Component mounted.')
         }
     }
 

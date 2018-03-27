@@ -437,9 +437,12 @@
   #back_text_field{
     position: relative;
 
-    .company-logo-img{
+    .company-logo-img{ width: 125px; }
+    .company-signature{ width: 150px; }
+
+    .company-logo-img,
+    .company-signature{
       position: absolute;
-      width: 125px;
 
       &.bottom-right{ bottom: 40px; right: 10px; }
       &.bottom-left{ bottom: 40px; left: 10px; }

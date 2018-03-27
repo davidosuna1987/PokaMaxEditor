@@ -24336,6 +24336,25 @@ background: #ccc;
   border: none;
 }
 
+#signature_pad .modal-card-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#signature_pad canvas {
+  border: solid 1px gainsboro;
+}
+
+#signature_pad .signature-pad-footer {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 /* POSTCARD FRONT */
 
 .canvas-container {
@@ -24806,59 +24825,76 @@ background: #ccc;
 }
 
 #back_text_field .company-logo-img {
-  position: absolute;
   width: 125px;
 }
 
-#back_text_field .company-logo-img.bottom-right {
+#back_text_field .company-signature {
+  width: 150px;
+}
+
+#back_text_field .company-logo-img,
+#back_text_field .company-signature {
+  position: absolute;
+}
+
+#back_text_field .company-logo-img.bottom-right,
+#back_text_field .company-signature.bottom-right {
   bottom: 40px;
   right: 10px;
 }
 
-#back_text_field .company-logo-img.bottom-left {
+#back_text_field .company-logo-img.bottom-left,
+#back_text_field .company-signature.bottom-left {
   bottom: 40px;
   left: 10px;
 }
 
-#back_text_field .company-logo-img.bottom-center {
+#back_text_field .company-logo-img.bottom-center,
+#back_text_field .company-signature.bottom-center {
   bottom: 40px;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
 }
 
-#back_text_field .company-logo-img.center-right {
+#back_text_field .company-logo-img.center-right,
+#back_text_field .company-signature.center-right {
   top: 50%;
   right: 10px;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
 
-#back_text_field .company-logo-img.center-left {
+#back_text_field .company-logo-img.center-left,
+#back_text_field .company-signature.center-left {
   top: 50%;
   left: 10px;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
 
-#back_text_field .company-logo-img.center-center {
+#back_text_field .company-logo-img.center-center,
+#back_text_field .company-signature.center-center {
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
 }
 
-#back_text_field .company-logo-img.top-right {
+#back_text_field .company-logo-img.top-right,
+#back_text_field .company-signature.top-right {
   top: 10px;
   right: 10px;
 }
 
-#back_text_field .company-logo-img.top-left {
+#back_text_field .company-logo-img.top-left,
+#back_text_field .company-signature.top-left {
   top: 10px;
   left: 10px;
 }
 
-#back_text_field .company-logo-img.top-center {
+#back_text_field .company-logo-img.top-center,
+#back_text_field .company-signature.top-center {
   top: 10px;
   left: 50%;
   -webkit-transform: translateX(-50%);

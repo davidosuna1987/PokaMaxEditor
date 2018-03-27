@@ -14,6 +14,9 @@ import VueColor from 'vue-color';
 import VueSession from 'vue-session';
 Vue.use(VueSession);
 
+import VueSignaturePad from 'vue-signature-pad';
+Vue.use(VueSignaturePad);
+
 import Buefy from 'buefy';
 Vue.use(Buefy, {
   defaultIconPack: 'mdi',
@@ -34,6 +37,7 @@ Vue.component('companies', require('./components/Companies.vue'));
 Vue.component('postcards', require('./components/Postcards.vue'));
 Vue.component('recievers-table', require('./components/RecieversTable.vue'));
 Vue.component('postcard-configurator', require('./components/PostcardConfigurator.vue'));
+Vue.component('signature-pad', require('./components/SignaturePad.vue'));
 
 Vue.filter('highlight', function(word, query){
   var check = new RegExp(query, "ig");
