@@ -50896,6 +50896,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         is_set: false,
         name: '',
         size: '',
+        width: 125,
         image: '',
         position: 'bottom-right'
       },
@@ -51061,7 +51062,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var file = files[0];
 
         vue.isSetCompanyLogo = true;
-        vue.tempData.company_logo = {};
         vue.tempData.company_logo.is_set = true;
         vue.tempData.company_logo.name = file.name;
         vue.tempData.company_logo.size = file.size;

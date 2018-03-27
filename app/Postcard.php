@@ -15,6 +15,7 @@ class Postcard extends Model
       'user_id',
       'status',
       'product_name',
+      'company_logo_file_path',
       'front_cropped_file_path',
       'front_original_file_path',
       'front_thumbnail_file_path',

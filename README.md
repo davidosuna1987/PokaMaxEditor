@@ -11,9 +11,9 @@
   - add 10.000 contacts
 
 - Editor
+  - Uploaded png photos has black background
   - Contacts filter by month or between dates
   - Upload signature
-  - Upload company logo store
   - Upload company customize size
   - Sets identifier xxxx(set)-xxx(postcard)
   - Custom font
@@ -26,6 +26,9 @@
 
 
 ### Completed todo's
+  - ~~_Upload company logo store_~~
+
+### 26/03/2018
 - Computed errors
   - ~~_Company_~~
   - ~~_Companies_~~

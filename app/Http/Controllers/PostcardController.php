@@ -29,11 +29,9 @@ class PostcardController extends Controller
 
     public function store(CreatePostcardRequest $request)
     {
-        // return response()->json(['font_data' => $request->get('font_data')]);
+        // return response()->json(['company_logo' => $request->get('company_logo')]);
 
         if($request->ajax()):
-
-            $temp_postcard = [];
 
             $sender_data = $request->get('sender_data');
 
@@ -69,6 +67,7 @@ class PostcardController extends Controller
             endforeach;
 
             $font_data = $request->get('font_data');
+            $font_color = is_array($font_data['color']) ? $font_data['color']['hex'] : $font_data['color'];
 
             $postcard = Postcard::create([
               'user_id' => $request->get('company_id'),
@@ -77,7 +76,7 @@ class PostcardController extends Controller
               'front_cropped_file_path' => 'waiting',
               'front_original_file_path' => 'waiting',
               'back_text' => $request->get('back_text'),
-              'back_color' => $font_data['color']['hex'],
+              'back_color' => $font_color,
               'font_family' => $font_data['font_family'],
               'font_size' => $font_data['font_size']
             ]);
@@ -96,9 +95,23 @@ class PostcardController extends Controller
                 ]);
             endforeach;
 
+            $temp_postcard = [];
+            $temp_postcard['company_logo_file_path'] = null;
+
             $temp_file_path = public_path().'/images/postcards/'.$postcard->id.'/';
             File::cleanDirectory($temp_file_path);
             File::makeDirectory($temp_file_path, $mode = 0777, true, true);
+
+            $company_logo = $request->get('company_logo');
+
+            if(isset($company_logo['image']) and !empty($company_logo['image'])):
+                $company_logo_file = $company_logo['image'];
+                $company_logo_file_name = 'logo-'.str_random(25).'.png';
+
+                Image::make($company_logo_file)->save($temp_file_path.$company_logo_file_name);
+
+                $temp_postcard['company_logo_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$company_logo_file_name);
+            endif;
 
             if($request->get('original_file')):
                 $original_file = $request->get('original_file');
@@ -128,6 +141,7 @@ class PostcardController extends Controller
             endif;
 
             $postcard->update([
+              'company_logo_file_path' => $temp_postcard['company_logo_file_path'],
               'front_cropped_file_path' => $temp_postcard['front_cropped_file_path'],
               'front_original_file_path' => $temp_postcard['front_original_file_path'],
               'front_thumbnail_file_path' => $temp_postcard['front_thumbnail_file_path'],
@@ -168,6 +182,7 @@ class PostcardController extends Controller
         if($request->ajax()):
 
             $temp_postcard = [];
+            $temp_postcard['company_logo_file_path'] = null;
 
             if($request->get('original_file')):
               // return response()->json(['original_file' => $request->get('original_file')]);
@@ -229,6 +244,7 @@ class PostcardController extends Controller
             ]);
 
             $font_data = $request->get('font_data');
+            $font_color = is_array($font_data['color']) ? $font_data['color']['hex'] : $font_data['color'];
 
             $postcard = Postcard::create([
               'user_id' => auth()->user()->id,
@@ -236,7 +252,7 @@ class PostcardController extends Controller
               'front_cropped_file_path' => $temp_postcard['front_cropped_file_path'],
               'front_original_file_path' => $temp_postcard['front_original_file_path'],
               'back_text' => $request->get('back_text'),
-              'back_color' => $request->get('back_color')['hex'],
+              'back_color' => $font_color,
               'font_family' => $font_data['font_family'],
               'font_size' => $font_data['font_size'],
               'sender_address_id' => $sender_address->id,

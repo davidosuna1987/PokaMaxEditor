@@ -1111,6 +1111,7 @@
                     is_set: false,
                     name: '',
                     size: '',
+                    width: 125,
                     image: '',
                     position: 'bottom-right'
                   },
@@ -1273,7 +1274,6 @@
                 let file = files[0];
 
                 vue.isSetCompanyLogo = true;
-                vue.tempData.company_logo = {};
                 vue.tempData.company_logo.is_set = true;
                 vue.tempData.company_logo.name = file.name;
                 vue.tempData.company_logo.size = file.size;
