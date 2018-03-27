@@ -23,6 +23,7 @@ class CreatePostcardsTable extends Migration
             $table->string('front_original_file_path')->nullable();
             $table->string('front_thumbnail_file_path')->nullable();
             $table->text('back_text');
+            $table->boolean('show_back_reciever')->default(true);
             $table->string('back_color');
             $table->integer('font_family');
             $table->integer('font_size');

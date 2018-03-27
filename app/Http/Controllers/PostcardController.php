@@ -76,6 +76,7 @@ class PostcardController extends Controller
               'front_cropped_file_path' => 'waiting',
               'front_original_file_path' => 'waiting',
               'back_text' => $request->get('back_text'),
+              'show_back_reciever' => $request->get('show_back_reciever'),
               'back_color' => $font_color,
               'font_family' => $font_data['font_family'],
               'font_size' => $font_data['font_size']
@@ -252,6 +253,7 @@ class PostcardController extends Controller
               'front_cropped_file_path' => $temp_postcard['front_cropped_file_path'],
               'front_original_file_path' => $temp_postcard['front_original_file_path'],
               'back_text' => $request->get('back_text'),
+              'show_back_reciever' => $request->get('show_back_reciever'),
               'back_color' => $font_color,
               'font_family' => $font_data['font_family'],
               'font_size' => $font_data['font_size'],

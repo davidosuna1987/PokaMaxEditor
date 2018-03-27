@@ -50862,6 +50862,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['companyIdProp'],
@@ -50902,17 +50903,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       is_set: null,
       has_frame: false,
-      hide_back_reciever: false,
       product_name: 'standard',
       cropped_file: null,
       original_file: null,
       front_cropped_file_path: null,
       front_original_file_path: null,
       back_text: '',
+      show_back_reciever: true,
       font_data: {
         font_family: 1,
         font_size: 21,
-        color: '#031993'
+        color: {
+          hex: '#031993'
+        }
       },
       sender_data: {
         is_new: false,
@@ -52829,7 +52832,7 @@ var render = function() {
                       {
                         staticClass: "postcard-back",
                         class: [
-                          { "full-text": _vm.tempData.hide_back_reciever }
+                          { "full-text": !_vm.tempData.show_back_reciever }
                         ],
                         attrs: { id: "postcard_back" }
                       },
@@ -52944,16 +52947,16 @@ var render = function() {
                     {
                       attrs: { type: "is-info" },
                       model: {
-                        value: _vm.tempData.hide_back_reciever,
+                        value: _vm.tempData.show_back_reciever,
                         callback: function($$v) {
-                          _vm.$set(_vm.tempData, "hide_back_reciever", $$v)
+                          _vm.$set(_vm.tempData, "show_back_reciever", $$v)
                         },
-                        expression: "tempData.hide_back_reciever"
+                        expression: "tempData.show_back_reciever"
                       }
                     },
                     [
                       _vm._v(
-                        "\n                  Hide reciever address\n              "
+                        "\n                  Show reciever address\n              "
                       )
                     ]
                   )
@@ -55412,7 +55415,9 @@ var render = function() {
                             {
                               staticClass: "postcard-back",
                               class: [
-                                { "full-text": _vm.tempData.hide_back_reciever }
+                                {
+                                  "full-text": !_vm.tempData.show_back_reciever
+                                }
                               ],
                               attrs: { id: "postcard_back" }
                             },
@@ -55445,6 +55450,9 @@ var render = function() {
                                         " font-size-" +
                                         _vm.tempData.font_data.font_size
                                     ],
+                                    style: {
+                                      color: _vm.tempData.font_data.color.hex
+                                    },
                                     attrs: {
                                       disabled: "",
                                       name: "back_text",
@@ -55858,7 +55866,7 @@ var render = function() {
                     [_vm._v("Rotate postcard")]
                   ),
                   _vm._v(" "),
-                  _vm.previewRecieverData && !_vm.tempData.hide_back_reciever
+                  _vm.previewRecieverData && _vm.tempData.show_back_reciever
                     ? _c(
                         "b-collapse",
                         {

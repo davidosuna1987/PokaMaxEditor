@@ -20,6 +20,7 @@ class Postcard extends Model
       'front_original_file_path',
       'front_thumbnail_file_path',
       'back_text',
+      'show_back_reciever',
       'back_color',
       'font_family',
       'font_size',

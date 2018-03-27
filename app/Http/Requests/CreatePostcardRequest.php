@@ -28,6 +28,7 @@ class CreatePostcardRequest extends FormRequest
             // 'front_cropped_file_path' => 'required|active_url',
             // 'front_original_file_path' => 'required|active_url',
             'back_text' => 'required|string',
+            'show_back_reciever' => 'required|boolean',
             'font_data.font_family' => 'required|integer',
             'font_data.font_size' => 'required|integer',
             'font_data.color' => 'required',

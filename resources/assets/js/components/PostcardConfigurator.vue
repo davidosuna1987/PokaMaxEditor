@@ -379,7 +379,7 @@
                 <form method="post" class="postcard_form">
 
                   <div class="col-1">
-                    <div id="postcard_back" class="postcard-back" :class="[{'full-text' : tempData.hide_back_reciever}]">
+                    <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
                       <div id="back_text_field" class="field">
                           <img class="company-logo-img is-hidden" alt="Company logo">
                           <textarea
@@ -432,9 +432,9 @@
               </div>
               <div class="column m-t-15">
                 <div class="field">
-                  <b-switch v-model="tempData.hide_back_reciever"
+                  <b-switch v-model="tempData.show_back_reciever"
                   type="is-info">
-                      Hide reciever address
+                      Show reciever address
                   </b-switch>
                 </div>
                 <div class="font-selector">
@@ -884,12 +884,13 @@
                         <div class="postcard_form">
 
                           <div class="col-1">
-                            <div id="postcard_back" class="postcard-back" :class="[{'full-text' : tempData.hide_back_reciever}]">
+                            <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
                               <div id="back_text_field" class="field">
                                   <img class="company-logo-img is-hidden" alt="Company logo">
                                   <textarea
                                       disabled
                                       v-model="tempData.back_text"
+                                      :style="{color: tempData.font_data.color.hex}"
                                       :class="[{ 'has-error': backTextHasError }, 'font-family-'+tempData.font_data.font_family+' font-size-'+tempData.font_data.font_size]"
                                       name="back_text"
                                       id="back_text">
@@ -1003,7 +1004,7 @@
 
                   <div class="column m-t-30">
                     <button class="button is-info p-l-35 p-r-35" @click="flipPostcard">Rotate postcard</button>
-                    <b-collapse v-if="previewRecieverData && !tempData.hide_back_reciever" class="card m-t-10" :open="false">
+                    <b-collapse v-if="previewRecieverData && tempData.show_back_reciever" class="card m-t-10" :open="false">
                       <div slot="trigger" slot-scope="props" class="card-header">
                           <p class="card-header-title">Preview with other reciever</p>
                           <a class="card-header-icon">
@@ -1117,17 +1118,19 @@
                   },
                   is_set: null,
                   has_frame: false,
-                  hide_back_reciever: false,
                   product_name: 'standard',
                   cropped_file: null,
                   original_file: null,
                   front_cropped_file_path: null,
                   front_original_file_path: null,
                   back_text: '',
+                  show_back_reciever: true,
                   font_data: {
                     font_family: 1,
                     font_size: 21,
-                    color: '#031993'
+                    color: {
+                      hex: '#031993'
+                    }
                   },
                   sender_data: {
                     is_new: false,
