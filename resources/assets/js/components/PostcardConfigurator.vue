@@ -381,8 +381,8 @@
                   <div class="col-1">
                     <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
                       <div id="back_text_field" class="field">
-                          <img class="company-logo-img is-hidden" alt="Company logo">
-                          <img v-show="tempData.signature.image" :src="tempData.signature.image" class="company-signature bottom-left" alt="Company signature">
+                          <img v-show="isSetCompanyLogo" :src="tempData.company_logo.image" class="company-logo-img" :class="companyLogoPosition">
+                          <img v-show="isSetSignature" :src="tempData.signature.image" class="company-signature" :class="signaturePosition">
                           <textarea
                               v-model="tempData.back_text"
                               :style="{color: tempData.font_data.color.hex}"
@@ -514,8 +514,8 @@
                     <input class="is-hidden" id="upload_logo_input" type="file" @change="setCompanyLogo($event)">
 
                     <a class="button is-info" @click.prevent="selectCompanyLogo()">
-                        <b-icon pack="fa" icon="upload"></b-icon>
-                        <span>Upload company logo</span>
+                        <b-icon icon="upload"></b-icon>
+                        <span>Upload logo</span>
                     </a>
                   </template>
 
@@ -524,7 +524,6 @@
                       <b-field class="m-t-10">
                           <b-select
                             v-model="tempData.company_logo.position"
-                            @input="setCompanyLogoClass($event)"
                             placeholder="Logo position" icon="grid">
                               <option value="bottom-right">Bottom right</option>
                               <option value="bottom-center">Bottom center</option>
@@ -546,13 +545,18 @@
                 </div>
 
                 <div class="create-signature m-t-20 m-b-20">
-                  <p class="title is-5 m-b-10">Add signature</p>
-                  <template v-if="!tempData.signature.image" class="fake-upload-logo-field">
-                    <input class="is-hidden" id="upload_logo_input" type="file" @change="setCompanyLogo($event)">
+                  <p class="title is-5 m-b-10">Signature</p>
+                  <template v-if="!isSetSignature" class="fake-upload-logo-field">
+                    <input class="is-hidden" id="upload_signature_input" type="file" @change="setSignature($event)">
 
-                    <a class="button is-info" @click.prevent="showSignaturePad()">
+                    <a class="button is-info m-b-10" @click.prevent="showSignaturePad()">
                         <b-icon icon="pen"></b-icon>
                         <span>Draw signature</span>
+                    </a>
+
+                    <a class="button is-info" @click.prevent="selectSignatureLogo()">
+                        <b-icon icon="upload"></b-icon>
+                        <span>Upload signature</span>
                     </a>
                   </template>
 
@@ -561,7 +565,6 @@
                       <b-field class="m-t-10">
                           <b-select
                             v-model="tempData.signature.position"
-                            @input="setSignatureClass($event)"
                             placeholder="Signature position" icon="grid">
                               <option value="bottom-right">Bottom right</option>
                               <option value="bottom-center">Bottom center</option>
@@ -575,9 +578,13 @@
                           </b-select>
                       </b-field>
                     </div>
-                    <span class="tag is-danger">
-                      Custom signature
-                      <button class="delete is-small" @click.prevent="tempData.signature.image = null"></button>
+                    <span v-if="tempData.signature.name" class="tag is-danger">
+                      {{ tempData.signature.name }}
+                      <button class="delete is-small" @click.prevent="clearSignature()"></button>
+                    </span>
+                    <span v-else class="tag is-danger">
+                      Drawed signature
+                      <button class="delete is-small" @click.prevent="clearSignature()"></button>
                     </span>
                   </template>
                 </div>
@@ -1123,6 +1130,7 @@
         props: ['companyIdProp'],
         data() {
             return {
+                isSetSignature: false,
                 isSetCompanyLogo: false,
                 birthdayFilters: {
                   month: '',
@@ -1156,17 +1164,17 @@
                 showCustomColor: false,
                 tempData: {
                   signature: {
+                    name: '',
+                    width: 150,
                     image: null,
                     position: 'bottom-left'
                   },
                   postcard_id: null,
                   company_id: null,
                   company_logo: {
-                    is_set: false,
                     name: '',
-                    size: '',
                     width: 125,
-                    image: '',
+                    image: null,
                     position: 'bottom-right'
                   },
                   is_set: null,
@@ -1230,6 +1238,12 @@
           }
         },
         computed: {
+            signaturePosition() {
+              return this.tempData.signature.position;
+            },
+            companyLogoPosition() {
+              return this.tempData.company_logo.position;
+            },
             computedPreviewRecieverData() {
               return this.tempData.reciever_data[0];
             },
@@ -1323,6 +1337,7 @@
             },
         },
         methods: {
+          // Signature functions
             showSignaturePad() {
                 let vue = this;
                 vue.$modal.open({
@@ -1331,6 +1346,8 @@
                     props: {},
                     events: {
                       'signature-created': function (response) {
+                        vue.isSetSignature = true;
+                        vue.tempData.signature.position = 'bottom-left';
                         vue.tempData.signature.image = response;
                       }
                     },
@@ -1339,8 +1356,39 @@
                     }
                 });
             },
-            setSignatureClass(value) {
-              $('.company-signature').attr('class', 'company-signature '+value);
+            selectSignatureLogo() {
+              $('#upload_signature_input').click();
+            },
+            setSignature(event) {
+              let vue = this;
+              let files = event.target.files;
+              if (files && files[0]){
+                let file = files[0];
+
+                vue.isSetSignature = true;
+                vue.tempData.signature.name = file.name;
+                vue.tempData.signature.position = 'bottom-left';
+
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                  vue.tempData.signature.image = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+              }else{
+                vue.clearSignature();
+              }
+            },
+            clearSignature() {
+              this.isSetSignature = false;
+              this.tempData.signature.name = '';
+              this.tempData.signature.position = 'bottom-left';
+              this.tempData.signature.image = null;
+            },
+
+          // Company logo functions
+            selectCompanyLogo() {
+              $('#upload_logo_input').click();
             },
             setCompanyLogo(event) {
               let vue = this;
@@ -1349,50 +1397,27 @@
                 let file = files[0];
 
                 vue.isSetCompanyLogo = true;
-                vue.tempData.company_logo.is_set = true;
                 vue.tempData.company_logo.name = file.name;
-                vue.tempData.company_logo.size = file.size;
                 vue.tempData.company_logo.position = 'bottom-right';
 
                 let reader = new FileReader();
                 reader.onload = function(e) {
-                  $('.company-logo-img').attr({
-                    src: e.target.result,
-                    class: 'company-logo-img bottom-right'
-                  });
                   vue.tempData.company_logo.image = e.target.result;
                 }
 
                 reader.readAsDataURL(file);
               }else{
-                vue.isSetCompanyLogo = false;
-                vue.tempData.company_logo.is_set = false;
-                vue.tempData.company_logo.name = '';
-                vue.tempData.company_logo.size = '';
-                vue.tempData.company_logo.position = 'bottom-right';
-                vue.tempData.company_logo.image = '';
+                vue.clearCompanyLogo();
               }
             },
-            setCompanyLogoClass(value) {
-              $('.company-logo-img').attr('class', 'company-logo-img '+value);
-            },
             clearCompanyLogo() {
-              console.info('0');
               this.isSetCompanyLogo = false;
-              console.info('1');
-              this.tempData.company_logo.is_set = false;
-              console.info('2');
               this.tempData.company_logo.name = '';
-              this.tempData.company_logo.size = '';
               this.tempData.company_logo.position = 'bottom-right';
-              this.tempData.company_logo.image = '';
-              $('#upload_logo_input').val('');
-              $('.company-logo-img').attr('src', '').addClass('is-hidden');
-              console.info('3');
+              this.tempData.company_logo.image = null;
             },
-            selectCompanyLogo() {
-              $('#upload_logo_input').click();
-            },
+
+          // Address list functions
             storeAddresList() {
                 axios.post( '/api/addresslists/create', this.newAddressList)
                 .then(response => {
@@ -1487,6 +1512,8 @@
                   }
                 });
             },
+
+          // Companies functions
             getCompanies(id = null) {
                 axios.get('/api/companies-from-editor/')
                 .then(response => {
@@ -1636,6 +1663,21 @@
                 this.tempData.sender_data.surnames = '';
                 this.tempData.sender_data.birthday = '';
             },
+
+          // Back text font functions
+            changeFontFamily(event){
+                if(event.target.tagName === 'LI'){
+                    this.tempData.font_data.font_family = parseInt(event.target.dataset.fontid);
+                    $('.font-selector .font-family').removeClass('opened');
+                }
+            },
+            changeFontSize(event){
+                if(event.target.tagName === 'LI'){
+                    this.tempData.font_data.font_size = parseInt(event.target.dataset.fontsize);
+                }
+            },
+
+          // Helper functions
             flipPostcard() {
               this.postcard_flipped = !this.postcard_flipped;
             },
@@ -1798,17 +1840,6 @@
                       });
                   });
               }
-            },
-            changeFontFamily(event){
-                if(event.target.tagName === 'LI'){
-                    this.tempData.font_data.font_family = parseInt(event.target.dataset.fontid);
-                    $('.font-selector .font-family').removeClass('opened');
-                }
-            },
-            changeFontSize(event){
-                if(event.target.tagName === 'LI'){
-                    this.tempData.font_data.font_size = parseInt(event.target.dataset.fontsize);
-                }
             },
             enableDisableNextButton() {
                 setTimeout(function(){

@@ -16,7 +16,6 @@
   - Store signature
   - Change signature color
   - Company logo customize size
-  - Company logo bind src
   - Sets identifier xxxx(set)-xxx(postcard)
   - Custom font
   - Upload back image
@@ -28,9 +27,11 @@
 
 
 ### Completed todo's
-  - ~~_Upload company logo store_~~
-  - ~~_Custom back text color_~~
-  - ~~_Add signature_~~
+  - ~~_Custom back text color input_~~
+  - ~~_Store uploaded company logo_~~
+  - ~~_Company logo bind src_~~
+  - ~~_Upload signature image_~~
+  - ~~_Add custom signature_~~
 
 ### 26/03/2018
 - Computed errors

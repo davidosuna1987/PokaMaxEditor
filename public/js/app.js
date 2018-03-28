@@ -50916,6 +50916,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -50925,6 +50932,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      isSetSignature: false,
       isSetCompanyLogo: false,
       birthdayFilters: {
         month: ''
@@ -50947,17 +50955,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       isModalAddressListsActive: false
     }, _defineProperty(_ref, 'isCreatingAddressList', false), _defineProperty(_ref, 'isCreatingCompany', false), _defineProperty(_ref, 'newListName', ''), _defineProperty(_ref, 'selected_address_list', null), _defineProperty(_ref, 'postcard_flipped', false), _defineProperty(_ref, 'steps_actions_next_button_disabled', true), _defineProperty(_ref, 'empty_file_cropped', _.isEmpty($('#file1cropped').val())), _defineProperty(_ref, 'empty_file_original', _.isEmpty($('#file1cropped').val())), _defineProperty(_ref, 'errors', {}), _defineProperty(_ref, 'errorsAddressList', {}), _defineProperty(_ref, 'showCustomColor', false), _defineProperty(_ref, 'tempData', {
       signature: {
+        name: '',
+        width: 150,
         image: null,
         position: 'bottom-left'
       },
       postcard_id: null,
       company_id: null,
       company_logo: {
-        is_set: false,
         name: '',
-        size: '',
         width: 125,
-        image: '',
+        image: null,
         position: 'bottom-right'
       },
       is_set: null,
@@ -51024,6 +51032,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   computed: {
+    signaturePosition: function signaturePosition() {
+      return this.tempData.signature.position;
+    },
+    companyLogoPosition: function companyLogoPosition() {
+      return this.tempData.company_logo.position;
+    },
     computedPreviewRecieverData: function computedPreviewRecieverData() {
       return this.tempData.reciever_data[0];
     },
@@ -51117,6 +51131,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: {
+    // Signature functions
     showSignaturePad: function showSignaturePad() {
       var vue = this;
       vue.$modal.open({
@@ -51125,6 +51140,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         props: {},
         events: {
           'signature-created': function signatureCreated(response) {
+            vue.isSetSignature = true;
+            vue.tempData.signature.position = 'bottom-left';
             vue.tempData.signature.image = response;
           }
         },
@@ -51133,8 +51150,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     },
-    setSignatureClass: function setSignatureClass(value) {
-      $('.company-signature').attr('class', 'company-signature ' + value);
+    selectSignatureLogo: function selectSignatureLogo() {
+      $('#upload_signature_input').click();
+    },
+    setSignature: function setSignature(event) {
+      var vue = this;
+      var files = event.target.files;
+      if (files && files[0]) {
+        var file = files[0];
+
+        vue.isSetSignature = true;
+        vue.tempData.signature.name = file.name;
+        vue.tempData.signature.position = 'bottom-left';
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          vue.tempData.signature.image = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        vue.clearSignature();
+      }
+    },
+    clearSignature: function clearSignature() {
+      this.isSetSignature = false;
+      this.tempData.signature.name = '';
+      this.tempData.signature.position = 'bottom-left';
+      this.tempData.signature.image = null;
+    },
+
+
+    // Company logo functions
+    selectCompanyLogo: function selectCompanyLogo() {
+      $('#upload_logo_input').click();
     },
     setCompanyLogo: function setCompanyLogo(event) {
       var vue = this;
@@ -51143,50 +51192,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var file = files[0];
 
         vue.isSetCompanyLogo = true;
-        vue.tempData.company_logo.is_set = true;
         vue.tempData.company_logo.name = file.name;
-        vue.tempData.company_logo.size = file.size;
         vue.tempData.company_logo.position = 'bottom-right';
 
         var reader = new FileReader();
         reader.onload = function (e) {
-          $('.company-logo-img').attr({
-            src: e.target.result,
-            class: 'company-logo-img bottom-right'
-          });
           vue.tempData.company_logo.image = e.target.result;
         };
 
         reader.readAsDataURL(file);
       } else {
-        vue.isSetCompanyLogo = false;
-        vue.tempData.company_logo.is_set = false;
-        vue.tempData.company_logo.name = '';
-        vue.tempData.company_logo.size = '';
-        vue.tempData.company_logo.position = 'bottom-right';
-        vue.tempData.company_logo.image = '';
+        vue.clearCompanyLogo();
       }
     },
-    setCompanyLogoClass: function setCompanyLogoClass(value) {
-      $('.company-logo-img').attr('class', 'company-logo-img ' + value);
-    },
     clearCompanyLogo: function clearCompanyLogo() {
-      console.info('0');
       this.isSetCompanyLogo = false;
-      console.info('1');
-      this.tempData.company_logo.is_set = false;
-      console.info('2');
       this.tempData.company_logo.name = '';
-      this.tempData.company_logo.size = '';
       this.tempData.company_logo.position = 'bottom-right';
-      this.tempData.company_logo.image = '';
-      $('#upload_logo_input').val('');
-      $('.company-logo-img').attr('src', '').addClass('is-hidden');
-      console.info('3');
+      this.tempData.company_logo.image = null;
     },
-    selectCompanyLogo: function selectCompanyLogo() {
-      $('#upload_logo_input').click();
-    },
+
+
+    // Address list functions
     storeAddresList: function storeAddresList() {
       var _this = this;
 
@@ -51283,6 +51310,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     },
+
+
+    // Companies functions
     getCompanies: function getCompanies() {
       var _this4 = this;
 
@@ -51437,6 +51467,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.tempData.sender_data.surnames = '';
       this.tempData.sender_data.birthday = '';
     },
+
+
+    // Back text font functions
+    changeFontFamily: function changeFontFamily(event) {
+      if (event.target.tagName === 'LI') {
+        this.tempData.font_data.font_family = parseInt(event.target.dataset.fontid);
+        $('.font-selector .font-family').removeClass('opened');
+      }
+    },
+    changeFontSize: function changeFontSize(event) {
+      if (event.target.tagName === 'LI') {
+        this.tempData.font_data.font_size = parseInt(event.target.dataset.fontsize);
+      }
+    },
+
+
+    // Helper functions
     flipPostcard: function flipPostcard() {
       this.postcard_flipped = !this.postcard_flipped;
     },
@@ -51598,17 +51645,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           });
         });
-      }
-    },
-    changeFontFamily: function changeFontFamily(event) {
-      if (event.target.tagName === 'LI') {
-        this.tempData.font_data.font_family = parseInt(event.target.dataset.fontid);
-        $('.font-selector .font-family').removeClass('opened');
-      }
-    },
-    changeFontSize: function changeFontSize(event) {
-      if (event.target.tagName === 'LI') {
-        this.tempData.font_data.font_size = parseInt(event.target.dataset.fontsize);
       }
     },
     enableDisableNextButton: function enableDisableNextButton() {
@@ -52906,8 +52942,17 @@ var render = function() {
                           },
                           [
                             _c("img", {
-                              staticClass: "company-logo-img is-hidden",
-                              attrs: { alt: "Company logo" }
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.isSetCompanyLogo,
+                                  expression: "isSetCompanyLogo"
+                                }
+                              ],
+                              staticClass: "company-logo-img",
+                              class: _vm.companyLogoPosition,
+                              attrs: { src: _vm.tempData.company_logo.image }
                             }),
                             _vm._v(" "),
                             _c("img", {
@@ -52915,15 +52960,13 @@ var render = function() {
                                 {
                                   name: "show",
                                   rawName: "v-show",
-                                  value: _vm.tempData.signature.image,
-                                  expression: "tempData.signature.image"
+                                  value: _vm.isSetSignature,
+                                  expression: "isSetSignature"
                                 }
                               ],
-                              staticClass: "company-signature bottom-left",
-                              attrs: {
-                                src: _vm.tempData.signature.image,
-                                alt: "Company signature"
-                              }
+                              staticClass: "company-signature",
+                              class: _vm.signaturePosition,
+                              attrs: { src: _vm.tempData.signature.image }
                             }),
                             _vm._v(" "),
                             _c("textarea", {
@@ -53316,11 +53359,9 @@ var render = function() {
                             }
                           },
                           [
-                            _c("b-icon", {
-                              attrs: { pack: "fa", icon: "upload" }
-                            }),
+                            _c("b-icon", { attrs: { icon: "upload" } }),
                             _vm._v(" "),
-                            _c("span", [_vm._v("Upload company logo")])
+                            _c("span", [_vm._v("Upload logo")])
                           ],
                           1
                         )
@@ -53340,11 +53381,6 @@ var render = function() {
                                     attrs: {
                                       placeholder: "Logo position",
                                       icon: "grid"
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        _vm.setCompanyLogoClass($event)
-                                      }
                                     },
                                     model: {
                                       value: _vm.tempData.company_logo.position,
@@ -53448,17 +53484,17 @@ var render = function() {
                 { staticClass: "create-signature m-t-20 m-b-20" },
                 [
                   _c("p", { staticClass: "title is-5 m-b-10" }, [
-                    _vm._v("Add signature")
+                    _vm._v("Signature")
                   ]),
                   _vm._v(" "),
-                  !_vm.tempData.signature.image
+                  !_vm.isSetSignature
                     ? [
                         _c("input", {
                           staticClass: "is-hidden",
-                          attrs: { id: "upload_logo_input", type: "file" },
+                          attrs: { id: "upload_signature_input", type: "file" },
                           on: {
                             change: function($event) {
-                              _vm.setCompanyLogo($event)
+                              _vm.setSignature($event)
                             }
                           }
                         }),
@@ -53466,7 +53502,7 @@ var render = function() {
                         _c(
                           "a",
                           {
-                            staticClass: "button is-info",
+                            staticClass: "button is-info m-b-10",
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
@@ -53478,6 +53514,25 @@ var render = function() {
                             _c("b-icon", { attrs: { icon: "pen" } }),
                             _vm._v(" "),
                             _c("span", [_vm._v("Draw signature")])
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "button is-info",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.selectSignatureLogo()
+                              }
+                            }
+                          },
+                          [
+                            _c("b-icon", { attrs: { icon: "upload" } }),
+                            _vm._v(" "),
+                            _c("span", [_vm._v("Upload signature")])
                           ],
                           1
                         )
@@ -53497,11 +53552,6 @@ var render = function() {
                                     attrs: {
                                       placeholder: "Signature position",
                                       icon: "grid"
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        _vm.setSignatureClass($event)
-                                      }
                                     },
                                     model: {
                                       value: _vm.tempData.signature.position,
@@ -53578,20 +53628,37 @@ var render = function() {
                           1
                         ),
                         _vm._v(" "),
-                        _c("span", { staticClass: "tag is-danger" }, [
-                          _vm._v(
-                            "\n                  Custom signature\n                  "
-                          ),
-                          _c("button", {
-                            staticClass: "delete is-small",
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.tempData.signature.image = null
-                              }
-                            }
-                          })
-                        ])
+                        _vm.tempData.signature.name
+                          ? _c("span", { staticClass: "tag is-danger" }, [
+                              _vm._v(
+                                "\n                  " +
+                                  _vm._s(_vm.tempData.signature.name) +
+                                  "\n                  "
+                              ),
+                              _c("button", {
+                                staticClass: "delete is-small",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.clearSignature()
+                                  }
+                                }
+                              })
+                            ])
+                          : _c("span", { staticClass: "tag is-danger" }, [
+                              _vm._v(
+                                "\n                  Drawed signature\n                  "
+                              ),
+                              _c("button", {
+                                staticClass: "delete is-small",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.clearSignature()
+                                  }
+                                }
+                              })
+                            ])
                       ]
                 ],
                 2
