@@ -18,6 +18,7 @@ class CreatePostcardsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->enum('status', ['SENDED', 'DRAFT'])->default('DRAFT');
             $table->string('product_name');
+            $table->string('signature_file_path')->nullable();
             $table->string('company_logo_file_path')->nullable();
             $table->string('front_cropped_file_path')->nullable();
             $table->string('front_original_file_path')->nullable();
