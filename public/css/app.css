@@ -23918,10 +23918,6 @@ input[type=range].slider.is-danger .has-output-tooltip + output {
   border-color: #ff3860 !important;
 }
 
-.steps .step-item .step-marker.is-disabled {
-  pointer-events: none;
-}
-
 .steps .steps-actions {
   position: fixed;
   bottom: 0;
@@ -25237,6 +25233,12 @@ background: #ccc;
   width: 100%;
   -webkit-box-shadow: 0 6px 13px 2px rgba(0, 0, 0, 0.2);
           box-shadow: 0 6px 13px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* OTHERS */
+
+.range-field {
+  width: 250px;
 }
 
 .welcome-container {

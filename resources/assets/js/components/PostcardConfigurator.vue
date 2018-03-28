@@ -381,8 +381,8 @@
                   <div class="col-1">
                     <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
                       <div id="back_text_field" class="field">
-                          <img v-show="isSetCompanyLogo" :src="tempData.company_logo.image" class="company-logo-img" :class="companyLogoPosition">
-                          <img v-show="isSetSignature" :src="tempData.signature.image" class="company-signature" :class="signaturePosition">
+                          <img v-show="isSetCompanyLogo" :src="tempData.company_logo.image" class="company-logo-img" :class="companyLogoPosition" :style="{width: tempData.company_logo.width+'px'}">
+                          <img v-show="isSetSignature" :src="tempData.signature.image" class="company-signature" :class="signaturePosition" :style="{width: tempData.signature.width+'px'}">
                           <textarea
                               v-model="tempData.back_text"
                               :style="{color: tempData.font_data.color.hex}"
@@ -537,6 +537,10 @@
                           </b-select>
                       </b-field>
                     </div>
+                    <div class="field m-b-10">
+                      <label class="label is-small">Company logo width: <span class="has-text-info">{{ tempData.company_logo.width }}px</span></label>
+                      <input type="range" min="50" max="300" v-model.number="tempData.company_logo.width" class="range-field" />
+                    </div>
                     <span class="tag is-danger">
                       {{ tempData.company_logo.name }}
                       <button class="delete is-small" @click.prevent="clearCompanyLogo()"></button>
@@ -577,6 +581,10 @@
                               <option value="top-left">Top left</option>
                           </b-select>
                       </b-field>
+                    </div>
+                    <div class="field m-b-10">
+                      <label class="label is-small">Signature width: <span class="has-text-info">{{ tempData.signature.width }}px</span></label>
+                      <input type="range" min="50" max="300" v-model.number="tempData.signature.width" class="range-field" />
                     </div>
                     <span v-if="tempData.signature.name" class="tag is-danger">
                       {{ tempData.signature.name }}
@@ -938,8 +946,8 @@
                           <div class="col-1">
                             <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
                               <div id="back_text_field" class="field">
-                                  <img v-show="isSetCompanyLogo" :src="tempData.company_logo.image" class="company-logo-img" :class="companyLogoPosition">
-                                  <img v-show="isSetSignature" :src="tempData.signature.image" class="company-signature" :class="signaturePosition">
+                                  <img v-show="isSetCompanyLogo" :src="tempData.company_logo.image" class="company-logo-img" :class="companyLogoPosition" :style="{width: tempData.company_logo.width+'px'}">
+                                  <img v-show="isSetSignature" :src="tempData.signature.image" class="company-signature" :class="signaturePosition" :style="{width: tempData.signature.width+'px'}">
                                   <textarea
                                       disabled
                                       v-model="tempData.back_text"
@@ -1729,6 +1737,9 @@
                 }
 
                 //Removing reciever data errors
+                if('reciever_data' in this.errors && !_.isEmpty(this.tempData.reciever_data)){
+                  this.errors['reciever_data'] = null;
+                }
                 if('reciever_data.name' in this.errors && !_.isEmpty(this.tempData.reciever_data.name)){
                   this.errors['reciever_data.name'] = null;
                 }

@@ -50923,6 +50923,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -51535,6 +51543,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
 
         //Removing reciever data errors
+        if ('reciever_data' in this.errors && !_.isEmpty(this.tempData.reciever_data)) {
+          this.errors['reciever_data'] = null;
+        }
         if ('reciever_data.name' in this.errors && !_.isEmpty(this.tempData.reciever_data.name)) {
           this.errors['reciever_data.name'] = null;
         }
@@ -52952,6 +52963,9 @@ var render = function() {
                               ],
                               staticClass: "company-logo-img",
                               class: _vm.companyLogoPosition,
+                              style: {
+                                width: _vm.tempData.company_logo.width + "px"
+                              },
                               attrs: { src: _vm.tempData.company_logo.image }
                             }),
                             _vm._v(" "),
@@ -52966,6 +52980,9 @@ var render = function() {
                               ],
                               staticClass: "company-signature",
                               class: _vm.signaturePosition,
+                              style: {
+                                width: _vm.tempData.signature.width + "px"
+                              },
                               attrs: { src: _vm.tempData.signature.image }
                             }),
                             _vm._v(" "),
@@ -53458,6 +53475,46 @@ var render = function() {
                           1
                         ),
                         _vm._v(" "),
+                        _c("div", { staticClass: "field m-b-10" }, [
+                          _c("label", { staticClass: "label is-small" }, [
+                            _vm._v("Company logo width: "),
+                            _c("span", { staticClass: "has-text-info" }, [
+                              _vm._v(
+                                _vm._s(_vm.tempData.company_logo.width) + "px"
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model.number",
+                                value: _vm.tempData.company_logo.width,
+                                expression: "tempData.company_logo.width",
+                                modifiers: { number: true }
+                              }
+                            ],
+                            staticClass: "range-field",
+                            attrs: { type: "range", min: "50", max: "300" },
+                            domProps: {
+                              value: _vm.tempData.company_logo.width
+                            },
+                            on: {
+                              __r: function($event) {
+                                _vm.$set(
+                                  _vm.tempData.company_logo,
+                                  "width",
+                                  _vm._n($event.target.value)
+                                )
+                              },
+                              blur: function($event) {
+                                _vm.$forceUpdate()
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
                         _c("span", { staticClass: "tag is-danger" }, [
                           _vm._v(
                             "\n                  " +
@@ -53627,6 +53684,44 @@ var render = function() {
                           ],
                           1
                         ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "field m-b-10" }, [
+                          _c("label", { staticClass: "label is-small" }, [
+                            _vm._v("Signature width: "),
+                            _c("span", { staticClass: "has-text-info" }, [
+                              _vm._v(
+                                _vm._s(_vm.tempData.signature.width) + "px"
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model.number",
+                                value: _vm.tempData.signature.width,
+                                expression: "tempData.signature.width",
+                                modifiers: { number: true }
+                              }
+                            ],
+                            staticClass: "range-field",
+                            attrs: { type: "range", min: "50", max: "300" },
+                            domProps: { value: _vm.tempData.signature.width },
+                            on: {
+                              __r: function($event) {
+                                _vm.$set(
+                                  _vm.tempData.signature,
+                                  "width",
+                                  _vm._n($event.target.value)
+                                )
+                              },
+                              blur: function($event) {
+                                _vm.$forceUpdate()
+                              }
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _vm.tempData.signature.name
                           ? _c("span", { staticClass: "tag is-danger" }, [
@@ -55798,6 +55893,10 @@ var render = function() {
                                     ],
                                     staticClass: "company-logo-img",
                                     class: _vm.companyLogoPosition,
+                                    style: {
+                                      width:
+                                        _vm.tempData.company_logo.width + "px"
+                                    },
                                     attrs: {
                                       src: _vm.tempData.company_logo.image
                                     }
@@ -55814,6 +55913,9 @@ var render = function() {
                                     ],
                                     staticClass: "company-signature",
                                     class: _vm.signaturePosition,
+                                    style: {
+                                      width: _vm.tempData.signature.width + "px"
+                                    },
                                     attrs: { src: _vm.tempData.signature.image }
                                   }),
                                   _vm._v(" "),

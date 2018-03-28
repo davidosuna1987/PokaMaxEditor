@@ -68,13 +68,17 @@ class PostcardController extends Controller
 
             $font_data = $request->get('font_data');
             $font_color = is_array($font_data['color']) ? $font_data['color']['hex'] : $font_data['color'];
+            $has_signature = $request->get('signature')['image'] and !empty($request->get('signature')['image']);
+            $has_company_logo = $request->get('company_logo')['image'] and !empty($request->get('company_logo')['image']);
 
             $postcard = Postcard::create([
               'user_id' => $request->get('company_id'),
               'status' => 'DRAFT',
               'product_name' => $request->get('product_name'),
-              'signature_position' => $request->get('signature')['image'] ? $request->get('signature')['position'] : null,
-              'company_logo_position' => $request->get('company_logo')['image'] ? $request->get('company_logo')['position'] : null,
+              'signature_width' => $has_signature ? $request->get('signature')['width'] : null,
+              'signature_position' => $has_signature ? $request->get('signature')['position'] : null,
+              'company_logo_width' => $has_company_logo ? $request->get('company_logo')['width'] : null,
+              'company_logo_position' => $has_company_logo ? $request->get('company_logo')['position'] : null,
               'back_text' => $request->get('back_text'),
               'show_back_reciever' => $request->get('show_back_reciever'),
               'back_color' => $font_color,
@@ -104,26 +108,26 @@ class PostcardController extends Controller
             File::cleanDirectory($temp_file_path);
             File::makeDirectory($temp_file_path, $mode = 0777, true, true);
 
-            $company_logo = $request->get('company_logo');
-
-            if(isset($company_logo['image']) and !empty($company_logo['image'])):
-                $company_logo_file = $company_logo['image'];
-                $company_logo_file_name = 'l-'.str_random(25).'.png';
-
-                Image::make($company_logo_file)->save($temp_file_path.$company_logo_file_name);
-
-                $temp_postcard['company_logo_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$company_logo_file_name);
-            endif;
-
             $signature = $request->get('signature');
 
-            if(isset($signature['image']) and !empty($signature['image'])):
+            if($has_signature):
                 $signature_file = $signature['image'];
                 $signature_file_name = 's-'.str_random(25).'.png';
 
                 Image::make($signature_file)->save($temp_file_path.$signature_file_name);
 
                 $temp_postcard['signature_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$signature_file_name);
+            endif;
+
+            $company_logo = $request->get('company_logo');
+
+            if($has_company_logo):
+                $company_logo_file = $company_logo['image'];
+                $company_logo_file_name = 'l-'.str_random(25).'.png';
+
+                Image::make($company_logo_file)->save($temp_file_path.$company_logo_file_name);
+
+                $temp_postcard['company_logo_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$company_logo_file_name);
             endif;
 
             if($request->get('original_file')):

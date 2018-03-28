@@ -14,7 +14,6 @@
   - Uploaded png photos has black background
   - Contacts filter by month or between dates
   - Change signature color
-  - Company logo customize size
   - Sets identifier xxxx(set)-xxx(postcard)
   - Custom font
   - Upload back image
@@ -29,10 +28,13 @@
   - ~~_Custom back text color input_~~
   - ~~_Store uploaded company logo_~~
   - ~~_Company logo bind src_~~
+  - ~~_Company logo custom size_~~
   - ~~_Upload signature image_~~
   - ~~_Add custom signature_~~
   - ~~_Store signature_~~
+  - ~~_Signature custom size_~~
   - ~~_Store signature and company_logo position_~~
+  - ~~_Store signature and company_logo size_~~
 
 ### 26/03/2018
 - Computed errors
