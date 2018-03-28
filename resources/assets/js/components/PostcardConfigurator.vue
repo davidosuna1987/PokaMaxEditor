@@ -938,8 +938,8 @@
                           <div class="col-1">
                             <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
                               <div id="back_text_field" class="field">
-                                  <img class="company-logo-img is-hidden" alt="Company logo">
-                                  <img v-show="tempData.signature.image" :src="tempData.signature.image" class="company-signature bottom-left" alt="Company signature">
+                                  <img v-show="isSetCompanyLogo" :src="tempData.company_logo.image" class="company-logo-img" :class="companyLogoPosition">
+                                  <img v-show="isSetSignature" :src="tempData.signature.image" class="company-signature" :class="signaturePosition">
                                   <textarea
                                       disabled
                                       v-model="tempData.back_text"

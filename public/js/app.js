@@ -55788,8 +55788,19 @@ var render = function() {
                                 },
                                 [
                                   _c("img", {
-                                    staticClass: "company-logo-img is-hidden",
-                                    attrs: { alt: "Company logo" }
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: _vm.isSetCompanyLogo,
+                                        expression: "isSetCompanyLogo"
+                                      }
+                                    ],
+                                    staticClass: "company-logo-img",
+                                    class: _vm.companyLogoPosition,
+                                    attrs: {
+                                      src: _vm.tempData.company_logo.image
+                                    }
                                   }),
                                   _vm._v(" "),
                                   _c("img", {
@@ -55797,16 +55808,13 @@ var render = function() {
                                       {
                                         name: "show",
                                         rawName: "v-show",
-                                        value: _vm.tempData.signature.image,
-                                        expression: "tempData.signature.image"
+                                        value: _vm.isSetSignature,
+                                        expression: "isSetSignature"
                                       }
                                     ],
-                                    staticClass:
-                                      "company-signature bottom-left",
-                                    attrs: {
-                                      src: _vm.tempData.signature.image,
-                                      alt: "Company signature"
-                                    }
+                                    staticClass: "company-signature",
+                                    class: _vm.signaturePosition,
+                                    attrs: { src: _vm.tempData.signature.image }
                                   }),
                                   _vm._v(" "),
                                   _c("textarea", {

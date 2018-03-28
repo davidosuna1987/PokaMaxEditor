@@ -29,7 +29,7 @@ class PostcardController extends Controller
 
     public function store(CreatePostcardRequest $request)
     {
-        // return response()->json(['company_logo' => $request->get('company_logo')]);
+        // return response()->json(['signature' => $request->get('signature')]);
 
         if($request->ajax()):
 
@@ -73,8 +73,6 @@ class PostcardController extends Controller
               'user_id' => $request->get('company_id'),
               'status' => 'DRAFT',
               'product_name' => $request->get('product_name'),
-              'front_cropped_file_path' => 'waiting',
-              'front_original_file_path' => 'waiting',
               'back_text' => $request->get('back_text'),
               'show_back_reciever' => $request->get('show_back_reciever'),
               'back_color' => $font_color,
@@ -107,11 +105,22 @@ class PostcardController extends Controller
 
             if(isset($company_logo['image']) and !empty($company_logo['image'])):
                 $company_logo_file = $company_logo['image'];
-                $company_logo_file_name = 'logo-'.str_random(25).'.png';
+                $company_logo_file_name = 'l-'.str_random(25).'.png';
 
                 Image::make($company_logo_file)->save($temp_file_path.$company_logo_file_name);
 
                 $temp_postcard['company_logo_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$company_logo_file_name);
+            endif;
+
+            $signature = $request->get('signature');
+
+            if(isset($signature['image']) and !empty($signature['image'])):
+                $signature_file = $signature['image'];
+                $signature_file_name = 's-'.str_random(25).'.png';
+
+                Image::make($signature_file)->save($temp_file_path.$signature_file_name);
+
+                $temp_postcard['signature_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$signature_file_name);
             endif;
 
             if($request->get('original_file')):
@@ -142,6 +151,7 @@ class PostcardController extends Controller
             endif;
 
             $postcard->update([
+              'signature_file_path' => $temp_postcard['signature_file_path'],
               'company_logo_file_path' => $temp_postcard['company_logo_file_path'],
               'front_cropped_file_path' => $temp_postcard['front_cropped_file_path'],
               'front_original_file_path' => $temp_postcard['front_original_file_path'],
@@ -169,7 +179,7 @@ class PostcardController extends Controller
 
     public function update(Request $request, $postcard_id)
     {
-        return response()->json(['message' => "Your postcard was updated correctly!"]);
+        return response()->json(['message' => "This is an update action!"]);
     }
 
     public function destroy(Postcard $postcard)
