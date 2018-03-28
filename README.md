@@ -32,6 +32,7 @@
   - ~~_Upload signature image_~~
   - ~~_Add custom signature_~~
   - ~~_Store signature_~~
+  - ~~_Store signature and company_logo position_~~
 
 ### 26/03/2018
 - Computed errors

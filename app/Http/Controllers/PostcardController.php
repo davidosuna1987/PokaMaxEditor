@@ -73,6 +73,8 @@ class PostcardController extends Controller
               'user_id' => $request->get('company_id'),
               'status' => 'DRAFT',
               'product_name' => $request->get('product_name'),
+              'signature_position' => $request->get('signature')['image'] ? $request->get('signature')['position'] : null,
+              'company_logo_position' => $request->get('company_logo')['image'] ? $request->get('company_logo')['position'] : null,
               'back_text' => $request->get('back_text'),
               'show_back_reciever' => $request->get('show_back_reciever'),
               'back_color' => $font_color,
@@ -95,6 +97,7 @@ class PostcardController extends Controller
             endforeach;
 
             $temp_postcard = [];
+            $temp_postcard['signature_file_path'] = null;
             $temp_postcard['company_logo_file_path'] = null;
 
             $temp_file_path = public_path().'/images/postcards/'.$postcard->id.'/';
