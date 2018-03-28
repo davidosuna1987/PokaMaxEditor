@@ -56659,7 +56659,7 @@ var staticRenderFns = [
           attrs: {
             type: "file",
             name: "file1",
-            accept: "image/jpg, image/jpeg, image/png"
+            accept: "image/jpg, image/jpeg"
           }
         }),
         _vm._v(" "),

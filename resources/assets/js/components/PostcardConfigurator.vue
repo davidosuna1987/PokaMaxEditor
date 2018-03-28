@@ -331,7 +331,7 @@
                 <form method="post" class="postcard_form" enctype="multipart/form-data" :class="tempData.has_frame ? 'has-frame' : ''">
                   <div class="col-1">
                     <div id="collage_1" class="collage-item">
-                      <input type="file" name="file1" class="upload-file-input" accept="image/jpg, image/jpeg, image/png" />
+                      <input type="file" name="file1" class="upload-file-input" accept="image/jpg, image/jpeg" />
                       <input type="hidden" name="cropped_file" id="file1cropped">
                       <input type="hidden" name="original_file" id="file1original">
                       <div class="upload-icon-wrapper">
