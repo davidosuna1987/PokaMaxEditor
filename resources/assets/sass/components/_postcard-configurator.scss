@@ -264,7 +264,7 @@
       &.has-error{
         +.back-text-error-frame{
           width: 340px;
-          height: 388px;
+          height: 445px;
           border: solid 1px $red;
           position: absolute;
           left: 10px;
@@ -328,11 +328,11 @@
 
     &.full-text{
       #back_text{
-        width: 621px;
+        width: 655px;
 
         &.has-error{
           +.back-text-error-frame{
-            width: 601px;
+            width: 635px;
 
             .error{ z-index: 2; }
           }

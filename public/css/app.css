@@ -24644,7 +24644,7 @@ background: #ccc;
 
 #postcard_back #back_text.has-error + .back-text-error-frame {
   width: 340px;
-  height: 388px;
+  height: 445px;
   border: solid 1px #ff3860;
   position: absolute;
   left: 10px;
@@ -24709,11 +24709,11 @@ background: #ccc;
 }
 
 #postcard_back.full-text #back_text {
-  width: 621px;
+  width: 655px;
 }
 
 #postcard_back.full-text #back_text.has-error + .back-text-error-frame {
-  width: 601px;
+  width: 635px;
 }
 
 #postcard_back.full-text #back_text.has-error + .back-text-error-frame .error {

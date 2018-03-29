@@ -51716,7 +51716,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     return _ref = {
       activeTab: 0,
-      isSetCustomBackImage: false,
       isSetSignature: false,
       isSetCompanyLogo: false,
       birthdayFilters: {
@@ -51754,6 +51753,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         position: 'bottom-right'
       },
       custom_back_image: {
+        isset: false,
         name: '',
         image: null
       },
@@ -51926,9 +51926,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // Custom back image functions
     tabChanged: function tabChanged() {
       if (this.activeTab === 0) {
-        this.isSetCustomBackImage = false;
+        this.tempData.custom_back_image.isset = false;
       } else if (this.activeTab === 1) {
-        this.isSetCustomBackImage = this.tempData.custom_back_image.image !== null;
+        this.tempData.custom_back_image.isset = this.tempData.custom_back_image.image !== null;
       }
     },
     selectCustomBackImage: function selectCustomBackImage() {
@@ -51940,7 +51940,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (files && files[0]) {
         var file = files[0];
 
-        vue.isSetCustomBackImage = true;
+        vue.tempData.custom_back_image.isset = true;
         vue.tempData.custom_back_image.name = file.name;
 
         var reader = new FileReader();
@@ -51954,11 +51954,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     clearCustomBackImage: function clearCustomBackImage() {
-      this.isSetCustomBackImage = false;
+      this.tempData.custom_back_image.isset = false;
       this.tempData.custom_back_image.name = '';
       this.tempData.custom_back_image.image = null;
       $('#upload_back_input').val('');
     },
+
 
     // Signature functions
     showSignaturePad: function showSignaturePad() {
@@ -53890,8 +53891,8 @@ var render = function() {
                             {
                               name: "show",
                               rawName: "v-show",
-                              value: _vm.isSetCustomBackImage,
-                              expression: "isSetCustomBackImage"
+                              value: _vm.tempData.custom_back_image.isset,
+                              expression: "tempData.custom_back_image.isset"
                             }
                           ],
                           staticClass: "custom-back-image bg-img",
@@ -54900,7 +54901,7 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _vm.isSetCustomBackImage
+                        _vm.tempData.custom_back_image.isset
                           ? [
                               _c("span", { staticClass: "tag is-danger" }, [
                                 _vm._v(
@@ -57073,8 +57074,9 @@ var render = function() {
                                   {
                                     name: "show",
                                     rawName: "v-show",
-                                    value: _vm.isSetCustomBackImage,
-                                    expression: "isSetCustomBackImage"
+                                    value: _vm.tempData.custom_back_image.isset,
+                                    expression:
+                                      "tempData.custom_back_image.isset"
                                   }
                                 ],
                                 staticClass: "custom-back-image bg-img",

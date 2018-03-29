@@ -15,6 +15,8 @@ class Postcard extends Model
       'user_id',
       'status',
       'product_name',
+      'has_custom_back_image',
+      'custom_back_image_file_path',
       'signature_width',
       'signature_position',
       'signature_file_path',

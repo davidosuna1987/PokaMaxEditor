@@ -381,7 +381,7 @@
                   <div class="col-1">
                     <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
 
-                      <div v-show="isSetCustomBackImage" class="custom-back-image bg-img" :style="{backgroundImage: customBackImageUrl}"></div>
+                      <div v-show="tempData.custom_back_image.isset" class="custom-back-image bg-img" :style="{backgroundImage: customBackImageUrl}"></div>
 
                       <div id="back_text_field" class="field">
                           <img v-show="isSetCompanyLogo" :src="tempData.company_logo.image" class="company-logo-img" :class="companyLogoPosition" :style="{width: tempData.company_logo.width+'px'}">
@@ -603,7 +603,7 @@
                   </b-tab-item>
                   <b-tab-item label="Upload image" icon="image-area">
                     <input type="file" id="upload_back_input" class="is-hidden" accept="image/jpg, image/jpeg" @change="setCustomBackImage($event)" />
-                    <template v-if="isSetCustomBackImage">
+                    <template v-if="tempData.custom_back_image.isset">
                       <span class="tag is-danger">
                         {{ tempData.custom_back_image.name }}
                         <button class="delete is-small" @click.prevent="clearCustomBackImage()"></button>
@@ -967,7 +967,7 @@
                           <div class="col-1">
                             <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
 
-                              <div v-show="isSetCustomBackImage" class="custom-back-image bg-img" :style="{backgroundImage: customBackImageUrl}"></div>
+                              <div v-show="tempData.custom_back_image.isset" class="custom-back-image bg-img" :style="{backgroundImage: customBackImageUrl}"></div>
 
                               <div id="back_text_field" class="field">
                                   <img v-show="isSetCompanyLogo" :src="tempData.company_logo.image" class="company-logo-img" :class="companyLogoPosition" :style="{width: tempData.company_logo.width+'px'}">
@@ -1163,7 +1163,6 @@
         data() {
             return {
                 activeTab: 0,
-                isSetCustomBackImage: false,
                 isSetSignature: false,
                 isSetCompanyLogo: false,
                 birthdayFilters: {
@@ -1212,6 +1211,7 @@
                     position: 'bottom-right'
                   },
                   custom_back_image: {
+                    isset: false,
                     name: '',
                     image: null,
                   },
@@ -1381,9 +1381,9 @@
           // Custom back image functions
             tabChanged() {
               if(this.activeTab === 0){
-                this.isSetCustomBackImage = false;
+                this.tempData.custom_back_image.isset = false;
               }else if(this.activeTab === 1){
-                this.isSetCustomBackImage = this.tempData.custom_back_image.image !== null;
+                this.tempData.custom_back_image.isset = this.tempData.custom_back_image.image !== null;
               }
             },
             selectCustomBackImage() {
@@ -1395,7 +1395,7 @@
               if (files && files[0]){
                 let file = files[0];
 
-                vue.isSetCustomBackImage = true;
+                vue.tempData.custom_back_image.isset = true;
                 vue.tempData.custom_back_image.name = file.name;
 
                 let reader = new FileReader();
@@ -1409,11 +1409,12 @@
               }
             },
             clearCustomBackImage() {
-              this.isSetCustomBackImage = false;
+              this.tempData.custom_back_image.isset = false;
               this.tempData.custom_back_image.name = '';
               this.tempData.custom_back_image.image = null;
               $('#upload_back_input').val('');
             },
+
           // Signature functions
             showSignaturePad() {
                 let vue = this;

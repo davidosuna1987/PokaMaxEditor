@@ -23,15 +23,14 @@ class CreatePostcardRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'product_name' => 'required|string|in:standard,horizontal,vertical',
-            // 'front_cropped_file_path' => 'required|active_url',
-            // 'front_original_file_path' => 'required|active_url',
-            'back_text' => 'required|string',
-            'show_back_reciever' => 'required|boolean',
-            'font_data.font_family' => 'required|integer',
-            'font_data.font_size' => 'required|integer',
-            'font_data.color' => 'required',
+
+            // 'back_text' => 'required|string',
+            // 'show_back_reciever' => 'required|boolean',
+            // 'font_data.font_family' => 'required|integer',
+            // 'font_data.font_size' => 'required|integer',
+            // 'font_data.color' => 'required',
 
             'sender_data.company' => 'required|string',
             'sender_data.title' => 'string|nullable',
@@ -67,5 +66,23 @@ class CreatePostcardRequest extends FormRequest
             'reciever_data.*.zip_code' => 'required|string',
             'reciever_data.*.birthday' => 'date_format:Y-m-d|nullable'
         ];
+
+        if($this->get('custom_back_image')):
+            if($this->get('custom_back_image')['isset']):
+                $rules = array_merge($rules, [
+                    'custom_back_image.image' => 'required',
+                ]);
+            else:
+                $rules = array_merge($rules, [
+                    'back_text' => 'required|string',
+                    'show_back_reciever' => 'required|boolean',
+                    'font_data.font_family' => 'required|integer',
+                    'font_data.font_size' => 'required|integer',
+                    'font_data.color' => 'required',
+                ]);
+            endif;
+        endif;
+
+        return $rules;
     }
 }
