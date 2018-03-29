@@ -16,7 +16,7 @@
   - Change signature color
   - Sets identifier xxxx(set)-xxx(postcard)
   - Custom font
-  - Upload back image
+  - Preview show contacts over custom back image
 
   - Preview step: send options (now, select date, birthday->check errors empty birthday)
 
@@ -35,6 +35,9 @@
   - ~~_Signature custom size_~~
   - ~~_Store signature and company_logo position_~~
   - ~~_Store signature and company_logo size_~~
+  - ~~_Upload back image_~~
+  - ~~_Store uploaded back image_~~
+  - ~~_Back new errors handling_~~
 
 ### 26/03/2018
 - Computed errors

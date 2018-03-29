@@ -123,9 +123,9 @@ jQuery(document).ready(function($) {
     // $(this).find('.cr-overlay').croppie('rotate', parseInt($(this).data('deg')));
   // });
 
-  $(document).on('click', '.font-family .title', function(e) {
+  $(document).on('click', '.font-family', function(e) {
     e.preventDefault();
-    $(this).parent().toggleClass('opened');
+    $(this).toggleClass('opened');
   });
 
 

@@ -1365,7 +1365,11 @@
               return false;
             },
             stepItemThreeHasErrors() {
-              return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors['back_text']);
+              if(this.tempData.custom_back_image.isset){
+                return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors['custom_back_image']);
+              }else{
+                return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors['back_text']);
+              }
             },
             stepItemFourHasErrors() {
               return this.errors != null && !_.isEmpty(this.errors) && (!_.isEmpty(this.errors['reciever_data']) || !_.isEmpty(this.errors['reciever_data.name']) || !_.isEmpty(this.errors['reciever_data.surnames']) || !_.isEmpty(this.errors['reciever_data.city']) || !_.isEmpty(this.errors['reciever_data.country']) || !_.isEmpty(this.errors['reciever_data.zip_code']) || !_.isEmpty(this.errors['reciever_data.address_line_1']));

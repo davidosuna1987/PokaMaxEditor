@@ -51910,7 +51910,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return false;
     },
     stepItemThreeHasErrors: function stepItemThreeHasErrors() {
-      return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors['back_text']);
+      if (this.tempData.custom_back_image.isset) {
+        return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors['custom_back_image']);
+      } else {
+        return this.errors != null && !_.isEmpty(this.errors) && !_.isEmpty(this.errors['back_text']);
+      }
     },
     stepItemFourHasErrors: function stepItemFourHasErrors() {
       return this.errors != null && !_.isEmpty(this.errors) && (!_.isEmpty(this.errors['reciever_data']) || !_.isEmpty(this.errors['reciever_data.name']) || !_.isEmpty(this.errors['reciever_data.surnames']) || !_.isEmpty(this.errors['reciever_data.city']) || !_.isEmpty(this.errors['reciever_data.country']) || !_.isEmpty(this.errors['reciever_data.zip_code']) || !_.isEmpty(this.errors['reciever_data.address_line_1']));
@@ -58684,9 +58688,9 @@ jQuery(document).ready(function ($) {
   // $(this).find('.cr-overlay').croppie('rotate', parseInt($(this).data('deg')));
   // });
 
-  $(document).on('click', '.font-family .title', function (e) {
+  $(document).on('click', '.font-family', function (e) {
     e.preventDefault();
-    $(this).parent().toggleClass('opened');
+    $(this).toggleClass('opened');
   });
 });
 
