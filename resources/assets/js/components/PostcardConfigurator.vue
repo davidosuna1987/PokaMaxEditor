@@ -380,6 +380,9 @@
 
                   <div class="col-1">
                     <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
+
+                      <div v-show="isSetCustomBackImage" class="custom-back-image bg-img" :style="{backgroundImage: customBackImageUrl}"></div>
+
                       <div id="back_text_field" class="field">
                           <img v-show="isSetCompanyLogo" :src="tempData.company_logo.image" class="company-logo-img" :class="companyLogoPosition" :style="{width: tempData.company_logo.width+'px'}">
                           <img v-show="isSetSignature" :src="tempData.signature.image" class="company-signature" :class="signaturePosition" :style="{width: tempData.signature.width+'px'}">
@@ -432,170 +435,188 @@
                 </form>
               </div>
               <div class="column m-t-15">
-                <div class="field">
-                  <b-switch v-model="tempData.show_back_reciever"
-                  type="is-info">
-                      Show reciever address
-                  </b-switch>
-                </div>
-                <div class="font-selector">
-                  <div class="font-family">
-                    <p class="title is-5">
-                      Select font
-                      <i class="mdi mdi-chevron-down mdi-24px"></i>
-                    </p>
-                    <ul class="font-family-list" @click="changeFontFamily">
-                        <li
-                            class="font-family-1"
-                            data-fontid="1"
-                            :class="tempData.font_data.font_family == 1 ? 'active' : ''">
-                          Pacifico
-                        </li>
-                        <li
-                            class="font-family-2"
-                            data-fontid="2"
-                            :class="tempData.font_data.font_family == 2 ? 'active' : ''">
-                          Indie Flower
-                        </li>
-                        <li
-                            class="font-family-3"
-                            data-fontid="3"
-                            :class="tempData.font_data.font_family == 3 ? 'active' : ''">
-                          Nanum Pen Script
-                        </li>
-                        <li
-                            class="font-family-4"
-                            data-fontid="4"
-                            :class="tempData.font_data.font_family == 4 ? 'active' : ''">
-                          Gloria Hallelujah
-                        </li>
-                    </ul>
-                  </div>
-                  <div class="font-size m-b-25">
-                    <p class="title is-5">Select font size</p>
-                    <ul class="font-size-list" @click="changeFontSize">
-                        <li
-                            data-fontsize="15"
-                            :class="tempData.font_data.font_size == 15 ? 'active' : ''">
-                          XS
-                        </li>
-                        <li
-                            data-fontsize="18"
-                            :class="tempData.font_data.font_size == 18 ? 'active' : ''">
-                          S
-                        </li>
-                        <li
-                            data-fontsize="21"
-                            :class="tempData.font_data.font_size == 21 ? 'active' : ''">
-                          M
-                        </li>
-                        <li
-                            data-fontsize="24"
-                            :class="tempData.font_data.font_size == 24 ? 'active' : ''">
-                          L
-                        </li>
-                    </ul>
-                  </div>
-                  <div class="font-color">
-                    <p class="title is-5">Select text color</p>
-                    <template v-if="showCustomColor">
-                      <input v-model="tempData.font_data.color.hex" type="text" class="input">
-                      <button class="button is-small m-t-10" @click.prevent="showCustomColor = false">Show color picker</button>
+                <b-tabs v-model="activeTab" type="is-boxed" class="back-tabs" @input="tabChanged()">
+                  <b-tab-item label="Customize" icon="table-edit">
+                    <div class="field">
+                      <b-switch v-model="tempData.show_back_reciever"
+                      type="is-info">
+                          Show reciever address
+                      </b-switch>
+                    </div>
+                    <div class="font-selector">
+                      <div class="font-family">
+                        <p class="title is-5">
+                          Select font
+                          <i class="mdi mdi-chevron-down mdi-24px"></i>
+                        </p>
+                        <ul class="font-family-list" @click="changeFontFamily">
+                            <li
+                                class="font-family-1"
+                                data-fontid="1"
+                                :class="tempData.font_data.font_family == 1 ? 'active' : ''">
+                              Pacifico
+                            </li>
+                            <li
+                                class="font-family-2"
+                                data-fontid="2"
+                                :class="tempData.font_data.font_family == 2 ? 'active' : ''">
+                              Indie Flower
+                            </li>
+                            <li
+                                class="font-family-3"
+                                data-fontid="3"
+                                :class="tempData.font_data.font_family == 3 ? 'active' : ''">
+                              Nanum Pen Script
+                            </li>
+                            <li
+                                class="font-family-4"
+                                data-fontid="4"
+                                :class="tempData.font_data.font_family == 4 ? 'active' : ''">
+                              Gloria Hallelujah
+                            </li>
+                        </ul>
+                      </div>
+                      <div class="font-size m-b-25">
+                        <p class="title is-5">Select font size</p>
+                        <ul class="font-size-list" @click="changeFontSize">
+                            <li
+                                data-fontsize="15"
+                                :class="tempData.font_data.font_size == 15 ? 'active' : ''">
+                              XS
+                            </li>
+                            <li
+                                data-fontsize="18"
+                                :class="tempData.font_data.font_size == 18 ? 'active' : ''">
+                              S
+                            </li>
+                            <li
+                                data-fontsize="21"
+                                :class="tempData.font_data.font_size == 21 ? 'active' : ''">
+                              M
+                            </li>
+                            <li
+                                data-fontsize="24"
+                                :class="tempData.font_data.font_size == 24 ? 'active' : ''">
+                              L
+                            </li>
+                        </ul>
+                      </div>
+                      <div class="font-color">
+                        <p class="title is-5">Select text color</p>
+                        <template v-if="showCustomColor">
+                          <input v-model="tempData.font_data.color.hex" type="text" class="input">
+                          <button class="button is-small m-t-10" @click.prevent="showCustomColor = false">Show color picker</button>
+                        </template>
+                        <template v-else>
+                          <slider-picker v-model="tempData.font_data.color"></slider-picker>
+                          <button class="button is-small m-t-10" @click.prevent="showCustomColor = true">Set custom color</button>
+                        </template>
+                      </div>
+                    </div>
+                    <div class="upload-logo m-t-20 m-b-20">
+                      <p class="title is-5 m-b-10">Company logo</p>
+                      <template v-if="!isSetCompanyLogo" class="fake-upload-logo-field">
+                        <input class="is-hidden" id="upload_logo_input" type="file" @change="setCompanyLogo($event)">
+
+                        <a class="button is-info" @click.prevent="selectCompanyLogo()">
+                            <b-icon icon="upload"></b-icon>
+                            <span>Upload logo</span>
+                        </a>
+                      </template>
+
+                      <template v-else>
+                        <div class="company-logo-position m-b-10">
+                          <b-field class="m-t-10">
+                              <b-select
+                                v-model="tempData.company_logo.position"
+                                placeholder="Logo position" icon="grid">
+                                  <option value="bottom-right">Bottom right</option>
+                                  <option value="bottom-center">Bottom center</option>
+                                  <option value="bottom-left">Bottom left</option>
+                                  <option value="center-right">Center right</option>
+                                  <option value="center-center">Center center</option>
+                                  <option value="center-left">Center left</option>
+                                  <option value="top-right">Top right</option>
+                                  <option value="top-center">Top center</option>
+                                  <option value="top-left">Top left</option>
+                              </b-select>
+                          </b-field>
+                        </div>
+                        <div class="field m-b-10">
+                          <label class="label is-small">Company logo width: <span class="has-text-info">{{ tempData.company_logo.width }}px</span></label>
+                          <input type="range" min="50" max="300" v-model.number="tempData.company_logo.width" class="range-field" />
+                        </div>
+                        <span class="tag is-danger">
+                          {{ tempData.company_logo.name }}
+                          <button class="delete is-small" @click.prevent="clearCompanyLogo()"></button>
+                        </span>
+                      </template>
+                    </div>
+                    <div class="create-signature m-t-20 m-b-20">
+                      <p class="title is-5 m-b-10">Signature</p>
+                      <template v-if="!isSetSignature" class="fake-upload-logo-field">
+                        <input class="is-hidden" id="upload_signature_input" type="file" @change="setSignature($event)">
+
+                        <a class="button is-info m-b-10" @click.prevent="showSignaturePad()">
+                            <b-icon icon="pen"></b-icon>
+                            <span>Draw signature</span>
+                        </a>
+
+                        <a class="button is-info" @click.prevent="selectSignatureLogo()">
+                            <b-icon icon="upload"></b-icon>
+                            <span>Upload signature</span>
+                        </a>
+                      </template>
+
+                      <template v-else>
+                        <div class="company-logo-position m-b-10">
+                          <b-field class="m-t-10">
+                              <b-select
+                                v-model="tempData.signature.position"
+                                placeholder="Signature position" icon="grid">
+                                  <option value="bottom-right">Bottom right</option>
+                                  <option value="bottom-center">Bottom center</option>
+                                  <option value="bottom-left">Bottom left</option>
+                                  <option value="center-right">Center right</option>
+                                  <option value="center-center">Center center</option>
+                                  <option value="center-left">Center left</option>
+                                  <option value="top-right">Top right</option>
+                                  <option value="top-center">Top center</option>
+                                  <option value="top-left">Top left</option>
+                              </b-select>
+                          </b-field>
+                        </div>
+                        <div class="field m-b-10">
+                          <label class="label is-small">Signature width: <span class="has-text-info">{{ tempData.signature.width }}px</span></label>
+                          <input type="range" min="50" max="300" v-model.number="tempData.signature.width" class="range-field" />
+                        </div>
+                        <span v-if="tempData.signature.name" class="tag is-danger">
+                          {{ tempData.signature.name }}
+                          <button class="delete is-small" @click.prevent="clearSignature()"></button>
+                        </span>
+                        <span v-else class="tag is-danger">
+                          Drawed signature
+                          <button class="delete is-small" @click.prevent="clearSignature()"></button>
+                        </span>
+                      </template>
+                    </div>
+                  </b-tab-item>
+                  <b-tab-item label="Upload image" icon="image-area">
+                    <input type="file" id="upload_back_input" class="is-hidden" accept="image/jpg, image/jpeg" @change="setCustomBackImage($event)" />
+                    <template v-if="isSetCustomBackImage">
+                      <span class="tag is-danger">
+                        {{ tempData.custom_back_image.name }}
+                        <button class="delete is-small" @click.prevent="clearCustomBackImage()"></button>
+                      </span>
                     </template>
                     <template v-else>
-                      <slider-picker v-model="tempData.font_data.color"></slider-picker>
-                      <button class="button is-small m-t-10" @click.prevent="showCustomColor = true">Set custom color</button>
+                      <a class="button is-info" @click.prevent="selectCustomBackImage()">
+                          <b-icon icon="upload"></b-icon>
+                          <span>Select custom back image</span>
+                      </a>
                     </template>
-                  </div>
-                </div>
-                <div class="upload-logo m-t-20 m-b-20">
-                  <p class="title is-5 m-b-10">Company logo</p>
-                  <template v-if="!isSetCompanyLogo" class="fake-upload-logo-field">
-                    <input class="is-hidden" id="upload_logo_input" type="file" @change="setCompanyLogo($event)">
-
-                    <a class="button is-info" @click.prevent="selectCompanyLogo()">
-                        <b-icon icon="upload"></b-icon>
-                        <span>Upload logo</span>
-                    </a>
-                  </template>
-
-                  <template v-else>
-                    <div class="company-logo-position m-b-10">
-                      <b-field class="m-t-10">
-                          <b-select
-                            v-model="tempData.company_logo.position"
-                            placeholder="Logo position" icon="grid">
-                              <option value="bottom-right">Bottom right</option>
-                              <option value="bottom-center">Bottom center</option>
-                              <option value="bottom-left">Bottom left</option>
-                              <option value="center-right">Center right</option>
-                              <option value="center-center">Center center</option>
-                              <option value="center-left">Center left</option>
-                              <option value="top-right">Top right</option>
-                              <option value="top-center">Top center</option>
-                              <option value="top-left">Top left</option>
-                          </b-select>
-                      </b-field>
-                    </div>
-                    <div class="field m-b-10">
-                      <label class="label is-small">Company logo width: <span class="has-text-info">{{ tempData.company_logo.width }}px</span></label>
-                      <input type="range" min="50" max="300" v-model.number="tempData.company_logo.width" class="range-field" />
-                    </div>
-                    <span class="tag is-danger">
-                      {{ tempData.company_logo.name }}
-                      <button class="delete is-small" @click.prevent="clearCompanyLogo()"></button>
-                    </span>
-                  </template>
-                </div>
-
-                <div class="create-signature m-t-20 m-b-20">
-                  <p class="title is-5 m-b-10">Signature</p>
-                  <template v-if="!isSetSignature" class="fake-upload-logo-field">
-                    <input class="is-hidden" id="upload_signature_input" type="file" @change="setSignature($event)">
-
-                    <a class="button is-info m-b-10" @click.prevent="showSignaturePad()">
-                        <b-icon icon="pen"></b-icon>
-                        <span>Draw signature</span>
-                    </a>
-
-                    <a class="button is-info" @click.prevent="selectSignatureLogo()">
-                        <b-icon icon="upload"></b-icon>
-                        <span>Upload signature</span>
-                    </a>
-                  </template>
-
-                  <template v-else>
-                    <div class="company-logo-position m-b-10">
-                      <b-field class="m-t-10">
-                          <b-select
-                            v-model="tempData.signature.position"
-                            placeholder="Signature position" icon="grid">
-                              <option value="bottom-right">Bottom right</option>
-                              <option value="bottom-center">Bottom center</option>
-                              <option value="bottom-left">Bottom left</option>
-                              <option value="center-right">Center right</option>
-                              <option value="center-center">Center center</option>
-                              <option value="center-left">Center left</option>
-                              <option value="top-right">Top right</option>
-                              <option value="top-center">Top center</option>
-                              <option value="top-left">Top left</option>
-                          </b-select>
-                      </b-field>
-                    </div>
-                    <div class="field m-b-10">
-                      <label class="label is-small">Signature width: <span class="has-text-info">{{ tempData.signature.width }}px</span></label>
-                      <input type="range" min="50" max="300" v-model.number="tempData.signature.width" class="range-field" />
-                    </div>
-                    <span v-if="tempData.signature.name" class="tag is-danger">
-                      {{ tempData.signature.name }}
-                      <button class="delete is-small" @click.prevent="clearSignature()"></button>
-                    </span>
-                    <span v-else class="tag is-danger">
-                      Drawed signature
-                      <button class="delete is-small" @click.prevent="clearSignature()"></button>
-                    </span>
-                  </template>
-                </div>
+                  </b-tab-item>
+                </b-tabs>
               </div>
             </div>
           </div>
@@ -945,6 +966,9 @@
 
                           <div class="col-1">
                             <div id="postcard_back" class="postcard-back" :class="[{'full-text' : !tempData.show_back_reciever}]">
+
+                              <div v-show="isSetCustomBackImage" class="custom-back-image bg-img" :style="{backgroundImage: customBackImageUrl}"></div>
+
                               <div id="back_text_field" class="field">
                                   <img v-show="isSetCompanyLogo" :src="tempData.company_logo.image" class="company-logo-img" :class="companyLogoPosition" :style="{width: tempData.company_logo.width+'px'}">
                                   <img v-show="isSetSignature" :src="tempData.signature.image" class="company-signature" :class="signaturePosition" :style="{width: tempData.signature.width+'px'}">
@@ -1138,6 +1162,8 @@
         props: ['companyIdProp'],
         data() {
             return {
+                activeTab: 0,
+                isSetCustomBackImage: false,
                 isSetSignature: false,
                 isSetCompanyLogo: false,
                 birthdayFilters: {
@@ -1184,6 +1210,10 @@
                     width: 125,
                     image: null,
                     position: 'bottom-right'
+                  },
+                  custom_back_image: {
+                    name: '',
+                    image: null,
                   },
                   is_set: null,
                   has_frame: false,
@@ -1246,6 +1276,9 @@
           }
         },
         computed: {
+            customBackImageUrl() {
+              return this.tempData.custom_back_image.image ? 'url('+this.tempData.custom_back_image.image+')' : '';
+            },
             signaturePosition() {
               return this.tempData.signature.position;
             },
@@ -1345,6 +1378,42 @@
             },
         },
         methods: {
+          // Custom back image functions
+            tabChanged() {
+              if(this.activeTab === 0){
+                this.isSetCustomBackImage = false;
+              }else if(this.activeTab === 1){
+                this.isSetCustomBackImage = this.tempData.custom_back_image.image !== null;
+              }
+            },
+            selectCustomBackImage() {
+              $('#upload_back_input').click();
+            },
+            setCustomBackImage(event) {
+              let vue = this;
+              let files = event.target.files;
+              if (files && files[0]){
+                let file = files[0];
+
+                vue.isSetCustomBackImage = true;
+                vue.tempData.custom_back_image.name = file.name;
+
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                  vue.tempData.custom_back_image.image = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+              }else{
+                vue.clearCustomBackImage();
+              }
+            },
+            clearCustomBackImage() {
+              this.isSetCustomBackImage = false;
+              this.tempData.custom_back_image.name = '';
+              this.tempData.custom_back_image.image = null;
+              $('#upload_back_input').val('');
+            },
           // Signature functions
             showSignaturePad() {
                 let vue = this;

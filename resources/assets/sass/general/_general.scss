@@ -1,21 +1,7 @@
-// iPhone Safari media bug
-*::-webkit-media-controls-panel {
-  display: none!important;
-  -webkit-appearance: none;
-}
-*::--webkit-media-controls-play-button {
-  display: none!important;
-  -webkit-appearance: none;
-}
-*::-webkit-media-controls-start-playback-button {
-  display: none!important;
-  -webkit-appearance: none;
-}
-
-//Selection styles
-::selection{
-    background-color: $cyan;
-    color: #fff;
+.bg-img{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 *{
@@ -43,4 +29,26 @@
   .container {
     width: 100%;
   }
+}
+
+
+
+// iPhone Safari media bug
+*::-webkit-media-controls-panel {
+  display: none!important;
+  -webkit-appearance: none;
+}
+*::--webkit-media-controls-play-button {
+  display: none!important;
+  -webkit-appearance: none;
+}
+*::-webkit-media-controls-start-playback-button {
+  display: none!important;
+  -webkit-appearance: none;
+}
+
+//Selection styles
+::selection{
+    background-color: $cyan;
+    color: #fff;
 }

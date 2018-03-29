@@ -6,7 +6,7 @@
   .button-save-draft{
     position: fixed;
     bottom: 8px;
-    z-index: 1;
+    z-index: 10;
     right: 150px;
 
     &[disabled="disabled"]{
@@ -196,7 +196,17 @@
 
 /* POSTCARD BACK */
   #postcard_back{
+    position: relative;
     display: flex;
+
+    .custom-back-image{
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      width: 100%;
+      height: 100%;
+    }
 
     .field{
       position: relative;
@@ -732,4 +742,13 @@
 /* OTHERS */
 .range-field{
   width: 250px;
+}
+
+.back-tabs{
+  .tab-content{
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border: solid 1px gainsboro;
+    border-top: none;
+  }
 }
