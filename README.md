@@ -17,8 +17,8 @@
   - Sets identifier xxxx(set)-xxx(postcard)
   - Custom font
   - Preview show contacts over custom back image
-
   - Preview step: send options (now, select date, birthday->check errors empty birthday)
+  - Generate Postcard PDF
 
 - Address lists
   - Download example file
