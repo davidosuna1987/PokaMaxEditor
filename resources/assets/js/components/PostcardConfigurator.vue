@@ -1851,42 +1851,42 @@
               this.tempData.original_file = original_file;
               this.tempData.cropped_file = cropped_file;
 
-              if(this.tempData.postcard_id){
-                  axios.put('/postcard/update/'+this.tempData.postcard_id, this.tempData)
-                  .then(response => {
-                      console.info(response.data);
-                      // this.tempData.postcard_id = response.data.postcard_id;
-                      // var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
-                      // var front_original_file_path = response.data.temp_postcard.front_original_file_path;
-                      // this.tempData.front_cropped_file_path = front_cropped_file_path;
-                      // this.tempData.front_original_file_path = front_original_file_path;
-                        this.$snackbar.open({
-                            message: response.data.message,
-                            duration: 5000,
-                            queue: false,
-                            onAction: () => {
-                              //Do something on click button
-                            }
-                        });
-                  }).catch(error => {
-                      if(error.response.status && error.response.status === 419){
-                        location.href = '/login';
-                      }
-                      console.info(error);
-                      this.errors = error.response.data.errors;
-                      this.$snackbar.open({
-                          duration: 5000,
-                          message: 'Please correct errors before saving the postcard.',
-                          type: 'is-danger',
-                          queue: false,
-                          position: 'is-top',
-                          actionText: 'OK',
-                          onAction: () => {
-                              //Do something on click button
-                          }
-                      });
-                  });
-              } else {
+              // if(this.tempData.postcard_id){
+              //     axios.put('/postcard/update/'+this.tempData.postcard_id, this.tempData)
+              //     .then(response => {
+              //         console.info(response.data);
+              //         // this.tempData.postcard_id = response.data.postcard_id;
+              //         // var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
+              //         // var front_original_file_path = response.data.temp_postcard.front_original_file_path;
+              //         // this.tempData.front_cropped_file_path = front_cropped_file_path;
+              //         // this.tempData.front_original_file_path = front_original_file_path;
+              //           this.$snackbar.open({
+              //               message: response.data.message,
+              //               duration: 5000,
+              //               queue: false,
+              //               onAction: () => {
+              //                 //Do something on click button
+              //               }
+              //           });
+              //     }).catch(error => {
+              //         if(error.response.status && error.response.status === 419){
+              //           location.href = '/login';
+              //         }
+              //         console.info(error);
+              //         this.errors = error.response.data.errors;
+              //         this.$snackbar.open({
+              //             duration: 5000,
+              //             message: 'Please correct errors before saving the postcard.',
+              //             type: 'is-danger',
+              //             queue: false,
+              //             position: 'is-top',
+              //             actionText: 'OK',
+              //             onAction: () => {
+              //                 //Do something on click button
+              //             }
+              //         });
+              //     });
+              // } else {
                   axios.post('/postcard/store', this.tempData)
                   .then(response => {
                       console.info(response.data);
@@ -1924,7 +1924,7 @@
                           }
                       });
                   });
-              }
+              // }
             },
             enableDisableNextButton() {
                 setTimeout(function(){

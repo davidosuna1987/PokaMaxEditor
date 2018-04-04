@@ -20,6 +20,7 @@ class CreatePostcardsTable extends Migration
             $table->string('product_name');
             $table->boolean('has_custom_back_image')->default(false)->nullable();
             $table->string('custom_back_image_file_path')->nullable();
+            $table->enum('custom_back_image_orientation', ['horizontal', 'vertical'])->nullable();
             $table->integer('signature_width')->nullable();
             $table->string('signature_position')->nullable();
             $table->string('signature_file_path')->nullable();

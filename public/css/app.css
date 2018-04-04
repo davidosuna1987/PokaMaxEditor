@@ -24380,7 +24380,7 @@ background: #ccc;
   display: -ms-flexbox;
   display: flex;
   background: white;
-  height: 465px;
+  height: 473px;
   width: 655px;
 }
 
@@ -24624,7 +24624,7 @@ background: #ccc;
 
 #postcard_back #back_text {
   width: 360px;
-  height: 465px;
+  height: 473px;
   padding: 25px;
   color: #031993;
   line-height: 1.3;

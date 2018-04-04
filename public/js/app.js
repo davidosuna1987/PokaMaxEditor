@@ -52411,78 +52411,79 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.tempData.original_file = original_file;
       this.tempData.cropped_file = cropped_file;
 
-      if (this.tempData.postcard_id) {
-        axios.put('/postcard/update/' + this.tempData.postcard_id, this.tempData).then(function (response) {
-          console.info(response.data);
-          // this.tempData.postcard_id = response.data.postcard_id;
-          // var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
-          // var front_original_file_path = response.data.temp_postcard.front_original_file_path;
-          // this.tempData.front_cropped_file_path = front_cropped_file_path;
-          // this.tempData.front_original_file_path = front_original_file_path;
-          _this7.$snackbar.open({
-            message: response.data.message,
-            duration: 5000,
-            queue: false,
-            onAction: function onAction() {
-              //Do something on click button
-            }
-          });
-        }).catch(function (error) {
-          if (error.response.status && error.response.status === 419) {
-            location.href = '/login';
+      // if(this.tempData.postcard_id){
+      //     axios.put('/postcard/update/'+this.tempData.postcard_id, this.tempData)
+      //     .then(response => {
+      //         console.info(response.data);
+      //         // this.tempData.postcard_id = response.data.postcard_id;
+      //         // var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
+      //         // var front_original_file_path = response.data.temp_postcard.front_original_file_path;
+      //         // this.tempData.front_cropped_file_path = front_cropped_file_path;
+      //         // this.tempData.front_original_file_path = front_original_file_path;
+      //           this.$snackbar.open({
+      //               message: response.data.message,
+      //               duration: 5000,
+      //               queue: false,
+      //               onAction: () => {
+      //                 //Do something on click button
+      //               }
+      //           });
+      //     }).catch(error => {
+      //         if(error.response.status && error.response.status === 419){
+      //           location.href = '/login';
+      //         }
+      //         console.info(error);
+      //         this.errors = error.response.data.errors;
+      //         this.$snackbar.open({
+      //             duration: 5000,
+      //             message: 'Please correct errors before saving the postcard.',
+      //             type: 'is-danger',
+      //             queue: false,
+      //             position: 'is-top',
+      //             actionText: 'OK',
+      //             onAction: () => {
+      //                 //Do something on click button
+      //             }
+      //         });
+      //     });
+      // } else {
+      axios.post('/postcard/store', this.tempData).then(function (response) {
+        console.info(response.data);
+        _this7.tempData.postcard_id = response.data.postcard_id;
+        var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
+        var front_original_file_path = response.data.temp_postcard.front_original_file_path;
+        _this7.tempData.front_cropped_file_path = front_cropped_file_path;
+        _this7.tempData.front_original_file_path = front_original_file_path;
+        _this7.$snackbar.open({
+          message: response.data.message,
+          duration: 5000,
+          queue: false,
+          onAction: function onAction() {
+            //Do something on click button
           }
-          console.info(error);
-          _this7.errors = error.response.data.errors;
-          _this7.$snackbar.open({
-            duration: 5000,
-            message: 'Please correct errors before saving the postcard.',
-            type: 'is-danger',
-            queue: false,
-            position: 'is-top',
-            actionText: 'OK',
-            onAction: function onAction() {
-              //Do something on click button
-            }
-          });
         });
-      } else {
-        axios.post('/postcard/store', this.tempData).then(function (response) {
-          console.info(response.data);
-          _this7.tempData.postcard_id = response.data.postcard_id;
-          var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
-          var front_original_file_path = response.data.temp_postcard.front_original_file_path;
-          _this7.tempData.front_cropped_file_path = front_cropped_file_path;
-          _this7.tempData.front_original_file_path = front_original_file_path;
-          _this7.$snackbar.open({
-            message: response.data.message,
-            duration: 5000,
-            queue: false,
-            onAction: function onAction() {
-              //Do something on click button
-            }
-          });
-        }).catch(function (error) {
-          if (error.response.status && error.response.status === 419) {
-            location.href = '/login';
+      }).catch(function (error) {
+        if (error.response.status && error.response.status === 419) {
+          location.href = '/login';
+        }
+        console.info(error);
+        _this7.errors = error.response.data.errors;
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        _this7.$snackbar.open({
+          duration: 5000,
+          message: 'Please correct errors before saving.',
+          type: 'is-danger',
+          queue: false,
+          position: 'is-top',
+          actionText: 'OK',
+          onAction: function onAction() {
+            //Do something on click button
           }
-          console.info(error);
-          _this7.errors = error.response.data.errors;
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-          _this7.$snackbar.open({
-            duration: 5000,
-            message: 'Please correct errors before saving.',
-            type: 'is-danger',
-            queue: false,
-            position: 'is-top',
-            actionText: 'OK',
-            onAction: function onAction() {
-              //Do something on click button
-            }
-          });
         });
-      }
+      });
+      // }
     },
     enableDisableNextButton: function enableDisableNextButton() {
       setTimeout(function () {

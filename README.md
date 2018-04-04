@@ -19,6 +19,9 @@
   - Preview show contacts over custom back image
   - Preview step: send options (now, select date, birthday->check errors empty birthday)
   - Generate Postcard PDF
+      a) Tamaño que necesita la imprenta
+      b) Resultado después del corte
+      c) Recomendación contenido importante
 
 - Address lists
   - Download example file
