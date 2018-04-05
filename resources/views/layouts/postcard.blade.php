@@ -98,7 +98,7 @@
                 float: right;
                 top: 10mm;
                 right: 0;
-                width: 66mm;
+                width: 68mm;
                 height: 91mm;
             }
 
@@ -120,7 +120,7 @@
                 font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 
                 font-size: 13px;
-                font-weight: 200;
+                font-weight: lighter;
                 color: #444;
             }
 
@@ -134,16 +134,16 @@
             @endphp
 
             .back-text > img { position: absolute; }
-            .back-text > img.bottom-right{ bottom: 22mm; right: 1mm; }
-            .back-text > img.bottom-left{ bottom: 22mm; left: 1mm; }
+            .back-text > img.bottom-right{ bottom: 0; right: 0; transform: translateY(-100%);}
+            .back-text > img.bottom-left{ bottom: 0; left: 0; transform: translateY(-100%);}
             .back-text > img.bottom-center{
-                bottom: 22mm;
+                bottom: 0;
                 left: {{$full_text ? '71.5mm' : '38.5mm'}};
-                transform: translateX(-50%);
+                transform: translate(-50%, -100%);
             }
 
-            .back-text > img.center-right{ top: 50.5mm; right: 1mm; transform: translateY(-50%); }
-            .back-text > img.center-left{ top: 50.5mm; left: 1mm; transform: translateY(-50%); }
+            .back-text > img.center-right{ top: 50.5mm; right: 0; transform: translateY(-50%); }
+            .back-text > img.center-left{ top: 50.5mm; left: 0; transform: translateY(-50%); }
             .back-text > img.center-center{
                 top: 50.5mm;
                 left: {{$full_text ? '71.5mm' : '38.5mm'}};
