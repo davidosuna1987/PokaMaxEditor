@@ -1152,6 +1152,20 @@
         </div>
 
         <a href="#" class="button is-info button-save-draft" @click.prevent="saveDraft" :disabled="stepThreeIsDisabled">Save as draft</a>
+
+        <div v-show="workInProgress" class='loading-container'>
+          <div class='text'>GENERATING POSTCARDS</div>
+          <div class='loading'>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+          </div>
+        </div>
+
     </div>
 </template>
 
@@ -1162,6 +1176,7 @@
         props: ['companyIdProp'],
         data() {
             return {
+                workInProgress: false,
                 activeTab: 0,
                 isSetSignature: false,
                 isSetCompanyLogo: false,
@@ -1851,6 +1866,8 @@
               this.tempData.original_file = original_file;
               this.tempData.cropped_file = cropped_file;
 
+              this.workInProgress = true;
+
               // if(this.tempData.postcard_id){
               //     axios.put('/postcard/update/'+this.tempData.postcard_id, this.tempData)
               //     .then(response => {
@@ -1903,6 +1920,7 @@
                             //Do something on click button
                           }
                       });
+                      this.workInProgress = false;
                   }).catch(error => {
                       if(error.response.status && error.response.status === 419){
                         location.href = '/login';

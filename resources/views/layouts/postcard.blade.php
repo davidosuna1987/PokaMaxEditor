@@ -8,6 +8,8 @@
     <body>
         <style>
             @page { size: 154mm 111mm; margin: 0;  }
+            .page-break{ page-break-after: always; }
+
             /* POSTCARD FONTS */
               .font-family-1{
                 font-family: 'Pacifico', cursive;
@@ -47,7 +49,6 @@
             /* END POSTCARD FONTS */
 
             * { box-sizing: border-box; }
-            .page-break{ page-break-after: always; }
 
             .postcard-front, .postcard-back{
                 position: relative;
@@ -66,24 +67,25 @@
 
             .back-text{
                 position: absolute;
-                top: 5.5mm;
-                left: 8.5mm;
-                height: 98mm;
+                top: 5mm;
+                left: 6.5mm;
+                height: 91mm;
                 color: {{$postcard->back_color}};
             }
 
             .postcard-back.has-reciever-address .back-text{
-                width: 71mm;
+                width: 75mm;
             }
 
             .postcard-back.full-text .back-text{
-                width: 137mm;
+                width: 141mm;
             }
 
             .reciever{
                 border-left: solid 1px gainsboro;
                 position: absolute;
-                bottom: 10mm;
+                /*bottom: 10mm;*/
+                top: 5mm;
                 right: 0;
                 width: 68mm;
                 height: 91mm;
@@ -91,11 +93,13 @@
 
             .reciever-content{
                 position: absolute;
-                bottom: 0;
-                left: 0;
+                /*bottom: 0;*/
+                /*left: 0;*/
+                top: 43mm;
+                left: 8mm;
                 width: 53mm;
-                margin-bottom: 7mm;
-                margin-left: 4.75mm;
+                /*margin-bottom: 7mm;*/
+                /*margin-left: 4.75mm;*/
                 /*transform: translateY(-50%);*/
             }
 
@@ -111,49 +115,44 @@
                 color: #444;
             }
 
-            .reciever .line{
-                border-bottom: solid 1px gainsboro;
-                margin-bottom: 4mm;
-            }
-
             @php
                 $full_text = $postcard->show_back_reciever ? false : true;
             @endphp
 
-            .back-text > img { position: absolute; }
-            .back-text > img.bottom-right{ bottom: 0; right: 0; transform: translateY(-100%);}
-            .back-text > img.bottom-left{ bottom: 0; left: 0; transform: translateY(-100%);}
-            .back-text > img.bottom-center{
-                bottom: 0;
-                left: {{$full_text ? '71.5mm' : '38.5mm'}};
-                transform: translate(-50%, -100%);
-            }
+                .back-text > img { position: absolute; }
+                .back-text > img.bottom-right{ bottom: 0; right: 0; transform: translateY(-100%);}
+                .back-text > img.bottom-left{ bottom: 0; left: 0; transform: translateY(-100%);}
+                .back-text > img.bottom-center{
+                    bottom: 0;
+                    left: {{$full_text ? '71.5mm' : '38.5mm'}};
+                    transform: translate(-50%, -100%);
+                }
 
-            .back-text > img.center-right{ top: 50.5mm; right: 0; transform: translateY(-50%); }
-            .back-text > img.center-left{ top: 50.5mm; left: 0; transform: translateY(-50%); }
-            .back-text > img.center-center{
-                top: 50.5mm;
-                left: {{$full_text ? '71.5mm' : '38.5mm'}};
-                transform: translate(-50%, -50%);
-            }
+                .back-text > img.center-right{ top: 50.5mm; right: 0; transform: translateY(-50%); }
+                .back-text > img.center-left{ top: 50.5mm; left: 0; transform: translateY(-50%); }
+                .back-text > img.center-center{
+                    top: 50.5mm;
+                    left: {{$full_text ? '71.5mm' : '38.5mm'}};
+                    transform: translate(-50%, -50%);
+                }
 
-            .back-text > img.top-right{ top: 0; right: 0; }
-            .back-text > img.top-left{ top: 0; left: 0; }
-            .back-text > img.top-center{
-                top: 0;
-                left: {{$full_text ? '71.5mm' : '38.5mm'}};
-                transform: translateX(-50%);
-            }
+                .back-text > img.top-right{ top: 0; right: 0; }
+                .back-text > img.top-left{ top: 0; left: 0; }
+                .back-text > img.top-center{
+                    top: 0;
+                    left: {{$full_text ? '71.5mm' : '38.5mm'}};
+                    transform: translateX(-50%);
+                }
 
-            .company-logo-img { width: {{$postcard->company_logo_width / 4.65}}mm; }
-            .signature-img { width: {{$postcard->signature_width / 4.65}}mm; }
+                .company-logo-img { width: {{$postcard->company_logo_width / 4.65}}mm; }
+                .signature-img { width: {{$postcard->signature_width / 4.65}}mm; }
 
-            .postcard-back > img{
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-            }
+                /*.postcard-back > img{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                }*/
 
             .postcard-back.has-back-image > img{
                 position: absolute;
@@ -194,15 +193,9 @@
                                 <div class="reciever">
                                     <div class="reciever-content">
                                         <div class="reciever-data name">{{$address->name}} {{$address->surnames}}</div>
-                                        <div class="line"></div>
                                         <div class="reciever-data address">{{$address->address_line_1}}</div>
-                                        <div class="line"></div>
-                                        <div class="reciever-data zip-code">{{$address->zip_code}}</div>
-                                        <div class="line"></div>
-                                        <div class="reciever-data city">{{$address->city}}</div>
-                                        <div class="line"></div>
+                                        <div class="reciever-data zip-code-city">{{$address->zip_code}} {{$address->city}}</div>
                                         <div class="reciever-data country">{{$address->country}}</div>
-                                        <div class="line"></div>
                                     </div>
                                 </div>
                             @endif

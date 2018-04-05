@@ -51706,6 +51706,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -51715,6 +51729,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      workInProgress: false,
       activeTab: 0,
       isSetSignature: false,
       isSetCompanyLogo: false,
@@ -52411,6 +52426,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.tempData.original_file = original_file;
       this.tempData.cropped_file = cropped_file;
 
+      this.workInProgress = true;
+
       // if(this.tempData.postcard_id){
       //     axios.put('/postcard/update/'+this.tempData.postcard_id, this.tempData)
       //     .then(response => {
@@ -52462,6 +52479,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             //Do something on click button
           }
         });
+        _this7.workInProgress = false;
       }).catch(function (error) {
         if (error.response.status && error.response.status === 419) {
           location.href = '/login';
@@ -57762,6 +57780,26 @@ var render = function() {
           }
         },
         [_vm._v("Save as draft")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.workInProgress,
+              expression: "workInProgress"
+            }
+          ],
+          staticClass: "loading-container"
+        },
+        [
+          _c("div", { staticClass: "text" }, [_vm._v("GENERATING POSTCARDS")]),
+          _vm._v(" "),
+          _vm._m(19)
+        ]
       )
     ]
   )
@@ -58016,6 +58054,26 @@ var staticRenderFns = [
           placeholder: "Some text (optional)"
         }
       })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "loading" }, [
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" })
     ])
   }
 ]
