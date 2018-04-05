@@ -196,7 +196,7 @@ class PostcardController extends Controller
             $pdf_file_path = public_path().'/pdf/postcards/'.$postcard->id.'/';
             File::cleanDirectory($pdf_file_path);
             File::makeDirectory($pdf_file_path, $mode = 0777, true, true);
-            $pdf = PDF::loadView( 'layouts.postcard', compact('postcard'))
+            $pdf = PDF::loadView( 'layouts.postcard', compact('postcard', 'reciever_data_addresses'))
                       // ->setPaper('a1', 'landscape')
                       ->save($pdf_file_path.'postcard.pdf');
 

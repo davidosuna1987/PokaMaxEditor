@@ -47,13 +47,10 @@
             /* END POSTCARD FONTS */
 
             * { box-sizing: border-box; }
+            .page-break{ page-break-after: always; }
 
             .postcard-front, .postcard-back{
                 position: relative;
-                /*width: 1819px;*/
-                /*height: 1311px;*/
-                background-color: white;
-                /*border: solid 1px transparent;*/
                 width: 154mm;
                 height: 111mm;
                 margin: auto;
@@ -67,32 +64,25 @@
                 width: 100%;
             }
 
-            .postcard-back{
-                position: relative;
-                /*margin-top: 20px;*/
-            }
-
             .back-text{
                 position: absolute;
-                top: 0;
-                left: 0;
-                height: 100mm;
-                margin: 5.5mm;
+                top: 5.5mm;
+                left: 8.5mm;
+                height: 98mm;
                 color: {{$postcard->back_color}};
             }
 
             .postcard-back.has-reciever-address .back-text{
-                width: 77mm;
+                width: 71mm;
             }
 
             .postcard-back.full-text .back-text{
-                width: 143mm;
+                width: 137mm;
             }
 
             .reciever{
                 border-left: solid 1px gainsboro;
                 position: absolute;
-                /*float: right;*/
                 bottom: 10mm;
                 right: 0;
                 width: 68mm;
@@ -104,7 +94,7 @@
                 bottom: 0;
                 left: 0;
                 width: 53mm;
-                margin-bottom: 0;
+                margin-bottom: 7mm;
                 margin-left: 4.75mm;
                 /*transform: translateY(-50%);*/
             }
@@ -179,37 +169,60 @@
                 <img src="{{$postcard->front_cropped_file_path}}">
             </div>
 
-            <div class="postcard-back {{$postcard->show_back_reciever ? 'has-reciever-address' : 'full-text'}} {{$postcard->has_custom_back_image ? 'has-back-image' : ''}}">
-                @if($postcard->has_custom_back_image)
+            @if($postcard->has_custom_back_image)
+                <div class="page-break"></div>
+                <div class="postcard-back {{$postcard->show_back_reciever ? 'has-reciever-address' : 'full-text'}} {{$postcard->has_custom_back_image ? 'has-back-image' : ''}}">
                     <img src="{{$postcard->custom_back_image_file_path}}">
-                @else
-                    <div class="back-text font-family-{{$postcard->font_family}} font-size-{{$postcard->font_size}}">
-                        {{$postcard->back_text}}
-                        @if($postcard->company_logo_file_path)
-                            <img src="{{$postcard->company_logo_file_path}}" class="company-logo-img {{$postcard->company_logo_position}}">
-                        @endif
-                        @if($postcard->signature_file_path)
-                            <img src="{{$postcard->signature_file_path}}" class="signature-img {{$postcard->signature_position}}">
-                        @endif
-                    </div>
-                    @if($postcard->show_back_reciever)
-                        <div class="reciever">
-                            <div class="reciever-content">
-                                <div class="reciever-data name">David Osuna Mondaca</div>
-                                <div class="line"></div>
-                                <div class="reciever-data address">C/ Bélgica 14</div>
-                                <div class="line"></div>
-                                <div class="reciever-data zip-code">46021</div>
-                                <div class="line"></div>
-                                <div class="reciever-data city">Valencia</div>
-                                <div class="line"></div>
-                                <div class="reciever-data country">España</div>
-                                <div class="line"></div>
-                            </div>
+                </div>
+            @else
+                @if($postcard->show_back_reciever)
+                    @foreach($reciever_data_addresses as $address)
+                        <div class="page-break"></div>
+                        <div class="postcard-back {{$postcard->show_back_reciever ? 'has-reciever-address' : 'full-text'}} {{$postcard->has_custom_back_image ? 'has-back-image' : ''}}">
+                            @if($postcard->has_custom_back_image)
+                                <img src="{{$postcard->custom_back_image_file_path}}">
+                            @else
+                                <div class="back-text font-family-{{$postcard->font_family}} font-size-{{$postcard->font_size}}">
+                                    {{$postcard->back_text}}
+                                    @if($postcard->company_logo_file_path)
+                                        <img src="{{$postcard->company_logo_file_path}}" class="company-logo-img {{$postcard->company_logo_position}}">
+                                    @endif
+                                    @if($postcard->signature_file_path)
+                                        <img src="{{$postcard->signature_file_path}}" class="signature-img {{$postcard->signature_position}}">
+                                    @endif
+                                </div>
+                                <div class="reciever">
+                                    <div class="reciever-content">
+                                        <div class="reciever-data name">{{$address->name}} {{$address->surnames}}</div>
+                                        <div class="line"></div>
+                                        <div class="reciever-data address">{{$address->address_line_1}}</div>
+                                        <div class="line"></div>
+                                        <div class="reciever-data zip-code">{{$address->zip_code}}</div>
+                                        <div class="line"></div>
+                                        <div class="reciever-data city">{{$address->city}}</div>
+                                        <div class="line"></div>
+                                        <div class="reciever-data country">{{$address->country}}</div>
+                                        <div class="line"></div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
-                    @endif
+                    @endforeach
+                @else
+                    <div class="page-break"></div>
+                    <div class="postcard-back {{$postcard->show_back_reciever ? 'has-reciever-address' : 'full-text'}} {{$postcard->has_custom_back_image ? 'has-back-image' : ''}}">
+                        <div class="back-text font-family-{{$postcard->font_family}} font-size-{{$postcard->font_size}}">
+                            {{$postcard->back_text}}
+                            @if($postcard->company_logo_file_path)
+                                <img src="{{$postcard->company_logo_file_path}}" class="company-logo-img {{$postcard->company_logo_position}}">
+                            @endif
+                            @if($postcard->signature_file_path)
+                                <img src="{{$postcard->signature_file_path}}" class="signature-img {{$postcard->signature_position}}">
+                            @endif
+                        </div>
+                    </div>
                 @endif
-            </div>
+            @endif
         </div>
     </body>
 </html>

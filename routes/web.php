@@ -17,10 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function(){
-    $postcard = App\Postcard::find(71);
-    return view('layouts.postcard', compact('postcard'));
-});
+
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/home', 'HomeController@index')->name('home');
