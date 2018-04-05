@@ -2,16 +2,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        {{-- <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Indie+Flower|Nanum+Pen+Script|Pacifico" rel="stylesheet"> --}}
+        <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Indie+Flower|Nanum+Pen+Script|Pacifico" rel="stylesheet">
         <title>Postcard {{ $postcard->id }}</title>
     </head>
     <body>
         <style>
+            @page { size: 154mm 111mm; margin: 0;  }
             /* POSTCARD FONTS */
               .font-family-1{
                 font-family: 'Pacifico', cursive;
-                font-size: 19px;
-                line-height: 1.4;
+                font-size: 15px;
               }
               .font-family-1.font-size-15{ font-size: 12px; }
               .font-family-1.font-size-18{ font-size: 15px; }
@@ -20,8 +20,7 @@
 
               .font-family-2{
                 font-family: 'Indie Flower', cursive;
-                font-size: 19px;
-                line-height: 1.4;
+                font-size: 15px;
               }
               .font-family-2.font-size-15{ font-size: 12px; }
               .font-family-2.font-size-18{ font-size: 15px; }
@@ -30,8 +29,7 @@
 
               .font-family-3{
                 font-family: 'Nanum Pen Script', cursive;
-                font-size: 22px;
-                line-height: 1.4;
+                font-size: 25px;
               }
               .font-family-3.font-size-15{ font-size: 22px; }
               .font-family-3.font-size-18{ font-size: 25px; }
@@ -41,7 +39,6 @@
               .font-family-4{
                 font-family: 'Gloria Hallelujah', cursive;
                 font-size: 15px;
-                line-height: 1.4;
               }
               .font-family-4.font-size-15{ font-size: 12px; }
               .font-family-4.font-size-18{ font-size: 15px; }
@@ -56,11 +53,11 @@
                 /*width: 1819px;*/
                 /*height: 1311px;*/
                 background-color: white;
-                border: solid 1px gainsboro;
+                /*border: solid 1px transparent;*/
                 width: 154mm;
                 height: 111mm;
                 margin: auto;
-                /*overflow: hidden;*/
+                overflow: hidden;
             }
 
             .postcard-front > img{
@@ -72,7 +69,7 @@
 
             .postcard-back{
                 position: relative;
-                margin-top: 20px;
+                /*margin-top: 20px;*/
             }
 
             .back-text{
@@ -94,9 +91,9 @@
 
             .reciever{
                 border-left: solid 1px gainsboro;
-                position: relative;
-                float: right;
-                top: 10mm;
+                position: absolute;
+                /*float: right;*/
+                bottom: 10mm;
                 right: 0;
                 width: 68mm;
                 height: 91mm;
@@ -107,9 +104,9 @@
                 bottom: 0;
                 left: 0;
                 width: 53mm;
-                margin-bottom: 11mm;
+                margin-bottom: 0;
                 margin-left: 4.75mm;
-                transform: translateY(-50%);
+                /*transform: translateY(-50%);*/
             }
 
             .reciever .reciever-data{
