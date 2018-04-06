@@ -23924,6 +23924,10 @@ input[type=range].slider.is-danger .has-output-tooltip + output {
   border-color: #ff3860 !important;
 }
 
+.steps .step-item .step-marker.is-disabled {
+  pointer-events: none;
+}
+
 .steps .steps-actions {
   position: fixed;
   bottom: 0;

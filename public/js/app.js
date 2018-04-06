@@ -52588,7 +52588,11 @@ var render = function() {
         [
           _c("VueSignaturePad", {
             ref: "signaturePad",
-            attrs: { width: "400px", height: "300px" }
+            attrs: {
+              width: "400px",
+              options: { penColor: "#041a98" },
+              height: "300px"
+            }
           })
         ],
         1

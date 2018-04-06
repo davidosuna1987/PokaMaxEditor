@@ -11,9 +11,8 @@
   - add 10.000 contacts
 
 - Editor
-  - Uploaded png photos has black background
+  - Uploaded png photos has black backgrounds
   - Contacts filter by month or between dates
-  - Change signature color to blue
   - Sets identifier xxxx(set)-xxx(postcard)
   - Custom font
   - Preview show contacts over custom back image
@@ -22,6 +21,9 @@
   - Logo and signature z-index
   - Postcard sample similar to PDF
   - Preview step: send options (now, select date, birthday->check errors empty birthday)
+
+- PDF
+  - Store logo and signature with final width + 50px
 
 - Address lists
   - Download example file
@@ -45,6 +47,7 @@
   - ~~_Generate multiple PDF_~~
   - ~~_Generate PDF with custom back image_~~
   - ~~_Loading modal while generating PDF's_~~
+  - ~~_Signature color to blue_~
 
 ### 26/03/2018
 - Computed errors

@@ -2,7 +2,7 @@
   <section id="signature_pad">
     <div class="modal-card" style="width: 500px">
        <section class="modal-card-body">
-        <VueSignaturePad width="400px" height="300px" ref="signaturePad"></VueSignaturePad>
+        <VueSignaturePad width="400px" :options="{penColor: '#041a98'}" height="300px" ref="signaturePad"></VueSignaturePad>
       </section>
       <footer class="modal-card-foot signature-pad-footer">
         <div class="action-buttons">
