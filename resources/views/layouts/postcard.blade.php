@@ -67,18 +67,18 @@
 
             .back-text{
                 position: absolute;
-                top: 5mm;
-                left: 6.5mm;
-                height: 91mm;
+                top: 7mm;
+                left: 8mm;
+                height: 86mm;
                 color: {{$postcard->back_color}};
             }
 
             .postcard-back.has-reciever-address .back-text{
-                width: 75mm;
+                width: 72mm;
             }
 
             .postcard-back.full-text .back-text{
-                width: 141mm;
+                width: 138mm;
             }
 
             .reciever{
@@ -87,20 +87,15 @@
                 /*bottom: 10mm;*/
                 top: 5mm;
                 right: 0;
-                width: 68mm;
+                width: 69mm;
                 height: 91mm;
             }
 
             .reciever-content{
                 position: absolute;
-                /*bottom: 0;*/
-                /*left: 0;*/
-                top: 43mm;
-                left: 8mm;
-                width: 53mm;
-                /*margin-bottom: 7mm;*/
-                /*margin-left: 4.75mm;*/
-                /*transform: translateY(-50%);*/
+                top: 36mm;
+                left: 7mm;
+                width: 54mm;
             }
 
             .reciever .reciever-data{
@@ -110,9 +105,13 @@
                 padding-right: 1mm;
                 font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 
-                font-size: 13px;
+                font-size: 12px;
                 font-weight: lighter;
                 color: #444;
+            }
+
+            .reciever-data.country{
+                font-weight: 600;
             }
 
             @php

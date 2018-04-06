@@ -51785,7 +51785,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         font_family: 1,
         font_size: 21,
         color: {
-          hex: '#031993'
+          hex: '#041a98'
         }
       },
       sender_data: {

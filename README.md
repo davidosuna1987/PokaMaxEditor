@@ -13,15 +13,15 @@
 - Editor
   - Uploaded png photos has black background
   - Contacts filter by month or between dates
-  - Change signature color
+  - Change signature color to blue
   - Sets identifier xxxx(set)-xxx(postcard)
   - Custom font
   - Preview show contacts over custom back image
+  - Import contacts directly
+  - Logo input allow only images
+  - Logo and signature z-index
+  - Postcard sample similar to PDF
   - Preview step: send options (now, select date, birthday->check errors empty birthday)
-  - Generate Postcard PDF
-      a) Tamaño que necesita la imprenta
-      b) Resultado después del corte
-      c) Recomendación contenido importante
 
 - Address lists
   - Download example file
@@ -41,6 +41,10 @@
   - ~~_Upload back image_~~
   - ~~_Store uploaded back image_~~
   - ~~_Back new errors handling_~~
+  - ~~_Generate simple PDF_~~
+  - ~~_Generate multiple PDF_~~
+  - ~~_Generate PDF with custom back image_~~
+  - ~~_Loading modal while generating PDF's_~~
 
 ### 26/03/2018
 - Computed errors
