@@ -22,9 +22,6 @@
   - Postcard sample similar to PDF
   - Preview step: send options (now, select date, birthday->check errors empty birthday)
 
-- PDF
-  - Store logo and signature with final width + 50px
-
 - Address lists
   - Download example file
 
@@ -48,6 +45,7 @@
   - ~~_Generate PDF with custom back image_~~
   - ~~_Loading modal while generating PDF's_~~
   - ~~_Signature color to blue_~
+  - ~~_Store logo and signature with final width + 100px_~~
 
 ### 26/03/2018
 - Computed errors

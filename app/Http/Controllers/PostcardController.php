@@ -138,8 +138,13 @@ class PostcardController extends Controller
               if($has_signature):
                   $signature_file = $signature['image'];
                   $signature_file_name = 's-'.str_random(25).'.png';
+                  $signature_width = $request->get('signature')['width'] + 100;
 
-                  Image::make($signature_file)->save($temp_file_path.$signature_file_name);
+                  // Image::make($signature_file)->save($temp_file_path.$signature_file_name);
+
+                  Image::make($signature_file)->resize($signature_width, null, function($c){
+                    $c->aspectRatio();
+                  })->save($temp_file_path.$signature_file_name);
 
                   $temp_postcard['signature_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$signature_file_name);
               endif;
@@ -149,8 +154,13 @@ class PostcardController extends Controller
               if($has_company_logo):
                   $company_logo_file = $company_logo['image'];
                   $company_logo_file_name = 'l-'.str_random(25).'.png';
+                  $company_logo_width = $request->get('company_logo')['width'] + 100;
 
-                  Image::make($company_logo_file)->save($temp_file_path.$company_logo_file_name);
+                  // Image::make($company_logo_file)->save($temp_file_path.$company_logo_file_name);
+
+                  Image::make($company_logo_file)->resize($company_logo_width, null, function($c){
+                    $c->aspectRatio();
+                  })->save($temp_file_path.$company_logo_file_name);
 
                   $temp_postcard['company_logo_file_path'] = asset('images/postcards/'.$postcard->id.'/'.$company_logo_file_name);
               endif;
