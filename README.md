@@ -19,14 +19,14 @@
   - Import contacts directly
   - Logo input allow only images
   - Logo and signature z-index
-  - Postcard sample similar to PDF
+  - Postcard editor sample similar to PDF
   - Preview step: send options (now, select date, birthday->check errors empty birthday)
-
-- Address lists
-  - Download example file
 
 
 ### Completed todo's
+  - ~~_Download example xls contacts file_~~
+
+### 06/04/2018
   - ~~_Custom back text color input_~~
   - ~~_Store uploaded company logo_~~
   - ~~_Company logo bind src_~~

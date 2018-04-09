@@ -42333,6 +42333,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -44896,6 +44901,8 @@ var render = function() {
                                     : _vm._e()
                                 ]),
                                 _vm._v(" "),
+                                _vm._m(10, true),
+                                _vm._v(" "),
                                 _c(
                                   "b-field",
                                   [
@@ -45951,7 +45958,7 @@ var render = function() {
                                                 }
                                               }
                                             },
-                                            [_vm._m(10, true)]
+                                            [_vm._m(11, true)]
                                           )
                                         ]
                                       : _vm._e(),
@@ -46909,6 +46916,26 @@ var staticRenderFns = [
         staticClass: "mdi mdi-close",
         attrs: { "aria-hidden": "true" }
       })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "has-text-info help m-b-20" }, [
+      _vm._v(
+        "\n                              To import your own contacts, you must have a contacts xls file with a particular structure. If you don't have our exaple file, you can "
+      ),
+      _c(
+        "a",
+        {
+          staticClass: "has-text-info",
+          staticStyle: { "text-decoration": "underline" },
+          attrs: { href: "/download/xls", download: "" }
+        },
+        [_vm._v("download sample file")]
+      ),
+      _vm._v(".\n                            ")
     ])
   },
   function() {
@@ -51720,6 +51747,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -55167,212 +55199,7 @@ var render = function() {
                                       )
                                     ]
                                   )
-                                : [
-                                    _vm.tempData.company_id &&
-                                    _vm.companies[_vm.tempData.company_id]
-                                      .address_lists.length
-                                      ? _c("div", [
-                                          _c(
-                                            "p",
-                                            {
-                                              staticClass:
-                                                "is-size-6 has-text-link"
-                                            },
-                                            [_vm._v("Birthday filters")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("div", { staticClass: "field" }, [
-                                            _c(
-                                              "p",
-                                              { staticClass: "control" },
-                                              [
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "select" },
-                                                  [
-                                                    _c(
-                                                      "select",
-                                                      {
-                                                        directives: [
-                                                          {
-                                                            name: "model",
-                                                            rawName: "v-model",
-                                                            value:
-                                                              _vm
-                                                                .birthdayFilters
-                                                                .month,
-                                                            expression:
-                                                              "birthdayFilters.month"
-                                                          }
-                                                        ],
-                                                        on: {
-                                                          change: function(
-                                                            $event
-                                                          ) {
-                                                            var $$selectedVal = Array.prototype.filter
-                                                              .call(
-                                                                $event.target
-                                                                  .options,
-                                                                function(o) {
-                                                                  return o.selected
-                                                                }
-                                                              )
-                                                              .map(function(o) {
-                                                                var val =
-                                                                  "_value" in o
-                                                                    ? o._value
-                                                                    : o.value
-                                                                return val
-                                                              })
-                                                            _vm.$set(
-                                                              _vm.birthdayFilters,
-                                                              "month",
-                                                              $event.target
-                                                                .multiple
-                                                                ? $$selectedVal
-                                                                : $$selectedVal[0]
-                                                            )
-                                                          }
-                                                        }
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: { value: "" }
-                                                          },
-                                                          [_vm._v("By month")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "0"
-                                                            }
-                                                          },
-                                                          [_vm._v("January")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "1"
-                                                            }
-                                                          },
-                                                          [_vm._v("February")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "2"
-                                                            }
-                                                          },
-                                                          [_vm._v("March")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "3"
-                                                            }
-                                                          },
-                                                          [_vm._v("April")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "4"
-                                                            }
-                                                          },
-                                                          [_vm._v("May")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "5"
-                                                            }
-                                                          },
-                                                          [_vm._v("June")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "6"
-                                                            }
-                                                          },
-                                                          [_vm._v("July")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "7"
-                                                            }
-                                                          },
-                                                          [_vm._v("August")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "8"
-                                                            }
-                                                          },
-                                                          [_vm._v("September")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "9"
-                                                            }
-                                                          },
-                                                          [_vm._v("October")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "10"
-                                                            }
-                                                          },
-                                                          [_vm._v("November")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "11"
-                                                            }
-                                                          },
-                                                          [_vm._v("Dicember")]
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ])
-                                        ])
-                                      : _vm._e()
-                                  ],
+                                : _vm._e(),
                               _vm._v(" "),
                               _vm._l(
                                 _vm.companies[_vm.tempData.company_id]
@@ -55578,6 +55405,44 @@ var render = function() {
                                                                       1
                                                                     )
                                                                   : _vm._e()
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "p",
+                                                              {
+                                                                staticClass:
+                                                                  "has-text-info help m-b-20"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "\n                                          To import your own contacts, you must have a contacts xls file with a particular structure. If you don't have our exaple file, you can "
+                                                                ),
+                                                                _c(
+                                                                  "a",
+                                                                  {
+                                                                    staticClass:
+                                                                      "has-text-info",
+                                                                    staticStyle: {
+                                                                      "text-decoration":
+                                                                        "underline"
+                                                                    },
+                                                                    attrs: {
+                                                                      href:
+                                                                        "/download/xls",
+                                                                      download:
+                                                                        ""
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "download sample file"
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                _vm._v(
+                                                                  ".\n                                        "
+                                                                )
                                                               ]
                                                             ),
                                                             _vm._v(" "),

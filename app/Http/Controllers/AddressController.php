@@ -148,4 +148,9 @@ class AddressController extends Controller
             'message' => 'Selected contacts was added to '.$address_list->name.' address list correctly!'
         ]);
     }
+
+    public function download()
+    {
+        return response()->download(public_path('download/contacts.xls'));
+    }
 }

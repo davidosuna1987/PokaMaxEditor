@@ -672,7 +672,7 @@
                                     </div>
                                 </div>
 
-                                <template v-else>
+                                <!-- <template v-else>
                                   <div v-if="tempData.company_id && companies[tempData.company_id].address_lists.length">
                                     <p class="is-size-6 has-text-link">Birthday filters</p>
                                     <div class="field">
@@ -697,7 +697,7 @@
                                       </p>
                                     </div>
                                   </div>
-                                </template>
+                                </template> -->
 
                                 <div v-for="(address_list, index) in companies[tempData.company_id].address_lists" :key="index">
                                   <b-collapse v-if="address_list.addresses" class="card" :open="index === 0 ? true : false">
@@ -720,6 +720,11 @@
                                                 <span>Add {{checked_csv_addresses.length}} {{checked_csv_addresses.length == 1 ? 'contact' : 'contacts'}}</span>
                                               </button>
                                             </p>
+
+                                            <p class="has-text-info help m-b-20">
+                                              To import your own contacts, you must have a contacts xls file with a particular structure. If you don't have our exaple file, you can <a href="/download/xls" class="has-text-info" style="text-decoration:underline;" download>download sample file</a>.
+                                            </p>
+
                                             <b-field>
                                                 <b-upload v-model="csv_file" @input="uploadCsvFile">
                                                     <a class="button is-info">
