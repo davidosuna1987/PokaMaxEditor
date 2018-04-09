@@ -42333,6 +42333,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -44896,6 +44901,8 @@ var render = function() {
                                     : _vm._e()
                                 ]),
                                 _vm._v(" "),
+                                _vm._m(10, true),
+                                _vm._v(" "),
                                 _c(
                                   "b-field",
                                   [
@@ -45951,7 +45958,7 @@ var render = function() {
                                                 }
                                               }
                                             },
-                                            [_vm._m(10, true)]
+                                            [_vm._m(11, true)]
                                           )
                                         ]
                                       : _vm._e(),
@@ -46909,6 +46916,26 @@ var staticRenderFns = [
         staticClass: "mdi mdi-close",
         attrs: { "aria-hidden": "true" }
       })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "has-text-info help m-b-20" }, [
+      _vm._v(
+        "\n                              To import your own contacts, you must have a contacts xls file with a particular structure. If you don't have our exaple file, you can "
+      ),
+      _c(
+        "a",
+        {
+          staticClass: "has-text-info",
+          staticStyle: { "text-decoration": "underline" },
+          attrs: { href: "/download/xls", download: "" }
+        },
+        [_vm._v("download sample file")]
+      ),
+      _vm._v(".\n                            ")
     ])
   },
   function() {
@@ -51706,6 +51733,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -51715,6 +51761,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
+      workInProgress: false,
       activeTab: 0,
       isSetSignature: false,
       isSetCompanyLogo: false,
@@ -51770,7 +51817,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         font_family: 1,
         font_size: 21,
         color: {
-          hex: '#031993'
+          hex: '#041a98'
         }
       },
       sender_data: {
@@ -52411,78 +52458,82 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.tempData.original_file = original_file;
       this.tempData.cropped_file = cropped_file;
 
-      if (this.tempData.postcard_id) {
-        axios.put('/postcard/update/' + this.tempData.postcard_id, this.tempData).then(function (response) {
-          console.info(response.data);
-          // this.tempData.postcard_id = response.data.postcard_id;
-          // var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
-          // var front_original_file_path = response.data.temp_postcard.front_original_file_path;
-          // this.tempData.front_cropped_file_path = front_cropped_file_path;
-          // this.tempData.front_original_file_path = front_original_file_path;
-          _this7.$snackbar.open({
-            message: response.data.message,
-            duration: 5000,
-            queue: false,
-            onAction: function onAction() {
-              //Do something on click button
-            }
-          });
-        }).catch(function (error) {
-          if (error.response.status && error.response.status === 419) {
-            location.href = '/login';
+      this.workInProgress = true;
+
+      // if(this.tempData.postcard_id){
+      //     axios.put('/postcard/update/'+this.tempData.postcard_id, this.tempData)
+      //     .then(response => {
+      //         console.info(response.data);
+      //         // this.tempData.postcard_id = response.data.postcard_id;
+      //         // var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
+      //         // var front_original_file_path = response.data.temp_postcard.front_original_file_path;
+      //         // this.tempData.front_cropped_file_path = front_cropped_file_path;
+      //         // this.tempData.front_original_file_path = front_original_file_path;
+      //           this.$snackbar.open({
+      //               message: response.data.message,
+      //               duration: 5000,
+      //               queue: false,
+      //               onAction: () => {
+      //                 //Do something on click button
+      //               }
+      //           });
+      //     }).catch(error => {
+      //         if(error.response.status && error.response.status === 419){
+      //           location.href = '/login';
+      //         }
+      //         console.info(error);
+      //         this.errors = error.response.data.errors;
+      //         this.$snackbar.open({
+      //             duration: 5000,
+      //             message: 'Please correct errors before saving the postcard.',
+      //             type: 'is-danger',
+      //             queue: false,
+      //             position: 'is-top',
+      //             actionText: 'OK',
+      //             onAction: () => {
+      //                 //Do something on click button
+      //             }
+      //         });
+      //     });
+      // } else {
+      axios.post('/postcard/store', this.tempData).then(function (response) {
+        console.info(response.data);
+        _this7.tempData.postcard_id = response.data.postcard_id;
+        var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
+        var front_original_file_path = response.data.temp_postcard.front_original_file_path;
+        _this7.tempData.front_cropped_file_path = front_cropped_file_path;
+        _this7.tempData.front_original_file_path = front_original_file_path;
+        _this7.$snackbar.open({
+          message: response.data.message,
+          duration: 5000,
+          queue: false,
+          onAction: function onAction() {
+            //Do something on click button
           }
-          console.info(error);
-          _this7.errors = error.response.data.errors;
-          _this7.$snackbar.open({
-            duration: 5000,
-            message: 'Please correct errors before saving the postcard.',
-            type: 'is-danger',
-            queue: false,
-            position: 'is-top',
-            actionText: 'OK',
-            onAction: function onAction() {
-              //Do something on click button
-            }
-          });
         });
-      } else {
-        axios.post('/postcard/store', this.tempData).then(function (response) {
-          console.info(response.data);
-          _this7.tempData.postcard_id = response.data.postcard_id;
-          var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
-          var front_original_file_path = response.data.temp_postcard.front_original_file_path;
-          _this7.tempData.front_cropped_file_path = front_cropped_file_path;
-          _this7.tempData.front_original_file_path = front_original_file_path;
-          _this7.$snackbar.open({
-            message: response.data.message,
-            duration: 5000,
-            queue: false,
-            onAction: function onAction() {
-              //Do something on click button
-            }
-          });
-        }).catch(function (error) {
-          if (error.response.status && error.response.status === 419) {
-            location.href = '/login';
+        _this7.workInProgress = false;
+      }).catch(function (error) {
+        if (error.response.status && error.response.status === 419) {
+          location.href = '/login';
+        }
+        console.info(error);
+        _this7.errors = error.response.data.errors;
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        _this7.$snackbar.open({
+          duration: 5000,
+          message: 'Please correct errors before saving.',
+          type: 'is-danger',
+          queue: false,
+          position: 'is-top',
+          actionText: 'OK',
+          onAction: function onAction() {
+            //Do something on click button
           }
-          console.info(error);
-          _this7.errors = error.response.data.errors;
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-          _this7.$snackbar.open({
-            duration: 5000,
-            message: 'Please correct errors before saving.',
-            type: 'is-danger',
-            queue: false,
-            position: 'is-top',
-            actionText: 'OK',
-            onAction: function onAction() {
-              //Do something on click button
-            }
-          });
         });
-      }
+      });
+      // }
     },
     enableDisableNextButton: function enableDisableNextButton() {
       setTimeout(function () {
@@ -52569,7 +52620,11 @@ var render = function() {
         [
           _c("VueSignaturePad", {
             ref: "signaturePad",
-            attrs: { width: "400px", height: "300px" }
+            attrs: {
+              width: "400px",
+              options: { penColor: "#041a98" },
+              height: "300px"
+            }
           })
         ],
         1
@@ -55144,212 +55199,7 @@ var render = function() {
                                       )
                                     ]
                                   )
-                                : [
-                                    _vm.tempData.company_id &&
-                                    _vm.companies[_vm.tempData.company_id]
-                                      .address_lists.length
-                                      ? _c("div", [
-                                          _c(
-                                            "p",
-                                            {
-                                              staticClass:
-                                                "is-size-6 has-text-link"
-                                            },
-                                            [_vm._v("Birthday filters")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("div", { staticClass: "field" }, [
-                                            _c(
-                                              "p",
-                                              { staticClass: "control" },
-                                              [
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "select" },
-                                                  [
-                                                    _c(
-                                                      "select",
-                                                      {
-                                                        directives: [
-                                                          {
-                                                            name: "model",
-                                                            rawName: "v-model",
-                                                            value:
-                                                              _vm
-                                                                .birthdayFilters
-                                                                .month,
-                                                            expression:
-                                                              "birthdayFilters.month"
-                                                          }
-                                                        ],
-                                                        on: {
-                                                          change: function(
-                                                            $event
-                                                          ) {
-                                                            var $$selectedVal = Array.prototype.filter
-                                                              .call(
-                                                                $event.target
-                                                                  .options,
-                                                                function(o) {
-                                                                  return o.selected
-                                                                }
-                                                              )
-                                                              .map(function(o) {
-                                                                var val =
-                                                                  "_value" in o
-                                                                    ? o._value
-                                                                    : o.value
-                                                                return val
-                                                              })
-                                                            _vm.$set(
-                                                              _vm.birthdayFilters,
-                                                              "month",
-                                                              $event.target
-                                                                .multiple
-                                                                ? $$selectedVal
-                                                                : $$selectedVal[0]
-                                                            )
-                                                          }
-                                                        }
-                                                      },
-                                                      [
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: { value: "" }
-                                                          },
-                                                          [_vm._v("By month")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "0"
-                                                            }
-                                                          },
-                                                          [_vm._v("January")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "1"
-                                                            }
-                                                          },
-                                                          [_vm._v("February")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "2"
-                                                            }
-                                                          },
-                                                          [_vm._v("March")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "3"
-                                                            }
-                                                          },
-                                                          [_vm._v("April")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "4"
-                                                            }
-                                                          },
-                                                          [_vm._v("May")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "5"
-                                                            }
-                                                          },
-                                                          [_vm._v("June")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "6"
-                                                            }
-                                                          },
-                                                          [_vm._v("July")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "7"
-                                                            }
-                                                          },
-                                                          [_vm._v("August")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "8"
-                                                            }
-                                                          },
-                                                          [_vm._v("September")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "9"
-                                                            }
-                                                          },
-                                                          [_vm._v("October")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "10"
-                                                            }
-                                                          },
-                                                          [_vm._v("November")]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "option",
-                                                          {
-                                                            attrs: {
-                                                              value: "11"
-                                                            }
-                                                          },
-                                                          [_vm._v("Dicember")]
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ])
-                                        ])
-                                      : _vm._e()
-                                  ],
+                                : _vm._e(),
                               _vm._v(" "),
                               _vm._l(
                                 _vm.companies[_vm.tempData.company_id]
@@ -55555,6 +55405,44 @@ var render = function() {
                                                                       1
                                                                     )
                                                                   : _vm._e()
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "p",
+                                                              {
+                                                                staticClass:
+                                                                  "has-text-info help m-b-20"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "\n                                          To import your own contacts, you must have a contacts xls file with a particular structure. If you don't have our exaple file, you can "
+                                                                ),
+                                                                _c(
+                                                                  "a",
+                                                                  {
+                                                                    staticClass:
+                                                                      "has-text-info",
+                                                                    staticStyle: {
+                                                                      "text-decoration":
+                                                                        "underline"
+                                                                    },
+                                                                    attrs: {
+                                                                      href:
+                                                                        "/download/xls",
+                                                                      download:
+                                                                        ""
+                                                                    }
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "download sample file"
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                _vm._v(
+                                                                  ".\n                                        "
+                                                                )
                                                               ]
                                                             ),
                                                             _vm._v(" "),
@@ -57761,6 +57649,26 @@ var render = function() {
           }
         },
         [_vm._v("Save as draft")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.workInProgress,
+              expression: "workInProgress"
+            }
+          ],
+          staticClass: "loading-container"
+        },
+        [
+          _c("div", { staticClass: "text" }, [_vm._v("GENERATING POSTCARDS")]),
+          _vm._v(" "),
+          _vm._m(19)
+        ]
       )
     ]
   )
@@ -58015,6 +57923,26 @@ var staticRenderFns = [
           placeholder: "Some text (optional)"
         }
       })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "loading" }, [
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "loading__square" })
     ])
   }
 ]

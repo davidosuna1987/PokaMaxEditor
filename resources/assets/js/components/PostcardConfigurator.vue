@@ -672,7 +672,7 @@
                                     </div>
                                 </div>
 
-                                <template v-else>
+                                <!-- <template v-else>
                                   <div v-if="tempData.company_id && companies[tempData.company_id].address_lists.length">
                                     <p class="is-size-6 has-text-link">Birthday filters</p>
                                     <div class="field">
@@ -697,7 +697,7 @@
                                       </p>
                                     </div>
                                   </div>
-                                </template>
+                                </template> -->
 
                                 <div v-for="(address_list, index) in companies[tempData.company_id].address_lists" :key="index">
                                   <b-collapse v-if="address_list.addresses" class="card" :open="index === 0 ? true : false">
@@ -720,6 +720,11 @@
                                                 <span>Add {{checked_csv_addresses.length}} {{checked_csv_addresses.length == 1 ? 'contact' : 'contacts'}}</span>
                                               </button>
                                             </p>
+
+                                            <p class="has-text-info help m-b-20">
+                                              To import your own contacts, you must have a contacts xls file with a particular structure. If you don't have our exaple file, you can <a href="/download/xls" class="has-text-info" style="text-decoration:underline;" download>download sample file</a>.
+                                            </p>
+
                                             <b-field>
                                                 <b-upload v-model="csv_file" @input="uploadCsvFile">
                                                     <a class="button is-info">
@@ -1152,6 +1157,20 @@
         </div>
 
         <a href="#" class="button is-info button-save-draft" @click.prevent="saveDraft" :disabled="stepThreeIsDisabled">Save as draft</a>
+
+        <div v-show="workInProgress" class='loading-container'>
+          <div class='text'>GENERATING POSTCARDS</div>
+          <div class='loading'>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+            <div class='loading__square'></div>
+          </div>
+        </div>
+
     </div>
 </template>
 
@@ -1162,6 +1181,7 @@
         props: ['companyIdProp'],
         data() {
             return {
+                workInProgress: false,
                 activeTab: 0,
                 isSetSignature: false,
                 isSetCompanyLogo: false,
@@ -1228,7 +1248,7 @@
                     font_family: 1,
                     font_size: 21,
                     color: {
-                      hex: '#031993'
+                      hex: '#041a98'
                     }
                   },
                   sender_data: {
@@ -1851,42 +1871,44 @@
               this.tempData.original_file = original_file;
               this.tempData.cropped_file = cropped_file;
 
-              if(this.tempData.postcard_id){
-                  axios.put('/postcard/update/'+this.tempData.postcard_id, this.tempData)
-                  .then(response => {
-                      console.info(response.data);
-                      // this.tempData.postcard_id = response.data.postcard_id;
-                      // var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
-                      // var front_original_file_path = response.data.temp_postcard.front_original_file_path;
-                      // this.tempData.front_cropped_file_path = front_cropped_file_path;
-                      // this.tempData.front_original_file_path = front_original_file_path;
-                        this.$snackbar.open({
-                            message: response.data.message,
-                            duration: 5000,
-                            queue: false,
-                            onAction: () => {
-                              //Do something on click button
-                            }
-                        });
-                  }).catch(error => {
-                      if(error.response.status && error.response.status === 419){
-                        location.href = '/login';
-                      }
-                      console.info(error);
-                      this.errors = error.response.data.errors;
-                      this.$snackbar.open({
-                          duration: 5000,
-                          message: 'Please correct errors before saving the postcard.',
-                          type: 'is-danger',
-                          queue: false,
-                          position: 'is-top',
-                          actionText: 'OK',
-                          onAction: () => {
-                              //Do something on click button
-                          }
-                      });
-                  });
-              } else {
+              this.workInProgress = true;
+
+              // if(this.tempData.postcard_id){
+              //     axios.put('/postcard/update/'+this.tempData.postcard_id, this.tempData)
+              //     .then(response => {
+              //         console.info(response.data);
+              //         // this.tempData.postcard_id = response.data.postcard_id;
+              //         // var front_cropped_file_path = response.data.temp_postcard.front_cropped_file_path;
+              //         // var front_original_file_path = response.data.temp_postcard.front_original_file_path;
+              //         // this.tempData.front_cropped_file_path = front_cropped_file_path;
+              //         // this.tempData.front_original_file_path = front_original_file_path;
+              //           this.$snackbar.open({
+              //               message: response.data.message,
+              //               duration: 5000,
+              //               queue: false,
+              //               onAction: () => {
+              //                 //Do something on click button
+              //               }
+              //           });
+              //     }).catch(error => {
+              //         if(error.response.status && error.response.status === 419){
+              //           location.href = '/login';
+              //         }
+              //         console.info(error);
+              //         this.errors = error.response.data.errors;
+              //         this.$snackbar.open({
+              //             duration: 5000,
+              //             message: 'Please correct errors before saving the postcard.',
+              //             type: 'is-danger',
+              //             queue: false,
+              //             position: 'is-top',
+              //             actionText: 'OK',
+              //             onAction: () => {
+              //                 //Do something on click button
+              //             }
+              //         });
+              //     });
+              // } else {
                   axios.post('/postcard/store', this.tempData)
                   .then(response => {
                       console.info(response.data);
@@ -1903,6 +1925,7 @@
                             //Do something on click button
                           }
                       });
+                      this.workInProgress = false;
                   }).catch(error => {
                       if(error.response.status && error.response.status === 419){
                         location.href = '/login';
@@ -1924,7 +1947,7 @@
                           }
                       });
                   });
-              }
+              // }
             },
             enableDisableNextButton() {
                 setTimeout(function(){

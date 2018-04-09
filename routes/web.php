@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('companies', 'CompanyController@index')->name('companies.index');
     Route::get('companies/{id}', 'CompanyController@show')->name('companies.show');
 
+    Route::get('download/xls', 'AddressController@download')->name('download.xls');
     Route::post('csv/import', 'AddressController@csvImport')->name('csv.import');
     Route::get('companies/{id}/postcards', 'CompanyController@postcards')->name('companies.postcards');
 });
